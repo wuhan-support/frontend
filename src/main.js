@@ -15,7 +15,7 @@ const production = process.env.NODE_ENV === 'production';
 
 if (production) {
   Sentry.init({
-    dsn: 'https://9636aaa824a744f98a619df0aaabba00@sentry.io/1536764',
+    dsn: 'https://237b425bb92749e98198df60f1835d31@sentry.io/1973056',
     integrations: [new Integrations.Vue({Vue, attachProps: true})],
 
     // NOTE: the config below (`logErrors`) controls whether the error will be logged
@@ -24,7 +24,7 @@ if (production) {
     // So I've turned this setting off. If necessary please re-enable it.
     // More info at: https://docs.sentry.io/platforms/javascript/vue/
     logErrors: false,
-    release: 'frontend-v2@' + (config.version || 'unknown'),
+    release: 'frontend@' + (config.version || 'unknown'),
   });
 }
 
