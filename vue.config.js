@@ -5,6 +5,7 @@ module.exports = {
 
   outputDir: '_',
   runtimeCompiler: true,
+  integrity: true,
 
   pluginOptions: {
     i18n: {
@@ -13,5 +14,21 @@ module.exports = {
       localeDir: 'locales',
       enableInSFC: true
     }
-  }
+  },
+
+  pwa: {
+    name: "wuhan.support",
+    themeColor: "#2d66ba",
+    msTileColor: "#1d499b",
+    appleMobileWebAppStatusBarStyle: "black-translucent",
+
+    workboxPluginMode: "GenerateSW",
+    // iconPaths: {
+    //   favicon32: 'favicon/favicon-32x32.png',
+    //   favicon16: 'favicon/favicon-16x16.png',
+    //   appleTouchIcon: 'favicon/apple-touch-icon.png',
+    //   maskIcon: 'favicon/safari-pinned-tab.svg',
+    //   msTileImage: 'favicon/mstile-150x150.png'
+    // }
+  },
 }
