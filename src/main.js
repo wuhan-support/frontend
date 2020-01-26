@@ -5,9 +5,12 @@ import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
 import i18n from './i18n'
+import SuiVue from 'semantic-ui-vue';
 
 import * as Sentry from '@sentry/browser';
 import * as Integrations from "@sentry/integrations";
+
+Vue.use(SuiVue);
 
 Vue.config.productionTip = false
 
