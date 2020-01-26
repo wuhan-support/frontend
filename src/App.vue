@@ -1,51 +1,21 @@
 <template>
-  <v-app
-    id="__app_root"
-    :dark="dark"
-  >
-    <v-navigation-drawer
-      v-model="drawer"
-      app
-      width="300"
-    >
-      <div class="drawer-logo blue darken-4">
-        <v-img
-          :src="require('@/assets/logo/feiyan.help.svg')"
-          aspect-ratio="2.1"
-          contain
-        />
-        <div class="white--text description">
-          <v-row
-            align="center"
-            justify="center"
-          >
-            <span>{{ $t('app.name') }}</span>
-          </v-row>
-        </div>
-      </div>
-      <v-list
-        dense
-        nav
-      >
-        <template
-          v-for="route in routes"
-        >
+  <v-app id="__app_root" :dark="dark">
+    <v-navigation-drawer v-model="drawer" color="white" app clipped>
+      <v-list nav>
+        <template v-for="route in routes">
           <v-list-item
             v-if="!route.children || route.meta.forceSingle"
             :key="route.name"
             @click="onMenuItemClicked(route)"
+            link
           >
             <v-list-item-icon>
               <v-icon v-text="route.meta.icon" />
             </v-list-item-icon>
             <v-list-item-content>
               <v-list-item-title>
-                {{ $t(route.meta.i18n) }} &nbsp; <v-icon
-                  v-if="!route.component && !route.meta.forceSingle"
-                  small
-                >
-                  mdi-open-in-new
-                </v-icon>
+                {{ $t(route.meta.i18n) }} &nbsp;
+                <v-icon v-if="!route.component && !route.meta.forceSingle" small>mdi-open-in-new</v-icon>
               </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
@@ -61,7 +31,7 @@
             </template>
 
             <v-list-item
-              v-for="child in route.children"
+              v-for="child in route.children.filter(el => !el.meta.hide)"
               :key="child.name"
               @click="onMenuItemClicked(child)"
             >
@@ -77,28 +47,14 @@
         <v-divider class="my-2" />
 
         <v-container>
-          <v-row
-            justify="end"
-          >
-            <v-btn
-              icon
-              class="mx-1"
-              @click="dark = !dark"
-            >
+          <v-row justify="end">
+            <v-btn icon class="mx-1" @click="dark = !dark">
               <v-icon>mdi-invert-colors</v-icon>
             </v-btn>
 
-            <v-menu
-              bottom
-              left
-              transition="slide-y-transition"
-            >
+            <v-menu bottom left transition="slide-y-transition">
               <template v-slot:activator="{ on }">
-                <v-btn
-                  icon
-                  class="mx-1"
-                  v-on="on"
-                >
+                <v-btn icon class="mx-1" v-on="on">
                   <v-icon>mdi-translate</v-icon>
                 </v-btn>
               </template>
@@ -117,187 +73,169 @@
         </v-container>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar
-      app
-      fixed
-      dark
-      color="blue darken-3"
-    >
-      <v-app-bar-nav-icon
-        @click.stop="drawer = !drawer"
-      />
-
-      <v-toolbar-title class="pl-2">
-        <transition
-          name="fade-transition"
-          mode="out-in"
-        >
-          <v-avatar
-            :size="32"
-            class="mr-2"
-          >
-            <v-img
-              src="https://placehold.it/32x32"
-            />
-          </v-avatar>
-        </transition>
-        <span class="title">
-          {{ $t($router.currentRoute.meta.i18n) }}
-        </span>
+    <v-app-bar app clipped-left dark color="white" class="appBar">
+      <v-app-bar-nav-icon class="gray" @click.stop="drawer = !drawer" />
+      <v-toolbar-title>
+        <span class="title"><v-img :src="require('@/assets/logo/logo.svg')" class="logo" /></span>
       </v-toolbar-title>
     </v-app-bar>
-    <v-content
-      class="mb-8"
-    >
-      <transition
-        name="slide-fade"
-        mode="out-in"
-      >
-        <v-container>
-          <router-view />
-        </v-container>
+    <v-content class="mb-8">
+      <transition name="slide-fade" mode="out-in">
+        <router-view />
       </transition>
     </v-content>
-    <v-footer
-      app
-      color="blue darken-3"
-      class="white--text px-4 caption"
-    >
-      <v-spacer />
-      &copy; Non-nCoV Support Group | {{ new Date().getFullYear() }}
-    </v-footer>
   </v-app>
 </template>
 
 <script>
-  import Console from "@/utils/Console";
-  import utils from "./utils/utils";
+import Console from "@/utils/Console";
+import utils from "./utils/utils";
 
-  export default {
-    name: 'App',
-    data () {
-      return {
-        routes: [],
-        localizations: [
-          {
-            id: 'zh',
-            name: '中文'
-          }, {
-            id: 'en',
-            name: 'English'
-          }, {
-            id: 'ja',
-            name: '日本語'
-          }
-        ],
-        drawer: !this.$vuetify.breakpoint.xsOnly,
-      }
-    },
-    computed: {
-      dark: {
-        get () {
-          return this.$store.state.settings.dark
+export default {
+  name: "App",
+  data() {
+    return {
+      routes: [],
+      localizations: [
+        {
+          id: "zh",
+          name: "中文"
         },
-        set (value) {
-          this.$store.commit('switchDark', value)
-          this.$vuetify.theme.dark = value
+        {
+          id: "en",
+          name: "English"
+        },
+        {
+          id: "ja",
+          name: "日本語"
         }
-      }
-    },
-    watch: {
-      'dark': ['onDarkChange']
-    },
-    beforeMount() {
-      this.routes = this.$router.options.routes
-    },
-    mounted () {
-      this.onDarkChange(this.$store.state.settings.dark);
-
-      if (this.$store.getters.language) {
-        this.changeLocale(this.$store.getters.language, false)
-      } else {
-        const language = utils.getFirstBrowserLanguage();
-        Console.debug("[i18n] detected language", language);
-        if (language) {
-          // because this is a detection result, thus we are not storing it,
-          // unless the user manually set one.
-          this.changeLocale(language, false)
-        }
-      }
-
-      if (this.$store.state.settings.dark) {
-        this.$vuetify.theme.dark = this.$store.state.settings.dark
-      }
-    },
-    methods: {
-      onDarkChange (newValue) {
-        if (newValue) {
-          document.body.style.backgroundColor = "#303030"
-        } else {
-          document.body.style.backgroundColor = "#fafafa"
-        }
+      ],
+      drawer: !this.$vuetify.breakpoint.xsOnly,
+    };
+  },
+  computed: {
+    dark: {
+      get() {
+        return this.$store.state.settings.dark;
       },
-
-      onMenuItemClicked (route) {
-        if (route.meta && route.meta.link) {
-          window.open(route.meta.link);
-        } else {
-          this.$router.push({'name': route.name})
-        }
-      },
-      changeLocale (localeId, save=true) {
-        Console.debug("[i18n] locale changed to:", localeId, "| saving to vuex:", save);
-        this.$i18n.locale = localeId;
-        // this.$vuetify.lang.current = localeId;
-        if (save) this.$store.commit("changeLocale", localeId);
-        document.title = `${this.$t(this.$route.meta.i18n) + ' | ' || ''}${this.$t('app.name')}`;
+      set(value) {
+        this.$store.commit("switchDark", value);
+        this.$vuetify.theme.dark = value;
       },
     }
+  },
+  watch: {
+    dark: ["onDarkChange"]
+  },
+  beforeMount() {
+    this.routes = this.$router.options.routes.filter(el => !el.meta.hide);
+  },
+  mounted() {
+    this.onDarkChange(this.$store.state.settings.dark);
+
+    if (this.$store.getters.language) {
+      this.changeLocale(this.$store.getters.language, false);
+    } else {
+      const language = utils.getFirstBrowserLanguage();
+      Console.debug("[i18n] detected language", language);
+      if (language) {
+        // because this is a detection result, thus we are not storing it,
+        // unless the user manually set one.
+        this.changeLocale(language, false);
+      }
+    }
+
+    if (this.$store.state.settings.dark) {
+      this.$vuetify.theme.dark = this.$store.state.settings.dark;
+    }
+  },
+  methods: {
+    onDarkChange(newValue) {
+      if (newValue) {
+        document.body.style.backgroundColor = "#303030";
+      } else {
+        document.body.style.backgroundColor = "#fafafa";
+      }
+    },
+
+    onMenuItemClicked(route) {
+      if (route.meta && route.meta.externalRedirect) {
+        if (route.meta.link) {
+          window.open(route.meta.link);
+        }
+      } else {
+        this.$router.push({ name: route.name });
+      }
+    },
+    changeLocale(localeId, save = true) {
+      Console.debug(
+        "[i18n] locale changed to:",
+        localeId,
+        "| saving to vuex:",
+        save
+      );
+      this.$i18n.locale = localeId;
+      // this.$vuetify.lang.current = localeId;
+      if (save) this.$store.commit("changeLocale", localeId);
+      document.title = `${this.$t(this.$route.meta.i18n) + " | " ||
+        ""}${this.$t("app.name")}`;
+    }
   }
+};
 </script>
 
 <style>
-  .slide-fade-enter-active {
-    transition: all .225s cubic-bezier(0.165, 0.84, 0.44, 1);
-  }
-  .slide-fade-leave-active {
-    transition: all .125s cubic-bezier(0.165, 0.84, 0.44, 1);
-  }
-  .slide-fade-enter, .slide-fade-leave-to
+.logo {
+  display: block;
+  width: 165px;
+  height: 50px;
+}
+.appBar {
+  -webkit-box-shadow: 0 2px 10px 0 rgba(0,0,0,.05) !important;
+  box-shadow: 0 2px 10px 0 rgba(0,0,0,.05) !important;
+}
+.slide-fade-enter-active {
+  transition: all 0.225s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.slide-fade-leave-active {
+  transition: all 0.125s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.slide-fade-enter, .slide-fade-leave-to
     /* .slide-fade-leave-active for below version 2.1.8 */ {
-    transform: translateY(1.5vh);
-    opacity: 0;
-  }
+  transform: translateY(1.5vh);
+  opacity: 0;
+}
 
-  .theme--dark, .theme--light {
-    transition: all .3s cubic-bezier(.25,.8,.5,1) !important;
-  }
+.theme--dark,
+.theme--light {
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.5, 1) !important;
+}
 
-  .theme--light .bkop-light {
-    background: rgba(255, 255, 255, .75) !important;
-  }
+.theme--light .bkop-light {
+  background: rgba(255, 255, 255, 0.75) !important;
+}
 
-  .theme--dark .bkop-light {
-    background: rgba(66, 66, 66, .85) !important;
-  }
+.theme--dark .bkop-light {
+  background: rgba(66, 66, 66, 0.85) !important;
+}
 
-  .theme--light .bkop-medium {
-    background: rgba(255, 255, 255, .9) !important;
-  }
+.theme--light .bkop-medium {
+  background: rgba(255, 255, 255, 0.9) !important;
+}
 
-  .theme--dark .bkop-medium {
-    background: rgba(66, 66, 66, .9) !important;
-  }
+.theme--dark .bkop-medium {
+  background: rgba(66, 66, 66, 0.9) !important;
+}
 
-  .cursor-pointer {
-    cursor: pointer;
-  }
+.cursor-pointer {
+  cursor: pointer;
+}
 
-  .v-navigation-drawer::-webkit-scrollbar {
-    width: 2px;
-  }
+.v-navigation-drawer::-webkit-scrollbar {
+  width: 2px;
+}
 
-  .v-navigation-drawer::-webkit-scrollbar-thumb {
-    background-color: rgb(200, 200, 200);
-  }
+.v-navigation-drawer::-webkit-scrollbar-thumb {
+  background-color: rgb(200, 200, 200);
+}
 </style>

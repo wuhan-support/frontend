@@ -17,7 +17,7 @@ module.exports = {
   },
 
   pwa: {
-    name: "wuhan.support",
+    name: "feiyan.help",
     themeColor: "#2d66ba",
     msTileColor: "#1d499b",
     appleMobileWebAppStatusBarStyle: "black-translucent",
