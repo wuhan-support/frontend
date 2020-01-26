@@ -4,8 +4,9 @@ module.exports = {
     node: true
   },
   'extends': [
-    'plugin:vue/essential',
-    '@vue/standard'
+    'plugin:vue/recommended',
+    '@vue/standard',
+    'eslint:recommended'
   ],
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
@@ -13,5 +14,8 @@ module.exports = {
   },
   parserOptions: {
     parser: 'babel-eslint'
-  }
+  },
+  "plugins": [
+    "vuetify"
+  ]
 }

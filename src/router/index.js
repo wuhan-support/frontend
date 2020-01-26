@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import I18n from "vue-i18n";
 
 Vue.use(VueRouter)
 
@@ -25,5 +26,10 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
+router.beforeEach((to, from, next) => {
+  document.title = `${I18n.t(to.meta.i18n)} | ${I18n.t('app.name')}`;
+  next();
+});
 
 export default router

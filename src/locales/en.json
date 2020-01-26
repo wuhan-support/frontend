@@ -1,0 +1,34 @@
+{
+  "meta": {
+    "name": {
+      "short": "",
+      "long": ""
+    }
+  },
+  "pages": {
+
+  },
+  "partials": {
+    "boolean": {
+      "true": "Yes",
+      "false": "No"
+    },
+    "have": {
+      "true": "Have",
+      "false": "Not have"
+    },
+    "dialog": {
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "submit": "Submit",
+      "close": "Close"
+    },
+    "level": {
+      "info": "Info",
+      "tips": "Tips",
+      "success": "Success",
+      "warning": "Warning",
+      "failed": "Failed"
+    }
+  }
+}
