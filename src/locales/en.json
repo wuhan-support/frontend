@@ -1,12 +1,17 @@
 {
   "app": {
-    "name": {
-      "short": "",
-      "long": ""
-    }
+    "name": ""
   },
   "pages": {
-
+    "home": {
+      "_name": "Home"
+    },
+    "about": {
+      "_name": "About us"
+    },
+    "stream": {
+      "_name": "Event Stream"
+    }
   },
   "partials": {
     "boolean": {

@@ -1,12 +1,17 @@
 {
   "app": {
-    "name": {
-      "short": "",
-      "long": ""
-    }
+    "name": ""
   },
   "pages": {
-
+    "home": {
+      "_name": "首页"
+    },
+    "about": {
+      "_name": "关于我们"
+    },
+    "stream": {
+      "_name": "实时播报"
+    }
   },
   "partials": {
     "boolean": {

@@ -10,9 +10,8 @@
     >
       <div class="drawer-logo blue darken-4">
         <v-img
-          :src="require('@/assets/logo.png')"
-          aspect-ratio="1"
-          height="192px"
+          :src="require('@/assets/logo/feiyan.help.svg')"
+          aspect-ratio="2.1"
           contain
         />
         <div class="white--text description">
@@ -20,7 +19,7 @@
             align="center"
             justify="center"
           >
-            <span>{{ $t('app.name.long') }}</span>
+            <span>{{ $t('app.name') }}</span>
           </v-row>
         </div>
       </div>
@@ -62,7 +61,7 @@
             </template>
 
             <v-list-item
-              v-for="child in route.children.filter(el => !el.meta.hide)"
+              v-for="child in route.children"
               :key="child.name"
               @click="onMenuItemClicked(child)"
             >
@@ -154,16 +153,18 @@
         name="slide-fade"
         mode="out-in"
       >
-        <router-view />
+        <v-container>
+          <router-view />
+        </v-container>
       </transition>
     </v-content>
     <v-footer
       app
       color="blue darken-3"
-      class="white--text px-4"
+      class="white--text px-4 caption"
     >
       <v-spacer />
-      &copy; wuhan.support | {{ new Date().getFullYear() }}
+      &copy; Non-nCoV Support Group | {{ new Date().getFullYear() }}
     </v-footer>
   </v-app>
 </template>
@@ -207,7 +208,7 @@
       'dark': ['onDarkChange']
     },
     beforeMount() {
-      this.routes = this.$router.options.routes.filter(el => !(el.meta.hide));
+      this.routes = this.$router.options.routes
     },
     mounted () {
       this.onDarkChange(this.$store.state.settings.dark);
@@ -238,10 +239,8 @@
       },
 
       onMenuItemClicked (route) {
-        if (route.meta && route.meta.externalRedirect) {
-          if (route.meta.link) {
-            window.open(route.meta.link);
-          }
+        if (route.meta && route.meta.link) {
+          window.open(route.meta.link);
         } else {
           this.$router.push({'name': route.name})
         }

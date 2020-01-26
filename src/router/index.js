@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
-import I18n from "vue-i18n";
+import Home from '../views/Home'
+import About from '../views/About'
+import I18n from "../i18n";
+import Stream from "../views/Stream";
 
 Vue.use(VueRouter)
 
@@ -9,15 +11,29 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: Home
+    component: Home,
+    meta: {
+      icon: "mdi-home",
+      i18n: "pages.home._name"
+    }
   },
   {
     path: '/about',
     name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component: About,
+    meta: {
+      icon: "mdi-account-multiple",
+      i18n: "pages.about._name"
+    }
+  },
+  {
+    path: '/stream',
+    name: 'stream',
+    component: Stream,
+    meta: {
+      icon: "mdi-timeline-clock",
+      i18n: "pages.stream._name"
+    }
   }
 ]
 
