@@ -5,21 +5,21 @@ import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
 import i18n from './i18n'
-import * as Sentry from '@sentry/browser';
-import * as Integrations from "@sentry/integrations";
-import  config from "./config";
+import * as Sentry from '@sentry/browser'
+import * as Integrations from '@sentry/integrations'
+import config from './config'
 
 Vue.config.productionTip = false
 
-const production = process.env.NODE_ENV === 'production';
+const production = process.env.NODE_ENV === 'production'
 
 if (production) {
   Sentry.init({
     dsn: 'https://237b425bb92749e98198df60f1835d31@sentry.io/1973056',
-    integrations: [new Integrations.Vue({Vue, attachProps: true})],
+    integrations: [new Integrations.Vue({ Vue, attachProps: true })],
     logErrors: true,
-    release: 'frontend@' + (config.version || 'unknown'),
-  });
+    release: 'frontend@' + (config.version || 'unknown')
+  })
 }
 
 new Vue({
