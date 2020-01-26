@@ -6,10 +6,10 @@ import store from './store'
 import vuetify from './plugins/vuetify'
 import i18n from './i18n'
 
-Vue.config.productionTip = false
-
 import * as Sentry from '@sentry/browser';
 import * as Integrations from "@sentry/integrations";
+
+Vue.config.productionTip = false
 
 const production = process.env.NODE_ENV === 'production';
 
@@ -24,7 +24,7 @@ if (production) {
     // So I've turned this setting off. If necessary please re-enable it.
     // More info at: https://docs.sentry.io/platforms/javascript/vue/
     logErrors: false,
-    release: 'frontend-v2@' + (config.version || 'unknown'),
+    release: 'frontend-v2@' + (Vue.config.version || 'unknown'),
   });
 }
 
