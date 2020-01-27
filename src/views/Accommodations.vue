@@ -56,41 +56,93 @@
         </v-card-text>
       </v-card>
     </v-dialog>
-    <v-card
-      v-for="o in data"
-      :key="o.name"
-      class="mx-3 my-1"
-      style="width: 100%"
-    >
-      <v-card-title>
-        <span class="title">
-          {{ o.name }}
-        </span>
-      </v-card-title>
-      <v-card-text>
-        <span class="subtitle-1">
-          {{ o.province }} {{ o.city }} {{ o.suburb }}
-        </span>
-        <span class="float-right">
-          床位数：{{ o.beds ? o.beds : "暂未知" }}<br>房间数：{{ o.room ? o.room : "暂未知" }}
-        </span>
-        <br>
-        <span
-          v-if="o.notes.length"
-          class="subtitle-2 red--text"
+    <v-col cols="12">
+      <v-skeleton-loader
+        v-if="!data.length"
+        type="card@4"
+      />
+      <h1 class="heading mx-3">
+        住宿信息
+      </h1>
+      <p class="subtitle-1 mx-3">
+        图例：<v-icon
+          small
         >
-          {{ o.notes }}
-        </span>
-      </v-card-text>
-      <v-card-actions>
-        <v-btn
-          outlined
-          @click="openDialog(o)"
+          mdi-bed-empty
+        </v-icon> 表示床位剩余，<v-icon
+          small
         >
-          联系方式
-        </v-btn>
-      </v-card-actions>
-    </v-card>
+          mdi-home-circle
+        </v-icon> 表示房间剩余
+      </p>
+      <v-card
+        v-for="[i, o] in data.filter(el => el.name.length).entries()"
+        :key="i"
+        class="mx-3 my-3 pb-2"
+      >
+        <v-card-title>
+          <span class="title font-weight-black">
+            {{ o.name }}
+          </span>
+        </v-card-title>
+        <v-card-text>
+          <span class="float-right ml-4">
+            <v-icon
+              class="mr-1"
+              small
+            >mdi-bed-empty</v-icon> {{ o.beds ? o.beds : "未知" }}
+            <br>
+            <v-icon
+              class="mr-1"
+              small
+            >mdi-home-circle</v-icon> {{ o.room ? o.room : "未知" }}
+          </span>
+          <span class="subtitle-1">
+            {{ o.province }} {{ o.city }} {{ o.suburb }}<br>地址：{{ o.address }}
+          </span>
+          <br>
+          <span
+            v-if="o.notes.length"
+            class="subtitle-2 red--text"
+          >
+            备注：{{ o.notes }}
+          </span>
+        </v-card-text>
+        <v-card-actions class="mx-2">
+          <v-btn
+            outlined
+            color="primary"
+            :href="`https://ditu.amap.com/search?query=${encodeURIComponent(o.name)}`"
+            target="_blank"
+          >
+            <v-icon left>
+              mdi-map
+            </v-icon>
+            搜索高德地图
+          </v-btn>
+          <v-btn
+            outlined
+            color="green"
+            @click="openDialog(o)"
+          >
+            <v-icon left>
+              mdi-contact-phone
+            </v-icon>
+            联系方式
+          </v-btn>
+          <v-spacer />
+          <v-btn
+            icon
+            color="error darken-1"
+            @click="report(o)"
+          >
+            <v-icon>
+              mdi-flag
+            </v-icon>
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-col>
   </v-row>
 </template>
 
@@ -113,7 +165,9 @@
       }
     },
     beforeMount() {
-      this.update()
+      if (!this.data.length) {
+        this.update()
+      }
     },
     methods: {
       update() {
