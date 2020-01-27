@@ -40,7 +40,7 @@
             <v-list-item :href="`tel://${dialog.contact.content}`">
               <v-list-item-content>
                 <v-list-item-title>
-                  {{ dialog.contact.name }}
+                  {{ dialog.contact.name ? dialog.contact.name : "电话" }}
                 </v-list-item-title>
                 <v-list-item-subtitle>
                   {{ dialog.contact.content }}
@@ -60,6 +60,7 @@
       v-for="o in data"
       :key="o.name"
       class="mx-3 my-1"
+      style="width: 100%"
     >
       <v-card-title>
         <span class="title">
@@ -74,6 +75,12 @@
           床位数：{{ o.beds ? o.beds : "暂未知" }}<br>房间数：{{ o.room ? o.room : "暂未知" }}
         </span>
         <br>
+        <span
+          v-if="o.notes.length"
+          class="subtitle-2 red--text"
+        >
+          {{ o.notes }}
+        </span>
       </v-card-text>
       <v-card-actions>
         <v-btn
