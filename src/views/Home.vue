@@ -6,14 +6,45 @@
       class="fill-height"
     >
       <v-col cols="12">
-        <v-img
-          :src="require('@/assets/logo/logo.svg')"
-          aspect-ratio="2"
-          max-height="128px"
-          min-width="64px"
-          contain
-          class="my-6"
-        />
+        <v-row
+          justify="center"
+          align="center"
+        >
+          <v-col
+            cols="12"
+            sm="6"
+            md="6"
+            lg="6"
+            xl="6"
+          >
+            <v-img
+              :src="require('@/assets/logo/ncov.red.svg')"
+              aspect-ratio="2"
+              max-height="128px"
+              min-width="64px"
+              max-width="256px"
+              contain
+              class="mx-auto"
+            />
+          </v-col>
+          <v-col
+            cols="12"
+            sm="6"
+            md="6"
+            lg="6"
+            xl="6"
+          >
+            <v-img
+              :src="require('@/assets/logo/feiyan.help.svg')"
+              aspect-ratio="2"
+              max-height="128px"
+              min-width="64px"
+              max-width="256px"
+              contain
+              class="mx-auto"
+            />
+          </v-col>
+        </v-row>
         <v-card-title style="word-break: normal">
           <h1
             :class="{

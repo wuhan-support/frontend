@@ -5,5 +5,8 @@ export default {
   },
   platforms () {
     return service.get("/platforms/json")
+  },
+  reportIncorrect ({type, content}) {
+    return service.post("/report", {type, content})
   }
 }

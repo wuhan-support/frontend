@@ -16,6 +16,21 @@
     align="center"
     justify="center"
   >
+    <v-snackbar
+      :value="snackbar"
+      color="success"
+      bottom
+      :timeout="4000"
+    >
+      <v-icon
+        left
+        color="white"
+      >
+        mdi-check
+      </v-icon>
+      感谢支持，已提交纠错信息
+      <v-spacer />
+    </v-snackbar>
     <v-dialog
       v-model="dialog.enabled"
       max-width="450px"
@@ -54,13 +69,53 @@
             </v-list-item>
           </v-list>
         </v-card-text>
+        <v-card-actions>
+          <v-spacer />
+
+          <v-btn
+            text
+            @click="dialog.enabled = false"
+          >
+            关闭
+          </v-btn>
+        </v-card-actions>
       </v-card>
     </v-dialog>
+    <v-dialog
+      v-model="report.enabled"
+      max-width="450px"
+    >
+      <v-card>
+        <v-card-title>
+          提交纠错
+        </v-card-title>
+        <v-card-text>
+          确认要提交纠错信息嘛？收到纠错请求后我们会再次审核此条信息以保证准确性。
+          <span class="red--text">注意：由于我们的人力资源有限，还烦请不要滥用此功能，十分感谢！</span>
+        </v-card-text>
+        <v-card-actions>
+          <v-btn
+            text
+            @click="report.enabled = false"
+          >
+            取消
+          </v-btn>
+
+          <v-spacer />
+
+          <v-btn
+            text
+            color="primary"
+            :loading="$store.getters.ajaxLoading"
+            @click="doReport"
+          >
+            确认
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
     <v-col cols="12">
-      <v-skeleton-loader
-        v-if="!data.length"
-        type="card@4"
-      />
       <h1 class="heading mx-3">
         住宿信息
       </h1>
@@ -75,73 +130,100 @@
           mdi-home-circle
         </v-icon> 表示房间剩余
       </p>
-      <v-card
-        v-for="[i, o] in data.filter(el => el.name.length).entries()"
-        :key="i"
-        class="mx-3 my-3 pb-2"
+      <v-skeleton-loader
+        :loading="$store.getters.ajaxLoading && !data.length"
+        type="card@4"
+        class="mx-3"
       >
-        <v-card-title>
-          <span class="title font-weight-black">
-            {{ o.name }}
-          </span>
-        </v-card-title>
-        <v-card-text>
-          <span class="float-right ml-4">
-            <v-icon
-              class="mr-1"
-              small
-            >mdi-bed-empty</v-icon> {{ o.beds ? o.beds : "未知" }}
-            <br>
-            <v-icon
-              class="mr-1"
-              small
-            >mdi-home-circle</v-icon> {{ o.room ? o.room : "未知" }}
-          </span>
-          <span class="subtitle-1">
-            {{ o.province }} {{ o.city }} {{ o.suburb }}<br>地址：{{ o.address }}
-          </span>
-          <br>
-          <span
-            v-if="o.notes.length"
-            class="subtitle-2 red--text"
-          >
-            备注：{{ o.notes }}
-          </span>
-        </v-card-text>
-        <v-card-actions class="mx-2">
-          <v-btn
+        <div>
+          <v-text-field
+            v-model="search"
+            label="搜索"
+            placeholder="住宿名称、地址或区域"
+
             outlined
-            color="primary"
-            :href="`https://ditu.amap.com/search?query=${encodeURIComponent(o.name)}`"
-            target="_blank"
+            hide-details
+            clearable
+          />
+          <v-data-iterator
+            :items="dataset"
+            :search="search"
+            :page="page"
+            :items-per-page="20"
           >
-            <v-icon left>
-              mdi-map
-            </v-icon>
-            搜索高德地图
-          </v-btn>
-          <v-btn
-            outlined
-            color="green"
-            @click="openDialog(o)"
-          >
-            <v-icon left>
-              mdi-contact-phone
-            </v-icon>
-            联系方式
-          </v-btn>
-          <v-spacer />
-          <v-btn
-            icon
-            color="error darken-1"
-            @click="report(o)"
-          >
-            <v-icon>
-              mdi-flag
-            </v-icon>
-          </v-btn>
-        </v-card-actions>
-      </v-card>
+            <template v-slot:default="{ items }">
+              <v-card
+                v-for="[i, o] in items.entries()"
+                :key="i"
+                class="my-3 pb-2"
+              >
+                <v-card-title>
+                  <span class="title font-weight-black">
+                    {{ o.name }}
+                  </span>
+                  <span class="d-none">wuhan</span>
+                </v-card-title>
+                <v-card-text>
+                  <span class="float-right ml-4">
+                    <v-icon
+                      class="mr-1"
+                      small
+                    >mdi-bed-empty</v-icon> {{ o.beds ? o.beds : "未知" }}
+                    <br>
+                    <v-icon
+                      class="mr-1"
+                      small
+                    >mdi-home-circle</v-icon> {{ o.room ? o.room : "未知" }}
+                  </span>
+                  <span class="subtitle-1">
+                    {{ o.province }} {{ o.city }} {{ o.suburb }}<br>地址：{{ o.address }}
+                  </span>
+                  <br>
+                  <span
+                    v-if="o.notes.length"
+                    class="subtitle-2 red--text"
+                  >
+                    备注：{{ o.notes }}
+                  </span>
+                </v-card-text>
+                <v-card-actions class="mx-2">
+                  <v-btn
+                    outlined
+                    color="primary"
+                    :href="`https://ditu.amap.com/search?query=${encodeURIComponent(o.name)}`"
+                    target="_blank"
+                  >
+                    <v-icon left>
+                      mdi-map
+                    </v-icon>
+                    搜索高德地图
+                  </v-btn>
+                  <v-btn
+                    outlined
+                    color="green"
+                    @click="openDialog(o)"
+                  >
+                    <v-icon left>
+                      mdi-contact-phone
+                    </v-icon>
+                    联系方式
+                  </v-btn>
+                  <v-spacer />
+                  <v-btn
+                    icon
+                    color="error darken-1"
+                    @click="openReport(o)"
+                  >
+                    <v-icon>
+                      mdi-flag
+                    </v-icon>
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </template>
+          </v-data-iterator>
+        </div>
+      </v-skeleton-loader>
     </v-col>
   </v-row>
 </template>
@@ -154,6 +236,9 @@
     data () {
       return {
         data: [],
+        page: 1,
+        search: "",
+        snackbar: false,
         dialog: {
           enabled: false,
           contact: {
@@ -161,7 +246,16 @@
             content: ""
           },
           address: ""
+        },
+        report: {
+          enabled: false,
+          content: ""
         }
+      }
+    },
+    computed: {
+      dataset() {
+        return this.data.filter(el => el.name.length);
       }
     },
     beforeMount() {
@@ -175,11 +269,27 @@
           this.data = data["工作表1"]
         })
       },
+      doReport() {
+        api.reportIncorrect({
+          type: "accommodations",
+          content: this.report.content
+        })
+          .then(() => {
+            this.snackbar = true
+          })
+        .finally(() => {
+          this.report.enabled = false
+        })
+      },
       openDialog(o) {
         this.dialog.enabled = true;
         this.dialog.contact.name = o.contacts;
         this.dialog.contact.content = o.phone;
         this.dialog.address = o.address;
+      },
+      openReport(o) {
+        this.report.enabled = true;
+        this.report.content = JSON.stringify(o)
       }
     },
   }

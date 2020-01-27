@@ -12,49 +12,7 @@
 </i18n>
 
 <template>
-  <v-timeline dense>
-    <v-timeline-item
-      v-for="event in events"
-      :key="event.id"
-    >
-      <v-card>
-        <v-card-title>
-          <v-row
-            align="center"
-            justify="center"
-            class="px-3"
-          >
-            <span>
-              {{ event.pubDateStr }}
-            </span>
-            <v-spacer />
-            <span class="subtitle-1">
-              {{ event.provinceName }}
-            </span>
-          </v-row>
-        </v-card-title>
-        <v-card-text class="black--text">
-          <span class="subtitle-1">
-            {{ event.title }}
-          </span>
-          <br>
-          <span class="grey--text text--darken-2">
-            {{ event.summary }}
-          </span>
-        </v-card-text>
-        <v-card-actions>
-          <v-btn
-            color="primary"
-            :href="event.sourceUrl"
-            target="_blank"
-          >
-            <v-icon>mdi-magnify</v-icon>
-            {{ $t('view') }} ({{ event.infoSource }})
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-timeline-item>
-  </v-timeline>
+  <v-data-iterator />
 </template>
 
 <script>
