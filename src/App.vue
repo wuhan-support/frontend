@@ -1,13 +1,21 @@
 <template>
-  <v-app id="__app_root" :dark="dark">
-    <v-navigation-drawer v-model="drawer" color="white" app clipped>
+  <v-app
+    id="__app_root"
+    :dark="dark"
+  >
+    <v-navigation-drawer
+      v-model="drawer"
+      color="white"
+      app
+      clipped
+    >
       <v-list nav>
         <template v-for="route in routes">
           <v-list-item
             v-if="!route.children || route.meta.forceSingle"
             :key="route.name"
-            @click="onMenuItemClicked(route)"
             link
+            @click="onMenuItemClicked(route)"
           >
             <v-list-item-icon>
               <v-icon v-text="route.meta.icon" />
@@ -15,7 +23,12 @@
             <v-list-item-content>
               <v-list-item-title>
                 {{ $t(route.meta.i18n) }} &nbsp;
-                <v-icon v-if="!route.component && !route.meta.forceSingle" small>mdi-open-in-new</v-icon>
+                <v-icon
+                  v-if="!route.component && !route.meta.forceSingle"
+                  small
+                >
+                  mdi-open-in-new
+                </v-icon>
               </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
@@ -48,13 +61,25 @@
 
         <v-container>
           <v-row justify="end">
-            <v-btn icon class="mx-1" @click="dark = !dark">
+            <v-btn
+              icon
+              class="mx-1"
+              @click="dark = !dark"
+            >
               <v-icon>mdi-invert-colors</v-icon>
             </v-btn>
 
-            <v-menu bottom left transition="slide-y-transition">
+            <v-menu
+              bottom
+              left
+              transition="slide-y-transition"
+            >
               <template v-slot:activator="{ on }">
-                <v-btn icon class="mx-1" v-on="on">
+                <v-btn
+                  icon
+                  class="mx-1"
+                  v-on="on"
+                >
                   <v-icon>mdi-translate</v-icon>
                 </v-btn>
               </template>
@@ -73,15 +98,34 @@
         </v-container>
       </v-list>
     </v-navigation-drawer>
-    <v-app-bar app clipped-left dark color="white" class="appBar">
-      <v-app-bar-nav-icon class="gray" @click.stop="drawer = !drawer" />
+    <v-app-bar
+      app
+      clipped-left
+      dark
+      color="white"
+      class="appBar"
+    >
+      <v-app-bar-nav-icon
+        class="black--text"
+        @click.stop="drawer = !drawer"
+      />
       <v-toolbar-title>
-        <span class="title"><v-img :src="require('@/assets/logo/logo.svg')" class="logo" /></span>
+        <span class="title">
+          <v-img
+            :src="require('@/assets/logo/logo.svg')"
+            class="logo mx-0 my-2"
+          />
+        </span>
       </v-toolbar-title>
     </v-app-bar>
     <v-content class="mb-8">
-      <transition name="slide-fade" mode="out-in">
-        <router-view />
+      <transition
+        name="slide-fade"
+        mode="out-in"
+      >
+        <v-container>
+          <router-view />
+        </v-container>
       </transition>
     </v-content>
   </v-app>

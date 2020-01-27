@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home'
-import About from '../views/About'
 import I18n from "../i18n";
 import Stream from "../views/Stream";
+import Accommodations from "../views/Accommodations";
+import Platforms from "../views/Platforms";
 
 Vue.use(VueRouter)
 
@@ -18,21 +19,30 @@ const routes = [
     }
   },
   {
-    path: '/about',
-    name: 'about',
-    component: About,
-    meta: {
-      icon: "mdi-account-multiple",
-      i18n: "pages.about._name"
-    }
-  },
-  {
     path: '/stream',
     name: 'stream',
     component: Stream,
     meta: {
       icon: "mdi-timeline-clock",
       i18n: "pages.stream._name"
+    }
+  },
+  {
+    path: '/accommodations',
+    name: 'accommodations',
+    component: Accommodations,
+    meta: {
+      icon: "mdi-hotel",
+      i18n: "pages.accommodations._name"
+    }
+  },
+  {
+    path: '/platforms',
+    name: 'platforms',
+    component: Platforms,
+    meta: {
+      icon: "mdi-heart",
+      i18n: "pages.platforms._name"
     }
   }
 ]

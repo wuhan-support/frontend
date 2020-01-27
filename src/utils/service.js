@@ -2,7 +2,7 @@ import axios from 'axios'
 import Console from "./Console";
 
 const service = axios.create({
-  baseURL: "/"
+  baseURL: "/api"
 });
 
 // Add a response interceptor

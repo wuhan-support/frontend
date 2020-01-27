@@ -11,6 +11,12 @@
     },
     "stream": {
       "_name": "Event Stream"
+    },
+    "accommodations": {
+      "_name": "Accommodations"
+    },
+    "platforms": {
+      "_name": "Diag. Platform"
     }
   },
   "partials": {

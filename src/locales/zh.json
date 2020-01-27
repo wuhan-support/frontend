@@ -11,6 +11,12 @@
     },
     "stream": {
       "_name": "实时播报"
+    },
+    "accommodations": {
+      "_name": "免费住宿"
+    },
+    "platforms": {
+      "_name": "诊断平台"
     }
   },
   "partials": {
