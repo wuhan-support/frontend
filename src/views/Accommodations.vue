@@ -327,11 +327,11 @@
         if (names.length === contents.length) {
           for (const index in names) {
             let name = `负责人：${names[index]}`;
-            let content = `电话：${contents[index]}`
+            let content = `电话：${contents[index]}`;
             let phone;
             if (name === "" && content === "") return contacts;
-            if (!name) name = "负责人";
-            if (!content.length) {
+            if (name.length === 0) name = "负责人";
+            if (content.length > 0) {
               phone = content
             } else {
               phone = null
@@ -347,8 +347,8 @@
           let content = this.dialog.contact.content;
           let phone;
           if (name === "" && content === "") return contacts;
-          if (!name) name = "负责人";
-          if (!content.length) {
+          if (name.length === 0) name = "负责人";
+          if (content.length > 0) {
             phone = content
           } else {
             phone = null
