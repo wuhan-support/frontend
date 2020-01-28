@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from './App.vue'
 import './registerServiceWorker'
 import router from './router'
+import config from './config'
 import store from './store'
 import vuetify from './plugins/vuetify'
 import i18n from './i18n'
@@ -14,10 +15,10 @@ const production = process.env.NODE_ENV === 'production';
 
 if (production) {
   Sentry.init({
-    dsn: 'https://9636aaa824a744f98a619df0aaabba00@sentry.io/1536764',
+    dsn: 'https://237b425bb92749e98198df60f1835d31@sentry.io/1973056',
     integrations: [new Integrations.Vue({Vue, attachProps: true})],
     logErrors: false,
-    release: 'frontend-v2@' + (Vue.config.version || 'unknown'),
+    release: 'frontend-v2@' + (config.version || 'unknown'),
   });
 }
 
