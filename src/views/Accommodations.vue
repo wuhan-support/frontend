@@ -331,10 +331,10 @@
             let phone;
             if (name === "" && content === "") return contacts;
             if (name.length === 0) name = "负责人";
-            if (content.length > 0) {
-              phone = content
+            if (contents[index].length > 0) {
+              phone = contents[index]
             } else {
-              phone = null
+              phone = ""
             }
             contacts.push({
               name,
@@ -351,7 +351,7 @@
           if (content.length > 0) {
             phone = content
           } else {
-            phone = null
+            phone = ""
           }
           if (!content) content = "电话：(暂无)";
 
