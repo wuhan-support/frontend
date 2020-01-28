@@ -41,7 +41,12 @@
         </v-card-title>
         <v-card-text>
           <v-list two-line>
-            <v-list-item>
+            <v-list-item :href="`https://ditu.amap.com/search?query=${encodeURIComponent(dialog.address)}`">
+              <v-list-item-avatar>
+                <v-icon>
+                  mdi-map
+                </v-icon>
+              </v-list-item-avatar>
               <v-list-item-content>
                 <v-list-item-title>
                   地址
@@ -52,13 +57,22 @@
               </v-list-item-content>
             </v-list-item>
 
-            <v-list-item :href="`tel://${dialog.contact.content}`">
+            <v-list-item
+              v-for="[i, contact] in contacts.entries()"
+              :key="i"
+              :href="`tel://${contact.phone}`"
+            >
+              <v-list-item-avatar>
+                <v-icon>
+                  mdi-contact-phone
+                </v-icon>
+              </v-list-item-avatar>
               <v-list-item-content>
                 <v-list-item-title>
-                  {{ dialog.contact.name ? dialog.contact.name : "电话" }}
+                  {{ contact.name }}
                 </v-list-item-title>
                 <v-list-item-subtitle>
-                  {{ dialog.contact.content }}
+                  {{ contact.content }}
                 </v-list-item-subtitle>
               </v-list-item-content>
               <v-list-item-action>
@@ -71,7 +85,6 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-
           <v-btn
             text
             @click="dialog.enabled = false"
@@ -83,6 +96,7 @@
     </v-dialog>
     <v-dialog
       v-model="report.enabled"
+      persistent
       max-width="450px"
     >
       <v-card>
@@ -90,8 +104,17 @@
           提交纠错
         </v-card-title>
         <v-card-text>
-          确认要提交纠错信息嘛？收到纠错请求后我们会再次审核此条信息以保证准确性。
-          <span class="red--text">注意：由于我们的人力资源有限，还烦请不要滥用此功能，十分感谢！</span>
+          <v-select
+            v-model="report.cause"
+            label="错误类型"
+            placeholder="请选择错误类型"
+            :items="report.causes"
+            filled
+            hide-details
+            class="mb-2"
+          />
+          收到纠错请求后我们会再次审核此条信息以保证准确性。<br>
+          <span class="red--text">注意：我们的人力资源有限，烦请不要滥用此功能，十分感谢！</span>
         </v-card-text>
         <v-card-actions>
           <v-btn
@@ -107,6 +130,7 @@
             text
             color="primary"
             :loading="$store.getters.ajaxLoading"
+            :disabled="report.cause === ''"
             @click="doReport"
           >
             确认
@@ -150,18 +174,43 @@
             :search="search"
             :page="page"
             :items-per-page="20"
+            hide-default-footer
           >
+            <template v-slot:no-data>
+              <v-alert
+                border="left"
+                outlined
+                type="warning"
+              >
+                暂无数据
+              </v-alert>
+            </template>
+            <template v-slot:no-results>
+              <v-alert
+                border="left"
+                outlined
+                type="info"
+              >
+                没有查询到关键字 "{{ search }}" 的结果
+              </v-alert>
+            </template>
+            <template v-slot:header="{ pagination }">
+              <Paginator
+                :page="page"
+                :pagination="pagination"
+                @change="(newPage) => {page = newPage}"
+              />
+            </template>
             <template v-slot:default="{ items }">
               <v-card
                 v-for="[i, o] in items.entries()"
                 :key="i"
-                class="my-3 pb-2"
+                class="my-4 pb-2 card-border"
               >
                 <v-card-title>
                   <span class="title font-weight-black">
                     {{ o.name }}
                   </span>
-                  <span class="d-none">wuhan</span>
                 </v-card-title>
                 <v-card-text>
                   <span class="float-right ml-4">
@@ -194,9 +243,9 @@
                     target="_blank"
                   >
                     <v-icon left>
-                      mdi-map
+                      mdi-map-marker
                     </v-icon>
-                    搜索高德地图
+                    地图
                   </v-btn>
                   <v-btn
                     outlined
@@ -221,6 +270,13 @@
                 </v-card-actions>
               </v-card>
             </template>
+            <template v-slot:footer="{ pagination }">
+              <Paginator
+                :page="page"
+                :pagination="pagination"
+                @change="(newPage) => {page = newPage; $vuetify.goTo(0, {duration: 225, offset: 0, easing: 'easeOutQuad'})}"
+              />
+            </template>
           </v-data-iterator>
         </div>
       </v-skeleton-loader>
@@ -230,9 +286,11 @@
 
 <script>
   import api from "../apis/api";
+  import Paginator from "../components/Paginator";
 
   export default {
     name: "Accommodations",
+    components: {Paginator},
     data () {
       return {
         data: [],
@@ -249,13 +307,53 @@
         },
         report: {
           enabled: false,
+          cause: "",
+          causes: ['地址不存在/未找到', '联系不上', '已被征用', '已住满', '其他原因无法接待', '缺少必需物资无法营业', '信息重复', '其他'],
           content: ""
         }
       }
     },
     computed: {
       dataset() {
-        return this.data.filter(el => el.name.length);
+        return this.data.filter(el => el.name.length || el.note === "住满");
+      },
+      xs () {
+        return this.$vuetify.breakpoint.xsOnly
+      },
+      contacts () {
+        const contacts = [];
+        const names = this.dialog.contact.name.split(" ");
+        const contents = this.dialog.contact.content.split(" ");
+        if (names.length === contents.length) {
+          for (const index in names) {
+            let name = `负责人：${names[index]}`;
+            let content = `电话：${contents[index]}`
+            contacts.push({
+              name,
+              content,
+              phone: contents[index]
+            })
+          }
+        } else {
+          let name = this.dialog.contact.name;
+          let content = this.dialog.contact.content;
+          let phone;
+          if (name === "" && content === "") return contacts;
+          if (!name) name = "负责人";
+          if (!content.length) {
+            phone = content
+          } else {
+            phone = null
+          }
+          if (!content) content = "电话：(暂无)";
+
+          contacts.push({
+            name,
+            content,
+            phone
+          })
+        }
+        return contacts
       }
     },
     beforeMount() {
@@ -272,10 +370,12 @@
       doReport() {
         api.reportIncorrect({
           type: "accommodations",
+          cause: this.report.cause,
           content: this.report.content
         })
           .then(() => {
-            this.snackbar = true
+            this.snackbar = true;
+            this.report.cause = ""
           })
         .finally(() => {
           this.report.enabled = false
@@ -296,5 +396,7 @@
 </script>
 
 <style scoped>
-
+.card-border {
+  border-top: 4px solid rgba(0, 0, 0, .5) !important
+}
 </style>

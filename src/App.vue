@@ -56,46 +56,6 @@
             </v-list-item>
           </v-list-group>
         </template>
-
-        <v-divider class="my-2" />
-
-        <v-container>
-          <v-row justify="end">
-            <v-btn
-              icon
-              class="mx-1"
-              @click="dark = !dark"
-            >
-              <v-icon>mdi-invert-colors</v-icon>
-            </v-btn>
-
-            <v-menu
-              bottom
-              left
-              transition="slide-y-transition"
-            >
-              <template v-slot:activator="{ on }">
-                <v-btn
-                  icon
-                  class="mx-1"
-                  v-on="on"
-                >
-                  <v-icon>mdi-translate</v-icon>
-                </v-btn>
-              </template>
-
-              <v-list>
-                <v-list-item
-                  v-for="(locale, i) in localizations"
-                  :key="i"
-                  @click="changeLocale(locale.id)"
-                >
-                  <v-list-item-title>{{ locale.name }}</v-list-item-title>
-                </v-list-item>
-              </v-list>
-            </v-menu>
-          </v-row>
-        </v-container>
       </v-list>
     </v-navigation-drawer>
     <v-app-bar
@@ -133,7 +93,7 @@
 
 <script>
 import Console from "@/utils/Console";
-import utils from "./utils/utils";
+// import utils from "./utils/utils";
 
 export default {
   name: "App",
@@ -177,21 +137,21 @@ export default {
   mounted() {
     this.onDarkChange(this.$store.state.settings.dark);
 
-    if (this.$store.getters.language) {
-      this.changeLocale(this.$store.getters.language, false);
-    } else {
-      const language = utils.getFirstBrowserLanguage();
-      Console.debug("[i18n] detected language", language);
-      if (language) {
-        // because this is a detection result, thus we are not storing it,
-        // unless the user manually set one.
-        this.changeLocale(language, false);
-      }
-    }
+    // if (this.$store.getters.language) {
+    //   this.changeLocale(this.$store.getters.language, false);
+    // } else {
+    //   const language = utils.getFirstBrowserLanguage();
+    //   Console.debug("[i18n] detected language", language);
+    //   if (language) {
+    //     // because this is a detection result, thus we are not storing it,
+    //     // unless the user manually set one.
+    //     this.changeLocale(language, false);
+    //   }
+    // }
 
-    if (this.$store.state.settings.dark) {
-      this.$vuetify.theme.dark = this.$store.state.settings.dark;
-    }
+    // if (this.$store.state.settings.dark) {
+    //   this.$vuetify.theme.dark = this.$store.state.settings.dark;
+    // }
   },
   methods: {
     onDarkChange(newValue) {
