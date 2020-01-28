@@ -328,10 +328,18 @@
           for (const index in names) {
             let name = `负责人：${names[index]}`;
             let content = `电话：${contents[index]}`
+            let phone;
+            if (name === "" && content === "") return contacts;
+            if (!name) name = "负责人";
+            if (!content.length) {
+              phone = content
+            } else {
+              phone = null
+            }
             contacts.push({
               name,
               content,
-              phone: contents[index]
+              phone
             })
           }
         } else {
