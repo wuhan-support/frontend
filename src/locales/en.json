@@ -1,12 +1,23 @@
 {
-  "meta": {
-    "name": {
-      "short": "",
-      "long": ""
-    }
+  "app": {
+    "name": ""
   },
   "pages": {
-
+    "home": {
+      "_name": "Home"
+    },
+    "about": {
+      "_name": "About us"
+    },
+    "stream": {
+      "_name": "Event Stream"
+    },
+    "accommodations": {
+      "_name": "Accommodations"
+    },
+    "platforms": {
+      "_name": "Diag. Platform"
+    }
   },
   "partials": {
     "boolean": {

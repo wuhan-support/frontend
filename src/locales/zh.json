@@ -1,12 +1,23 @@
 {
-  "meta": {
-    "name": {
-      "short": "",
-      "long": ""
-    }
+  "app": {
+    "name": ""
   },
   "pages": {
-
+    "home": {
+      "_name": "首页"
+    },
+    "about": {
+      "_name": "关于我们"
+    },
+    "stream": {
+      "_name": "实时播报"
+    },
+    "accommodations": {
+      "_name": "住宿信息"
+    },
+    "platforms": {
+      "_name": "诊断平台信息"
+    }
   },
   "partials": {
     "boolean": {
