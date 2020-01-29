@@ -144,7 +144,7 @@
         心理咨询机构
       </h1>
       <p class="subtitle-1 mx-3">
-        图例：<v-icon
+        图例：<!-- <v-icon
           small
         >
           mdi-bed-empty
@@ -152,7 +152,7 @@
           small
         >
           mdi-home-circle
-        </v-icon> 表示房间剩余
+        </v-icon> 表示房间剩余 -->
       </p>
       <v-skeleton-loader
         :loading="$store.getters.ajaxLoading && !data.length"
