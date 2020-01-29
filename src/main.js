@@ -9,6 +9,9 @@ import i18n from './i18n'
 import * as Sentry from '@sentry/browser';
 import * as Integrations from "@sentry/integrations";
 
+import vRegion from 'v-region';
+Vue.use(vRegion, { });
+
 Vue.config.productionTip = false
 
 const production = process.env.NODE_ENV === 'production';
