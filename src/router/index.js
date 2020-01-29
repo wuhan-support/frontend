@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home'
 import I18n from "../i18n";
 import Accommodations from "../views/Accommodations";
+import Platforms from '../views/Platforms';
 
 Vue.use(VueRouter)
 
@@ -34,15 +35,15 @@ const routes = [
       i18n: "pages.accommodations._name"
     }
   },
-  // {
-  //   path: '/platforms',
-  //   name: 'platforms',
-  //   component: Platforms,
-  //   meta: {
-  //     icon: "mdi-heart",
-  //     i18n: "pages.platforms._name"
-  //   }
-  // }
+  {
+    path: '/platforms',
+    name: 'platforms',
+    component: Platforms,
+    meta: {
+      icon: "mdi-heart",
+      i18n: "pages.platforms._name"
+    }
+  }
 ]
 
 const router = new VueRouter({
