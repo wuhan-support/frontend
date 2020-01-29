@@ -50,7 +50,24 @@
               </v-alert>
             </template>
              <template v-slot:default="{ items }">
-                 
+                 <v-card
+                v-for="[i, o] in items.entries()"
+                :key="i"
+                class="my-4 pb-2 card-border"
+              >
+                <v-card-title>
+                  <span class="title font-weight-black">
+                    {{ o.PlatformName }}
+                  </span>
+                </v-card-title>
+                <v-card-text>
+                    <div>{{o.Address}}</div>
+                    <div>{{o.Province}} {{o.Type}}</div>
+                </v-card-text>
+                 <v-card-actions class="mx-2">
+                     {{o.Contributor}} {{o['微信 ID']||''}}
+                 </v-card-actions>
+            </v-card>
              </template>
              <template v-slot:footer="{ pagination }">
               <Paginator
@@ -67,6 +84,7 @@
 </template>
 
 <script>
+import api from "../apis/api";
 import Paginator from "../components/Paginator";
 
 export default {
@@ -79,10 +97,21 @@ export default {
       data: []
     };
   },
-  computed: {
+   computed: {
     dataset() {
-      return this.data.filter(el => el.name.length || el.note === "住满");
+      return this.data.filter(el => el.PlatformName.length);
     }
+  },
+  beforeMount() {
+      if (!this.data.length) {
+        this.update()
+      }
+  },
+  methods:{
+     async update(){
+        const dataset = await api.platforms();
+        this.data = dataset.data["工作表1"]
+      }
   }
 };
 </script>
