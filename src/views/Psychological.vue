@@ -13,8 +13,10 @@
 
 <template>
     <div>
-        <v-region type="group" :town="true" @values="regionChange"></v-region>
-        {{regions.join(' / ')}}
+        <place-selector
+          v-model="place"
+          @change="handleChangePlace"
+        />
         <v-row align="center" justify="center">
             <v-snackbar :value="snackbar" color="success" bottom :timeout="4000">
                 <v-icon left color="white">
@@ -181,13 +183,13 @@
 <script>
 import api from "../apis/api";
 import Paginator from "../components/Paginator";
+import PlaceSelector from "../components/PlaceSelector";
 
 export default {
     name: "Psychological",
-    components: { Paginator },
+    components: { Paginator, PlaceSelector },
     data () {
         return {
-            regions: [],
             data: [],
             page: 1,
             search: "",
@@ -205,7 +207,8 @@ export default {
                 cause: "",
                 causes: ['地址不存在/未找到', '联系不上', '已被征用', '已住满', '其他原因无法接待', '缺少必需物资无法营业', '信息重复', '其他'],
                 content: ""
-            }
+            },
+            place: []
         }
     },
     computed: {
@@ -265,9 +268,8 @@ export default {
         }
     },
     methods: {
-        regionChange (data) {
-            console.log(data);
-            this.regions = Object.entries(data).filter(([key, item]) => !!item).map(([key, item]) => item.value);
+        handleChangePlace(value) {
+          console.log(value)
         },
         update () {
             api.psychological().then(({ data }) => {
