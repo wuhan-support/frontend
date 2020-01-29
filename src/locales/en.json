@@ -17,6 +17,9 @@
     },
     "platforms": {
       "_name": "Diag. Platform"
+    },
+    "psychological": {
+      "_name": "Psychological"
     }
   },
   "partials": {

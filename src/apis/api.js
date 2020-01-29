@@ -3,6 +3,9 @@ export default {
   accommodations () {
     return service.get("/accommodations/json")
   },
+  psychological () {
+    return service.get("/psychological/json")
+  },
   platforms () {
     return service.get("/platforms/json")
   },

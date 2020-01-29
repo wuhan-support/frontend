@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home'
 import I18n from "../i18n";
 import Accommodations from "../views/Accommodations";
+import Psychological from "../views/Psychological";
 
 Vue.use(VueRouter)
 
@@ -42,7 +43,16 @@ const routes = [
   //     icon: "mdi-heart",
   //     i18n: "pages.platforms._name"
   //   }
-  // }
+  // },
+  {
+    path: '/psychological',
+    name: 'psychological',
+    component: Psychological,
+    meta: {
+      icon: "mdi-hotel",
+      i18n: "pages.psychological._name"
+    }
+  }
 ]
 
 const router = new VueRouter({

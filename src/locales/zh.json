@@ -17,6 +17,9 @@
     },
     "platforms": {
       "_name": "诊断平台信息"
+    },
+    "psychological": {
+      "_name": "心理咨询机构"
     }
   },
   "partials": {
