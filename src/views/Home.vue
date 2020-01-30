@@ -35,10 +35,16 @@
                   {{ route.meta.icon }}
                 </v-icon>
               </v-sheet>
-              <v-card-title :class="route.meta.classes">
+              <v-card-title
+                :class="route.meta.classes"
+                class="darken-1"
+              >
                 {{ $t(route.meta.i18n) }}
               </v-card-title>
-              <v-card-subtitle :class="route.meta.classes">
+              <v-card-subtitle
+                :class="route.meta.classes"
+                class="darken-1"
+              >
                 {{ route.meta.subtitle }}
               </v-card-subtitle>
             </v-card>
