@@ -1,13 +1,16 @@
 import service from "../utils/service";
 export default {
   accommodations () {
-    return service.get("/accommodations/json")
+    return service.get("/accommodations")
   },
-  psychological () {
-    return service.get("/psychological/json")
+  psychologicalPlatform () {
+    return service.get("/platforms/psychological")
   },
-  platforms () {
-    return service.get("/platforms/json")
+  medicalPlatform () {
+    return service.get("/platforms/medical")
+  },
+  supplies () {
+    return service.get("/hospital/supplies")
   },
   reportIncorrect ({type, cause, content}) {
     return service.post("/report", {type, cause, content})

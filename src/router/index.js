@@ -3,8 +3,9 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home'
 import I18n from "../i18n";
 import Accommodations from "../views/Accommodations";
-import Psychological from "../views/Psychological";
-import Platforms from '../views/Platforms';
+// import PsychologicalPlatforms from "../views/PsychologicalPlatforms";
+// import MedicalPlatforms from '../views/MedicalPlatforms';
+import Supplies from "../views/Supplies";
 
 Vue.use(VueRouter)
 
@@ -36,24 +37,34 @@ const routes = [
             i18n: "pages.accommodations._name"
         }
     },
-    {
-        path: '/platforms',
-        name: 'platforms',
-        component: Platforms,
-        meta: {
-            icon: "mdi-heart",
-            i18n: "pages.platforms._name"
-        }
-    },
-    {
-        path: '/psychological',
-        name: 'psychological',
-        component: Psychological,
-        meta: {
-            icon: "mdi-hotel",
-            i18n: "pages.psychological._name"
-        }
+  {
+    path: '/hospital/supplies',
+    name: 'supplies',
+    component: Supplies,
+    meta: {
+      icon: "mdi-hospital",
+      i18n: "pages.supplies._name",
+      classes: "red font-weight-bold white--text"
     }
+  },
+    // {
+    //     path: '/platforms',
+    //     name: 'platforms',
+    //     component: MedicalPlatforms,
+    //     meta: {
+    //         icon: "mdi-hospital",
+    //         i18n: "pages.platforms._name"
+    //     }
+    // },
+    // {
+    //     path: '/psychological',
+    //     name: 'psychological',
+    //     component: PsychologicalPlatforms,
+    //     meta: {
+    //         icon: "mdi-heart",
+    //         i18n: "pages.psychological._name"
+    //     }
+    // }
 ]
 
 const router = new VueRouter({

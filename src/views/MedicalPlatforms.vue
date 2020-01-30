@@ -12,7 +12,10 @@
 </i18n>
 
 <template>
-  <v-row align="center" justify="center">
+  <v-row
+    align="center"
+    justify="center"
+  >
     <v-col cols="12">
       <h1 class="heading mx-3">
         医院信息
@@ -31,7 +34,7 @@
             hide-details
             clearable
           />
-          <br />
+          <br>
           <v-data-iterator
             :items="dataset"
             :search="search"
@@ -40,17 +43,25 @@
             hide-default-footer
           >
             <template v-slot:no-data>
-              <v-alert border="left" outlined type="warning">
+              <v-alert
+                border="left"
+                outlined
+                type="warning"
+              >
                 暂无数据
               </v-alert>
             </template>
             <template v-slot:no-results>
-              <v-alert border="left" outlined type="info">
+              <v-alert
+                border="left"
+                outlined
+                type="info"
+              >
                 没有查询到关键字 "{{ search }}" 的结果
               </v-alert>
             </template>
-             <template v-slot:default="{ items }">
-                 <v-card
+            <template v-slot:default="{ items }">
+              <v-card
                 v-for="[i, o] in items.entries()"
                 :key="i"
                 class="my-4 pb-2 card-border"
@@ -61,15 +72,15 @@
                   </span>
                 </v-card-title>
                 <v-card-text>
-                    <div>{{o.Address}}</div>
-                    <div>{{o.Province}} {{o.Type}}</div>
+                  <div>{{ o.Address }}</div>
+                  <div>{{ o.Province }} {{ o.Type }}</div>
                 </v-card-text>
-                 <v-card-actions class="mx-2">
-                     {{o.Contributor}} {{o['微信 ID']||''}}
-                 </v-card-actions>
-            </v-card>
-             </template>
-             <template v-slot:footer="{ pagination }">
+                <v-card-actions class="mx-2">
+                  {{ o.Contributor }} {{ o['微信 ID']||'' }}
+                </v-card-actions>
+              </v-card>
+            </template>
+            <template v-slot:footer="{ pagination }">
               <Paginator
                 :page="page"
                 :pagination="pagination"
@@ -97,7 +108,7 @@ export default {
       data: []
     };
   },
-   computed: {
+  computed: {
     dataset() {
       return this.data.filter(el => el.PlatformName.length);
     }
@@ -109,8 +120,8 @@ export default {
   },
   methods:{
      async update(){
-        const dataset = await api.platforms();
-        this.data = dataset.data["工作表1"]
+        const dataset = await api.medicalPlatform();
+        this.data = dataset.data
       }
   }
 };

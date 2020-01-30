@@ -8653,6 +8653,18 @@ uuid@^3.0.1, uuid@^3.3.2, uuid@^3.4.0:
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
   integrity sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==
 
+v-dropdown@2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/v-dropdown/-/v-dropdown-2.1.1.tgz#5e1a49d61c2913a6abdda3ccb462e2647f9d69ed"
+  integrity sha512-Rc+LairgIJENvLQCBpl4QAcen8h0EIffKaLeb+W5G2dPrW8HbPLDqQhxKOdXPQB4dcCIePie/Os6TN4K5i0a0Q==
+
+v-region@^2.2.2:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/v-region/-/v-region-2.2.2.tgz#5abb305f2b04f0ffd9a025b84c00821da27308a5"
+  integrity sha512-478N2FviReRcNH6NdzN3d68sqVEmQ80QuFXRvfsuqDkfi5cu04JUd5vbIJq44EfCnlDTu+oLPq529tXEyZ1+bw==
+  dependencies:
+    v-dropdown "2.1.1"
+
 validate-npm-package-license@^3.0.1:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/validate-npm-package-license/-/validate-npm-package-license-3.0.4.tgz#fc91f6b9c7ba15c857f4cb2c5defeec39d4f410a"

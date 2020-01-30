@@ -1,26 +1,18 @@
 <template>
-  <v-row
-    v-resize="handleOnResize"
+  <div
     class="place-selector"
-    align="center"
   >
     <v-region
       v-model="regions"
-      :type="isLarge ? 'group' : 'select'"
+      type="select"
       @values="handleRegionChange"
     />
-  </v-row>
+  </div>
 </template>
 
 <script>
 export default {
   name: 'PlaceSelector',
-  props: {
-    value: {
-      type: Array,
-      default: () => []
-    }
-  },
   data() {
     return {
       regions: {},
@@ -31,20 +23,6 @@ export default {
         y: 0
       }
     }
-  },
-  computed: {
-    isLarge() {
-      return this.windowSize.x >= 1024
-    }
-  },
-  watch: {
-    value(newVal) {
-      // 若有回显需求 do something...
-      // this.regions = ...
-    }
-  },
-  mounted () {
-    this.handleOnResize()
   },
   methods: {
     // 监听地址选择
@@ -63,23 +41,6 @@ export default {
         this._events[e.name] && this.$emit(e.name, e.data)
       })
     },
-    // 监听屏幕大小改变
-    handleOnResize () {
-      if (this.timer) {
-        clearTimeout(this.timer)
-      }
-      this.timer = setTimeout(() => {
-        this.windowSize = {
-          x: window.innerWidth,
-          y: window.innerHeight
-        }
-        if (this.data.length < 3) {
-          this.regions = {}
-          this.data = []
-          this.$emit('input', this.data)
-        }
-      }, 100)
-    }
   }
 }
 </script>
@@ -93,5 +54,8 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   padding: 6px 20px 6px 10px;
+}
+.place-selector >>> .v-dropdown-container ul.rg-select__list li {
+  color: black;
 }
 </style>
