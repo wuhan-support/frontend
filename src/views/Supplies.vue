@@ -179,7 +179,7 @@
                 v-for="[i, o] in items.entries()"
                 :key="i"
                 class="my-4 pb-2"
-                :class="{'card-border': o.isextremeemergency !== 'Y'}"
+                :class="{'card-border pb-0': o.isextremeemergency !== 'Y'}"
               >
                 <v-card-title
                   class="mb-2"
@@ -348,9 +348,12 @@
       getTags (o) {
         const tags = [];
         const trueness = strings.trueness(o.trueness);
-        if (o.isextremeemergency === "Y") tags.push({c: 'red', t: '紧急'});
+        const nohelp = /(未|没有)(.*)援助/
+        if (trueness.t) tags.push({c: 'green', t: `已验证：${trueness.r}`});
         if (o.supplies && o.supplies.includes("已无任何库存")) tags.push({c: 'red', t: `已无任何库存`});
-        if (trueness.t) tags.push({c: 'green', t: `消息已验真：${trueness.r}`});
+        if (o.supplies && nohelp.test(o.supplies)) tags.push({c: 'red', t: `未收到过援助`});
+        if (o.supplies && (o.supplies.includes("联系不上") || o.supplies.includes("打不通") || o.supplies.includes("无人接听"))) tags.push({c: 'grey', t: "最近联系不上"});
+
         return tags
       },
       getContent(o) {

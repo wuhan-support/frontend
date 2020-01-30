@@ -81,7 +81,10 @@
         </div>
       </v-toolbar-title>
     </v-app-bar>
-    <v-content class="mb-8">
+    <v-content
+      app
+      class="mb-8"
+    >
       <v-container>
         <transition
           name="slide-fade"
@@ -92,14 +95,13 @@
       </v-container>
     </v-content>
     <v-footer
-      absolute
       padless
     >
       <v-card
         flat
         tile
         class="text-center"
-        color="grey"
+        color="grey lighten-2"
         style="width: 100%"
       >
         <v-card-text>
