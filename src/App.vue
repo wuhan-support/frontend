@@ -91,6 +91,34 @@
         </transition>
       </v-container>
     </v-content>
+    <v-footer
+      absolute
+      padless
+    >
+      <v-card
+        flat
+        tile
+        class="text-center"
+        color="grey"
+        style="width: 100%"
+      >
+        <v-card-text>
+          <span>{{ new Date().getFullYear() }} — <strong>feiyan.help</strong></span>
+
+          <v-btn
+            outlined
+            small
+            class="ml-3"
+            href="https://github.com/wuhan-support"
+          >
+            <v-icon left>
+              mdi-github-circle
+            </v-icon>
+            Github
+          </v-btn>
+        </v-card-text>
+      </v-card>
+    </v-footer>
   </v-app>
 </template>
 
