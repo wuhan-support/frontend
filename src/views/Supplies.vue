@@ -357,8 +357,8 @@
           "supplies": "需求描述",
           "official": "是否为官方信息（官网/官微）",
           "drugs": "急需药品",
-          "suppliesu": "备注",
-          "suppliesv": "备注物资",
+          "suppliesv": "备注",
+          "suppliesw": "备注物资",
 
           "suppliesn95": "N95 口罩（个）",
           "suppliesmsm": "医用外科口罩（个）",
@@ -376,12 +376,17 @@
           "suppliesl": "红外线体温仪",
           "suppliesm": "酒精",
           "suppliesn": "84 消毒液",
+          "suppliesx": "奥司他韦",
+          "suppliesy": "连花清瘟胶囊",
+          "suppliesz": "移动紫外线消毒车",
+          "suppliesaa": "板蓝根",
+
           "supplieso": "提出日期（到武汉中转站的日期）",
           "suppliesp": "物流编码/线下配送",
-          "suppliesq": "物流状态",
-          "suppliesr": "送货人",
-          "suppliess": "交付日期",
-          "suppliest": "签收人",
+          "suppliesr": "物流状态",
+          "suppliess": "送货人",
+          "suppliest": "交付日期",
+          "suppliesu": "签收人",
         };
         for (const [key, value] of Object.entries(map)) {
           if (key in o && o[key] && o[key].length) {
