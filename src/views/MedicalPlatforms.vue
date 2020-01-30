@@ -75,12 +75,12 @@
                   <div>{{ o.Address }}</div>
                   <div>{{ o.Province }} {{ o.Type }}</div>
                 </v-card-text>
-                 <v-card-actions class="mx-2">
-                     {{o.contributorName}} {{o.contributorWechatId}}
-                 </v-card-actions>
-            </v-card>
-             </template>
-             <template v-slot:footer="{ pagination }">
+                <v-card-actions class="mx-2">
+                  {{ o.contributorName }} {{ o.contributorWechatId }}
+                </v-card-actions>
+              </v-card>
+            </template>
+            <template v-slot:footer="{ pagination }">
               <Paginator
                 :page="page"
                 :pagination="pagination"
