@@ -21,8 +21,8 @@
     "psychological": {
       "_name": "Psychological"
     },
-    "formTest": {
-      "_name": "FormTest"
+    "suppliesSubmission": {
+      "_name": "Submit Supplies"
     }
   },
   "partials": {

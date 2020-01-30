@@ -15,7 +15,7 @@ export default {
     reportIncorrect ({ type, cause, content }) {
         return service.post("/report", { type, cause, content })
     },
-    formTest () {
-        return service.get("/formTest")
+    submitSupplies (data) {
+        return service.post("/supplies", data)
     },
 }

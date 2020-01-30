@@ -118,7 +118,7 @@ export default {
   },
   computed: {
     routes () {
-      return this.$router.options.routes.filter(el => el.path !== '/')
+      return this.$router.options.routes.filter(el => el.path !== '/' && !el.meta.hide)
     }
   },
 }

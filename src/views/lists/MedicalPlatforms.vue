@@ -95,8 +95,8 @@
 </template>
 
 <script>
-import api from "../apis/api";
-import Paginator from "../components/Paginator";
+import api from "../../apis/api";
+import Paginator from "../../components/Paginator";
 
 export default {
   name: "MedicalPlatforms",

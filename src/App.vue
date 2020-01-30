@@ -15,10 +15,9 @@
             v-if="!route.children || route.meta.forceSingle"
             :key="route.name"
             link
-            :class="route.meta.classes"
             @click="onMenuItemClicked(route)"
           >
-            <v-list-item-icon>
+            <v-list-item-icon :class="route.meta.classes">
               <v-icon v-text="route.meta.icon" />
             </v-list-item-icon>
             <v-list-item-content>

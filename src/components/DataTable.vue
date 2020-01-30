@@ -11,7 +11,37 @@
         v-model="region"
         class="mx-0 mb-1"
       />
+      <v-spacer />
+      <v-btn
+        right
+        icon
+        :loading="geolocation.determining"
+        :class="{'red--text': geolocation.failed, 'green--text': location}"
+        @click="geolocate"
+      >
+        <v-icon
+          @click="geolocate"
+        >
+          mdi-crosshairs-gps
+        </v-icon>
+      </v-btn>
     </v-row>
+    <v-expand-transition>
+      <v-row
+        v-if="location"
+        align="center"
+        justify="center"
+      >
+        <v-col
+          cols="12"
+          class="subtitle-1 text-center green--text font-weight-bold"
+        >
+          <span>
+            已按照最近距离排序列表
+          </span>
+        </v-col>
+      </v-row>
+    </v-expand-transition>
     <v-text-field
       v-model="search"
       :label="region.length ? '在所选地区范围内搜索' : '搜索'"
@@ -72,6 +102,7 @@
 <script>
   import Paginator from "./Paginator";
   import PlaceSelector from "./PlaceSelector";
+  import geo from "../utils/geo";
   export default {
     name: "DataTable",
     components: {PlaceSelector, Paginator},
@@ -85,7 +116,13 @@
       return {
         page: 1,
         search: "",
-        region: []
+        region: [],
+        geolocation: {
+          lat: null,
+          lng: null,
+          determining: false,
+          failed: false
+        }
       }
     },
     computed: {
@@ -108,6 +145,35 @@
             return true
           }
         });
+      },
+      location () {
+        if (this.geolocation.lat && this.geolocation.lng && !this.geolocation.failed) {
+          return this.geolocation
+        } else {
+          return null
+        }
+      }
+    },
+    methods: {
+      geolocate() {
+        this.geolocation.determining = true;
+
+        geo.locate()
+        .then(pos => {
+          this.geolocation.lat = pos.coords.latitude
+          this.geolocation.lng = pos.coords.longitude
+        })
+        .catch(err => {
+          this.geolocation.failed = true
+          setTimeout(() => {
+            this.geolocation.failed = false
+            this.geolocation.lat = null
+            this.geolocation.lng = null
+          }, 4000)
+        })
+        .finally(() => {
+          this.geolocation.determining = false
+        })
       }
     },
   }
