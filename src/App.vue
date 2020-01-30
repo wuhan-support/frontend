@@ -70,13 +70,15 @@
         class="black--text"
         @click.stop="drawer = !drawer"
       />
-      <v-toolbar-title>
-        <span class="title">
+      <v-toolbar-title class="pl-1">
+        <div class="title">
           <v-img
-            :src="require('@/assets/logo/logo.svg')"
+            :src="require('@/assets/logo/feiyan.help.svg')"
             class="logo mx-0 my-2"
+            contain
+            max-width="192px"
           />
-        </span>
+        </div>
       </v-toolbar-title>
     </v-app-bar>
     <v-content class="mb-8">

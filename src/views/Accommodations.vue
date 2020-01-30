@@ -146,9 +146,11 @@
       <h1 class="heading">
         医疗人员免费住宿信息
       </h1>
-      <p class="subtitle-1 red--text">
-        医疗人员请注意：大多数住宿地点均要求各位携带相关证件（医护工作证 + 身份证）实名入住；请记得准备好上述证件后，致电相关住宿提供方确认空房情况哦～ 你们辛苦了！
-      </p>
+      <v-card>
+        <v-card-text class="subtitle-2 green white--text my-2">
+          医疗人员请注意：大多数住宿地点均要求各位携带相关证件（医护工作证 + 身份证）实名入住；请记得准备好上述证件后，致电相关住宿提供方确认空房情况哦～ 你们辛苦了！
+        </v-card-text>
+      </v-card>
       <p class="subtitle-1">
         图例：<v-icon
           small

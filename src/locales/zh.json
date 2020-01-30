@@ -7,7 +7,7 @@
       "_name": "首页"
     },
     "supplies": {
-      "_name": "医院需求列表"
+      "_name": "医院需求信息"
     },
     "about": {
       "_name": "关于我们"
@@ -16,7 +16,7 @@
       "_name": "实时播报"
     },
     "accommodations": {
-      "_name": "医疗人员免费住宿"
+      "_name": "医疗人员免费住宿信息"
     },
     "platforms": {
       "_name": "线上诊断平台"

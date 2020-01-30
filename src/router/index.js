@@ -34,7 +34,8 @@ const routes = [
         component: Accommodations,
         meta: {
             icon: "mdi-hotel",
-            i18n: "pages.accommodations._name"
+            i18n: "pages.accommodations._name",
+          subtitle: "为医护人员提供免费住宿信息列表，便于查看"
         }
     },
   {
@@ -44,7 +45,8 @@ const routes = [
     meta: {
       icon: "mdi-hospital",
       i18n: "pages.supplies._name",
-      classes: "red font-weight-bold white--text"
+      classes: "red font-weight-bold white--text",
+      subtitle: "【急需社会各界帮助】为医院提供信息需求发布平台；支持按照地区过滤、且加入了显示紧急性功能，便于各位捐助者梳理捐助优先级"
     }
   },
     // {
