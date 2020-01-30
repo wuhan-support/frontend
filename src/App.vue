@@ -82,14 +82,14 @@
       </v-toolbar-title>
     </v-app-bar>
     <v-content class="mb-8">
-      <transition
-        name="slide-fade"
-        mode="out-in"
-      >
-        <v-container>
+      <v-container>
+        <transition
+          name="slide-fade"
+          mode="out-in"
+        >
           <router-view />
-        </v-container>
-      </transition>
+        </transition>
+      </v-container>
     </v-content>
   </v-app>
 </template>

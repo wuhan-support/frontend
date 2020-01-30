@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import App from './App.vue'
-import './registerServiceWorker'
 import router from './router'
 import config from './config'
 import store from './store'
@@ -10,7 +9,7 @@ import * as Sentry from '@sentry/browser'
 import * as Integrations from '@sentry/integrations'
 
 import vRegion from 'v-region';
-Vue.use(vRegion, { });
+Vue.use(vRegion, {});
 
 Vue.config.productionTip = false
 

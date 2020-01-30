@@ -222,9 +222,10 @@
                     </v-icon>
                     地图
                   </v-btn>
+
                   <v-btn
                     outlined
-                    color="green"
+                    color="secondary"
                     @click="openDialog(o)"
                   >
                     <v-icon left>
@@ -232,6 +233,7 @@
                     </v-icon>
                     联系方式
                   </v-btn>
+
                   <v-spacer />
                   <v-btn
                     icon

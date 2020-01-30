@@ -24,19 +24,19 @@ module.exports = {
     }
   },
 
-  pwa: {
-    name: "feiyan.help",
-    themeColor: "#2d66ba",
-    msTileColor: "#1d499b",
-    appleMobileWebAppStatusBarStyle: "black-translucent",
-
-    workboxPluginMode: "GenerateSW",
-    // iconPaths: {
-    //   favicon32: 'favicon/favicon-32x32.png',
-    //   favicon16: 'favicon/favicon-16x16.png',
-    //   appleTouchIcon: 'favicon/apple-touch-icon.png',
-    //   maskIcon: 'favicon/safari-pinned-tab.svg',
-    //   msTileImage: 'favicon/mstile-150x150.png'
-    // }
-  },
+  // pwa: {
+  //   name: "feiyan.help",
+  //   themeColor: "#813d34",
+  //   msTileColor: "#1d499b",
+  //   appleMobileWebAppStatusBarStyle: "black-translucent",
+  //
+  //   workboxPluginMode: "GenerateSW",
+  //   // iconPaths: {
+  //   //   favicon32: 'favicon/favicon-32x32.png',
+  //   //   favicon16: 'favicon/favicon-16x16.png',
+  //   //   appleTouchIcon: 'favicon/apple-touch-icon.png',
+  //   //   maskIcon: 'favicon/safari-pinned-tab.svg',
+  //   //   msTileImage: 'favicon/mstile-150x150.png'
+  //   // }
+  // },
 }
