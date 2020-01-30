@@ -20,6 +20,9 @@
     },
     "psychological": {
       "_name": "Psychological"
+    },
+    "formTest": {
+      "_name": "FormTest"
     }
   },
   "partials": {

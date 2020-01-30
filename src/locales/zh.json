@@ -23,6 +23,9 @@
     },
     "psychological": {
       "_name": "心理咨询平台"
+    },
+    "formTest": {
+      "_name": "表单测试页"
     }
   },
   "partials": {
