@@ -65,7 +65,7 @@
                     <div>{{o.Province}} {{o.Type}}</div>
                 </v-card-text>
                  <v-card-actions class="mx-2">
-                     {{o.Contributor}} {{o['微信 ID']||''}}
+                     {{o.contributorName}} {{o.contributorWechatId}}
                  </v-card-actions>
             </v-card>
              </template>
