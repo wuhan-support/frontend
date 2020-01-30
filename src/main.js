@@ -2,12 +2,15 @@ import Vue from 'vue'
 import App from './App.vue'
 import './registerServiceWorker'
 import router from './router'
+import config from './config'
 import store from './store'
 import vuetify from './plugins/vuetify'
 import i18n from './i18n'
 import * as Sentry from '@sentry/browser'
 import * as Integrations from '@sentry/integrations'
-import config from './config'
+
+import vRegion from 'v-region';
+Vue.use(vRegion, { });
 
 Vue.config.productionTip = false
 

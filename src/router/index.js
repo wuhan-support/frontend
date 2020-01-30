@@ -3,57 +3,81 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home'
 import I18n from "../i18n";
 import Accommodations from "../views/Accommodations";
+// import PsychologicalPlatforms from "../views/PsychologicalPlatforms";
+// import MedicalPlatforms from '../views/MedicalPlatforms';
+import Supplies from "../views/Supplies";
 
 Vue.use(VueRouter)
 
 const routes = [
+    {
+        path: '/',
+        name: 'home',
+        component: Home,
+        meta: {
+            icon: "mdi-home",
+            i18n: "pages.home._name"
+        }
+    },
+    // {
+    //   path: '/stream',
+    //   name: 'stream',
+    //   component: Stream,
+    //   meta: {
+    //     icon: "mdi-timeline-clock",
+    //     i18n: "pages.stream._name"
+    //   }
+    // },
+    {
+        path: '/accommodations',
+        name: 'accommodations',
+        component: Accommodations,
+        meta: {
+            icon: "mdi-hotel",
+            i18n: "pages.accommodations._name",
+          subtitle: "为医护人员提供免费住宿信息列表，便于查看"
+        }
+    },
   {
-    path: '/',
-    name: 'home',
-    component: Home,
+    path: '/hospital/supplies',
+    name: 'supplies',
+    component: Supplies,
     meta: {
-      icon: "mdi-home",
-      i18n: "pages.home._name"
+      icon: "mdi-hospital",
+      i18n: "pages.supplies._name",
+      classes: "red font-weight-bold white--text",
+      subtitle: "【急需社会各界帮助】为医院提供信息需求发布平台；支持按照地区过滤、且加入了显示紧急性功能，便于各位捐助者梳理捐助优先级"
     }
   },
-  // {
-  //   path: '/stream',
-  //   name: 'stream',
-  //   component: Stream,
-  //   meta: {
-  //     icon: "mdi-timeline-clock",
-  //     i18n: "pages.stream._name"
-  //   }
-  // },
-  {
-    path: '/accommodations',
-    name: 'accommodations',
-    component: Accommodations,
-    meta: {
-      icon: "mdi-hotel",
-      i18n: "pages.accommodations._name"
-    }
-  },
-  // {
-  //   path: '/platforms',
-  //   name: 'platforms',
-  //   component: Platforms,
-  //   meta: {
-  //     icon: "mdi-heart",
-  //     i18n: "pages.platforms._name"
-  //   }
-  // }
+    // {
+    //     path: '/platforms',
+    //     name: 'platforms',
+    //     component: MedicalPlatforms,
+    //     meta: {
+    //         icon: "mdi-hospital",
+    //         i18n: "pages.platforms._name"
+    //     }
+    // },
+    // {
+    //     path: '/psychological',
+    //     name: 'psychological',
+    //     component: PsychologicalPlatforms,
+    //     meta: {
+    //         icon: "mdi-heart",
+    //         i18n: "pages.psychological._name"
+    //     }
+    // }
 ]
 
 const router = new VueRouter({
-  mode: 'hash',
-  base: process.env.BASE_URL,
-  routes
+    mode: 'hash',
+    base: process.env.BASE_URL,
+    routes
 })
 
 router.beforeEach((to, from, next) => {
-  document.title = `${I18n.t(to.meta.i18n)} | ${I18n.t('app.name')}`;
-  next();
+    document.title = `${I18n.t(to.meta.i18n)} | ${I18n.t('app.name')}`;
+    next();
 });
 
 export default router

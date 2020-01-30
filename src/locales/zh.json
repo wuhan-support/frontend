@@ -1,10 +1,13 @@
 {
   "app": {
-    "name": ""
+    "name": "app.feiyan.help"
   },
   "pages": {
     "home": {
       "_name": "首页"
+    },
+    "supplies": {
+      "_name": "医院需求信息"
     },
     "about": {
       "_name": "关于我们"
@@ -13,10 +16,13 @@
       "_name": "实时播报"
     },
     "accommodations": {
-      "_name": "住宿信息"
+      "_name": "医疗人员免费住宿信息"
     },
     "platforms": {
-      "_name": "诊断平台信息"
+      "_name": "线上诊断平台"
+    },
+    "psychological": {
+      "_name": "心理咨询平台"
     }
   },
   "partials": {

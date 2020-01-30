@@ -58,9 +58,7 @@
             </v-list-item>
 
             <v-list-item
-              v-for="[i, contact] in contacts.entries()"
-              :key="i"
-              v-bind="contact.link"
+              :href="`tel://${dialog.contact.content}`"
             >
               <v-list-item-avatar>
                 <v-icon>
@@ -69,10 +67,10 @@
               </v-list-item-avatar>
               <v-list-item-content>
                 <v-list-item-title>
-                  {{ contact.name }}
+                  负责人：{{ dialog.contact.name ? dialog.contact.name : "（暂无姓名）" }}
                 </v-list-item-title>
                 <v-list-item-subtitle>
-                  {{ contact.content }}
+                  电话：{{ dialog.contact.content ? dialog.contact.name : "（暂无电话：可选择去官网查询）" }}
                 </v-list-item-subtitle>
               </v-list-item-content>
               <v-list-item-action>
@@ -144,24 +142,30 @@
       class="mx-3"
     >
       <h1 class="heading">
-        医疗人员免费住宿信息
+        医院需求信息
       </h1>
       <v-card>
-        <v-card-text class="subtitle-2 green white--text my-2">
-          医疗人员请注意：大多数住宿地点均要求各位携带相关证件（医护工作证 + 身份证）实名入住；请记得准备好上述证件后，致电相关住宿提供方确认空房情况哦～ 你们辛苦了！
+        <v-card-text class="subtitle-1 red font-weight-bold white--text my-2">
+          本列表中的所有医院均存在<span class="font-weight-black title">非常紧急</span>的物资缺口状况，急需社会各界紧急援助！若您身边有相关资源（包括物流资源、消耗品资源等）请速与这些医院进行联系！
         </v-card-text>
       </v-card>
-      <p class="subtitle-1">
-        图例：<v-icon
-          small
-        >
-          mdi-bed-empty
-        </v-icon> 表示床位剩余，<v-icon
-          small
-        >
-          mdi-home-circle
-        </v-icon> 表示房间剩余
-      </p>
+      <v-card>
+        <v-card-text class="subtitle-2 green white--text my-2">
+          捐赠者请知悉：为保证需求真实性，本列表中几乎所有数据均通过【电话-微信视频-带相片工作证-医院官方电话】的方式核验联系人信息（已通过标签方式标明需求核验状况）
+        </v-card-text>
+      </v-card>
+
+      <v-card>
+        <v-card-text class="caption grey white--text my-2">
+          若您发现信息有不完整、已过期等情况，请点击相应数据卡片右下角的 <v-icon
+            x-small
+            color="red lighten-4"
+          >
+            mdi-flag
+          </v-icon> 纠错按钮提交纠错请求，我们将再次与医院进行二次审核，以保证消息时效性。
+        </v-card-text>
+      </v-card>
+
       <v-skeleton-loader
         :loading="$store.getters.ajaxLoading && !data.length"
         type="card@4"
@@ -174,34 +178,36 @@
               <v-card
                 v-for="[i, o] in items.entries()"
                 :key="i"
-                class="my-4 pb-2 card-border"
+                class="my-4 pb-2"
+                :class="{'card-border': o.isextremeemergency !== 'Y'}"
               >
-                <v-card-title>
-                  <span class="title font-weight-black">
-                    {{ o.name }}
+                <v-card-title
+                  class="mb-2"
+                  :class="{'red darken-1 white--text': o.isextremeemergency === 'Y'}"
+                >
+                  <span
+                    class="title font-weight-black"
+                  >
+                    {{ o.isextremeemergency === 'Y' ? "[紧急]": "" }} {{ o.name }}
                   </span>
                 </v-card-title>
                 <v-card-text>
-                  <span class="float-right ml-4">
-                    <v-icon
-                      class="mr-1"
-                      small
-                    >mdi-bed-empty</v-icon> {{ o.beds ? o.beds : "未知" }}
+                  <span v-if="getTags(o).length">
+                    <v-chip
+                      v-for="tag in getTags(o)"
+
+                      :key="tag.t"
+                      label
+                      class="ma-1 font-weight-bold white--text"
+                      :color="tag.c"
+                    >
+                      {{ tag.t }}
+                    </v-chip>
                     <br>
-                    <v-icon
-                      class="mr-1"
-                      small
-                    >mdi-home-circle</v-icon> {{ o.room ? o.room : "未知" }}
                   </span>
+
                   <span class="subtitle-1">
                     {{ o.province }} {{ o.city }} {{ o.suburb }}<br>地址：{{ o.address }}
-                  </span>
-                  <br>
-                  <span
-                    v-if="o.notes"
-                    class="subtitle-2 red--text"
-                  >
-                    备注：{{ o.notes }}
                   </span>
                 </v-card-text>
                 <v-card-actions class="mx-2">
@@ -229,6 +235,12 @@
                   <v-spacer />
                   <v-btn
                     icon
+                    @click="showOrHideCard(o)"
+                  >
+                    <v-icon>{{ show[o.name] ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
+                  </v-btn>
+                  <v-btn
+                    icon
                     color="error darken-1"
                     @click="openReport(o)"
                   >
@@ -237,6 +249,27 @@
                     </v-icon>
                   </v-btn>
                 </v-card-actions>
+                <v-expand-transition>
+                  <div v-show="show[o.name]">
+                    <v-divider />
+
+                    <v-card-text>
+                      <div
+                        v-for="content in getContent(o)"
+                        :key="content.title"
+                        class="mb-3"
+                      >
+                        <h2 class="title">
+                          {{ content.title }}
+                        </h2>
+                        <p>
+                          {{ content.content }}
+                        </p>
+                        <v-divider />
+                      </div>
+                    </v-card-text>
+                  </div>
+                </v-expand-transition>
               </v-card>
             </template>
           </DataTable>
@@ -252,14 +285,12 @@
   import DataTable from "../components/DataTable";
 
   export default {
-    name: "Accommodations",
+    name: "Supplies",
     components: {DataTable},
     data () {
       return {
         data: [],
-        page: 1,
-        search: "",
-        selectedRegion: null,
+        show: {},
         snackbar: false,
         dialog: {
           enabled: false,
@@ -299,13 +330,77 @@
     },
     methods: {
       update() {
-        api.accommodations().then(({data}) => {
+        api.supplies().then(({data}) => {
           this.data = data
         })
       },
+      showOrHideCard(o) {
+        if (this.show[o.name]) {
+          this.show[o.name] = !this.show[o.name]
+        } else {
+          this.$set(this.show, o.name, true)
+          // this.show = Object.assign(this.show, {[o.name]: true})
+        }
+
+      },
+      getTags (o) {
+        const tags = [];
+        const trueness = strings.trueness(o.trueness);
+        if (o.isextremeemergency === "Y") tags.push({c: 'red', t: '紧急'});
+        if (o.supplies && o.supplies.includes("已无任何库存")) tags.push({c: 'red', t: `已无任何库存`});
+        if (trueness.t) tags.push({c: 'green', t: `消息已验真：${trueness.r}`});
+        return tags
+      },
+      getContent(o) {
+        const contents = [];
+        const map = {
+          "supplies": "需求描述",
+          "official": "是否为官方信息（官网/官微）",
+          "drugs": "急需药品",
+          "suppliesv": "备注",
+          "suppliesw": "备注物资",
+
+          "suppliesn95": "N95 口罩（个）",
+          "suppliesmsm": "医用外科口罩（个）",
+          "suppliesa": "一次性医用口罩（个）",
+          "suppliesb": "护目镜（个）",
+          "suppliesc": "防冲击眼罩（个）",
+          "suppliesd": "一次性防水面罩（个）",
+          "suppliese": "防护服（套）",
+          "suppliesf": "手术衣（件）",
+          "suppliesg": "隔离衣（件）",
+          "suppliesh": "医用帽（个）",
+          "suppliesi": "防水、防污染鞋（长筒）（套）",
+          "suppliesj": "乳胶手套（双）",
+          "suppliesk": "免洗手消毒液",
+          "suppliesl": "红外线体温仪",
+          "suppliesm": "酒精",
+          "suppliesn": "84 消毒液",
+          "suppliesx": "奥司他韦",
+          "suppliesy": "连花清瘟胶囊",
+          "suppliesz": "移动紫外线消毒车",
+          "suppliesaa": "板蓝根",
+
+          "supplieso": "提出日期（到武汉中转站的日期）",
+          "suppliesp": "物流编码/线下配送",
+          "suppliesr": "物流状态",
+          "suppliess": "送货人",
+          "suppliest": "交付日期",
+          "suppliesu": "签收人",
+        };
+        for (const [key, value] of Object.entries(map)) {
+          if (key in o && o[key] && o[key].length) {
+            contents.push({
+              title: value,
+              content: o[key]
+            })
+          }
+        }
+        return contents
+      },
       doReport() {
         api.reportIncorrect({
-          type: "accommodations",
+          type: "supplies",
           cause: this.report.cause,
           content: this.report.content
         })
@@ -319,8 +414,8 @@
       },
       openDialog(o) {
         this.dialog.enabled = true;
-        this.dialog.contact.name = o.contacts;
-        this.dialog.contact.content = o.phone;
+        this.dialog.contact.name = o.contactname;
+        this.dialog.contact.content = o.contactphone;
         this.dialog.address = o.address;
       },
       openReport(o) {
@@ -333,6 +428,6 @@
 
 <style scoped>
 .card-border {
-  border-top: 4px solid rgba(0, 0, 0, .5) !important
+  border-top: 4px solid rgba(226, 82, 66, 1) !important
 }
 </style>
