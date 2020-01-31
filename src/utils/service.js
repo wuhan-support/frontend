@@ -4,7 +4,7 @@ import store from "../store";
 import uuidv4 from 'uuid/v4';
 
 const service = axios.create({
-  baseURL: "/api"
+  baseURL: "http://172.16.238.3:80"
 });
 
 service.interceptors.request.use(function (request) {
