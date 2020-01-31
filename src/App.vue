@@ -105,19 +105,38 @@
         style="width: 100%"
       >
         <v-card-text>
-          <span>{{ new Date().getFullYear() }} — <strong>feiyan.help</strong></span>
-
-          <v-btn
-            outlined
-            small
-            class="ml-3"
-            href="https://github.com/wuhan-support"
+          <v-row
+            align="center"
+            justify="center"
+            class="mb-1"
           >
-            <v-icon left>
-              mdi-github-circle
-            </v-icon>
-            Github
-          </v-btn>
+            <a
+              href="https://feiyan.help/privacy/"
+              target="_blank"
+              class="font-weight-bold secondary--text text--darken-2"
+            >
+              隐私声明
+            </a>
+          </v-row>
+          <v-row
+            align="center"
+            justify="center"
+          >
+            <span>{{ new Date().getFullYear() }} — <strong>feiyan.help</strong></span>
+
+            <v-btn
+              outlined
+              small
+              class="ml-3"
+              href="https://github.com/wuhan-support"
+              target="_blank"
+            >
+              <v-icon left>
+                mdi-github-circle
+              </v-icon>
+              Github
+            </v-btn>
+          </v-row>
         </v-card-text>
       </v-card>
     </v-footer>
