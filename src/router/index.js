@@ -6,7 +6,7 @@ import Accommodations from "../views/lists/Accommodations";
 // import PsychologicalPlatforms from "../views/PsychologicalPlatforms";
 // import MedicalPlatforms from '../views/MedicalPlatforms';
 import Supplies from "../views/supplies/Supplies";
-// import SuppliesSubmission from "../views/supplies/SuppliesSubmission";
+import SuppliesSubmission from "../views/supplies/SuppliesSubmission";
 
 Vue.use(VueRouter)
 
@@ -49,17 +49,17 @@ const routes = [
       subtitle: "支持紧急程度与需求核验公示、按照地区过滤等多种功能，方便直观了解情况"
     }
   },
-  // {
-  //   path: '/hospital/supplies/submit',
-  //   name: 'suppliesSubmission',
-  //   component: SuppliesSubmission,
-  //   meta: {
-  //     icon: "mdi-file-document-box-plus",
-  //     i18n: "pages.suppliesSubmission._name",
-  //     subtitle: "提交新的医院物资需求",
-  //     hide: true
-  //   }
-  // },
+  {
+    path: '/hospital/supplies/submit',
+    name: 'suppliesSubmission',
+    component: SuppliesSubmission,
+    meta: {
+      icon: "mdi-file-document-box-plus",
+      i18n: "pages.suppliesSubmission._name",
+      subtitle: "提交新的医院物资需求",
+      hide: true
+    }
+  },
   // {
   //     path: '/platforms',
   //     name: 'platforms',

@@ -488,6 +488,11 @@
           } else if (form.valueKey === "region" && !(form.value && form.value.length === 3)) {
             missings.push(form.label);
           }
+          if (form.valueKey === "region" && form.value.length === 3) {
+            marshalled["province"] = form.value[0];
+            marshalled["city"] = form.value[1];
+            marshalled["suburb"] = form.value[2];
+          }
           marshalled[form.valueKey] = form.value
         }
         return {marshalled, missings}
