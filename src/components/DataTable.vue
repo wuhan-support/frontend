@@ -12,19 +12,19 @@
         class="mx-0 mb-1"
       />
       <v-spacer />
-      <v-btn
-        right
-        icon
-        :loading="geolocation.determining"
-        :class="{'red--text': geolocation.failed, 'green--text': location}"
-        @click="geolocate"
-      >
-        <v-icon
-          @click="geolocate"
-        >
-          mdi-crosshairs-gps
-        </v-icon>
-      </v-btn>
+      <!--      <v-btn-->
+      <!--        right-->
+      <!--        icon-->
+      <!--        :loading="geolocation.determining"-->
+      <!--        :class="{'red&#45;&#45;text': geolocation.failed, 'green&#45;&#45;text': location}"-->
+      <!--        @click="geolocate"-->
+      <!--      >-->
+      <!--        <v-icon-->
+      <!--          @click="geolocate"-->
+      <!--        >-->
+      <!--          mdi-crosshairs-gps-->
+      <!--        </v-icon>-->
+      <!--      </v-btn>-->
     </v-row>
     <v-expand-transition>
       <v-row

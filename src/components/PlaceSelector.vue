@@ -15,7 +15,9 @@ export default {
   name: 'PlaceSelector',
   data() {
     return {
-      regions: {},
+      regions: {
+        province: "420000"
+      },
       data: [],
       timer: null,
       windowSize: {

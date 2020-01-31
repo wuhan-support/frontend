@@ -144,7 +144,7 @@
       class="mx-3"
     >
       <h1 class="heading">
-        医疗人员免费住宿信息
+        医疗人员免费住宿
       </h1>
       <v-card>
         <v-card-text class="subtitle-2 green white--text my-2">
@@ -228,13 +228,11 @@
                   </v-btn>
                   <v-spacer />
                   <v-btn
-                    icon
+                    outlined
                     color="error darken-1"
                     @click="openReport(o)"
                   >
-                    <v-icon>
-                      mdi-file-document-box-remove
-                    </v-icon>
+                    纠错
                   </v-btn>
                 </v-card-actions>
               </v-card>
