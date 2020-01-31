@@ -36,7 +36,7 @@ const routes = [
     meta: {
       icon: "mdi-hotel",
       i18n: "pages.accommodations._name",
-      subtitle: "为医护人员提供免费住宿信息列表，便于查看"
+      subtitle: "为医护人员提供免费住宿信息列表，支持地理位置排序与地区过滤，为医护人员提供生活保障"
     }
   },
   {
@@ -46,7 +46,7 @@ const routes = [
     meta: {
       icon: "mdi-hospital",
       i18n: "pages.supplies._name",
-      subtitle: "医院物资需求发布平台；支持紧急程度与需求核验公示、按照地区过滤等多种功能，以便社会各界能更好地帮助他们"
+      subtitle: "支持紧急程度与需求核验公示、按照地区过滤等多种功能，以便社会各界能更好地帮助他们"
     }
   },
   // {
@@ -56,7 +56,8 @@ const routes = [
   //   meta: {
   //     icon: "mdi-file-document-box-plus",
   //     i18n: "pages.suppliesSubmission._name",
-  //     subtitle: "提交新的医院物资需求"
+  //     subtitle: "提交新的医院物资需求",
+  //     hide: true
   //   }
   // },
   // {
@@ -91,6 +92,9 @@ const routes = [
 const router = new VueRouter({
   mode: 'hash',
   base: process.env.BASE_URL,
+  scrollBehavior (to, from, savedPosition) {
+    return { x: 0, y: 0 }
+  },
   routes
 });
 

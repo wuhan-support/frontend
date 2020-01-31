@@ -11,20 +11,6 @@
         v-model="region"
         class="mx-0 mb-1"
       />
-      <v-spacer />
-      <v-btn
-        right
-        icon
-        :loading="geolocation.determining"
-        :class="{'red--text': geolocation.failed, 'green--text': location}"
-        @click="geolocate"
-      >
-        <v-icon
-          @click="geolocate"
-        >
-          mdi-crosshairs-gps
-        </v-icon>
-      </v-btn>
     </v-row>
     <v-expand-transition>
       <v-row
@@ -58,7 +44,26 @@
       outlined
       hide-details
       clearable
-    />
+    >
+      <template
+        v-if="enableGeolocation"
+        v-slot:append-outer
+      >
+        <v-btn
+          icon
+          :loading="geolocation.determining"
+          :class="{'red--text': geolocation.failed, 'green--text': location}"
+          style="margin-top: -7px"
+          @click="geolocate"
+        >
+          <v-icon
+            @click="geolocate"
+          >
+            mdi-crosshairs-gps
+          </v-icon>
+        </v-btn>
+      </template>
+    </v-text-field>
     <v-data-iterator
       :items="data"
       :search="search"
@@ -116,6 +121,12 @@
       items: {
         type: Array,
         required: true
+      },
+      enableGeolocation: {
+        type: Boolean,
+        default () {
+          return false
+        }
       }
     },
     data() {

@@ -40,8 +40,8 @@
       需求提交
     </h1>
     <v-card>
-      <v-card-text class="subtitle-1 yellow font-weight-bold black--text my-2">
-        请在提交所有数据前检查输入是否正确。感谢提供宝贵数据！
+      <v-card-text class="subtitle-1 red font-weight-bold white--text my-2">
+        数据贡献志愿者请注意：我们感谢您提供数据以帮助其他志愿者；但为了资源分配效率与信息准确度考量，在您提交数据后我们还需进行二次审核、确保信息真实无误后，再公开发布您的信息；因此，您可能不会看到您的信息被立即公开。若您想加速此流程，还请在下方的【需求官方证明】一栏中，填写相关官方证明，我们核验此证明后即可立即发布数据。感谢您的理解与配合！
       </v-card-text>
     </v-card>
     <form-item

@@ -184,6 +184,7 @@
             />
           </v-row>
           <DataTable
+            enable-geolocation
             :items="dataset"
           >
             <template v-slot:default="{ items }">
@@ -314,8 +315,8 @@
           el.notes = el.notes ? el.notes.toString() : ""
           return el
         })
-        if (this.filters.available) data = data.filter(el => !el.notes.includes("住满"))
-        if (this.filters.linBaoRuZhu) data = data.filter(el => !el.notes.includes("三件套") && !el.notes.includes("四件套"))
+        if (this.filters.available) data = data.filter(el => !/住满|不接待|征用/.test(el.notes))
+        if (this.filters.linBaoRuZhu) data = data.filter(el => !/([34三四])件套/.test(el.notes))
         return data
       },
       xs () {
