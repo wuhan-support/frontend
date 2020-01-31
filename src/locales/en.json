@@ -15,14 +15,20 @@
     "accommodations": {
       "_name": "Accommodations"
     },
-    "platforms": {
-      "_name": "Diag. Platform"
+    "medical": {
+      "_name": "Medical"
     },
     "psychological": {
       "_name": "Psychological"
     },
     "suppliesSubmission": {
       "_name": "Submit Supplies"
+    },
+    "people": {
+      "_name": "People"
+    },
+    "staff": {
+      "_name": "Staff"
     }
   },
   "partials": {

@@ -18,7 +18,7 @@
     "accommodations": {
       "_name": "医护人员免费住宿信息"
     },
-    "platforms": {
+    "medical": {
       "_name": "线上诊断平台"
     },
     "psychological": {
@@ -26,6 +26,12 @@
     },
     "suppliesSubmission": {
       "_name": "提交新的物资需求"
+    },
+    "people": {
+      "_name": "普通民众"
+    },
+    "staff": {
+      "_name": "医护人员"
     }
   },
   "partials": {

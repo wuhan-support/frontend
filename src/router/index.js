@@ -3,10 +3,12 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home'
 import I18n from "../i18n";
 import Accommodations from "../views/lists/Accommodations";
-// import PsychologicalPlatforms from "../views/PsychologicalPlatforms";
-// import MedicalPlatforms from '../views/MedicalPlatforms';
+import PsychologicalPlatforms from "../views/lists/PsychologicalPlatforms";
+import MedicalPlatforms from '../views/lists/MedicalPlatforms';
 import Supplies from "../views/supplies/Supplies";
 import SuppliesSubmission from "../views/supplies/SuppliesSubmission";
+import Staff from "../views/roles/Staff";
+import People from "../views/roles/People";
 
 Vue.use(VueRouter)
 
@@ -60,24 +62,42 @@ const routes = [
       hide: true
     }
   },
-  // {
-  //     path: '/platforms',
-  //     name: 'platforms',
-  //     component: MedicalPlatforms,
-  //     meta: {
-  //         icon: "mdi-hospital",
-  //         i18n: "pages.platforms._name"
-  //     }
-  // },
-  // {
-  //     path: '/psychological',
-  //     name: 'psychological',
-  //     component: PsychologicalPlatforms,
-  //     meta: {
-  //         icon: "mdi-heart",
-  //         i18n: "pages.psychological._name"
-  //     }
-  // },
+  {
+      path: '/MedicalPlatforms',
+      name: 'MedicalPlatforms',
+      component: MedicalPlatforms,
+      meta: {
+          icon: "mdi-hospital",
+          i18n: "pages.medical._name"
+      }
+  },
+  {
+      path: '/psychological',
+      name: 'psychological',
+      component: PsychologicalPlatforms,
+      meta: {
+          icon: "mdi-heart",
+          i18n: "pages.psychological._name"
+      }
+  },
+  {
+      path: '/staff',
+      name: 'staff',
+      component: Staff,
+      meta: {
+          icon: "mdi-heart",
+          i18n: "pages.staff._name"
+      }
+  },
+  {
+      path: '/people',
+      name: 'people',
+      component: People,
+      meta: {
+          icon: "mdi-heart",
+          i18n: "pages.people._name"
+      }
+  },
   {
     path: '*',
     beforeEnter: (to, from, next) => {
