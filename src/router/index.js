@@ -57,7 +57,7 @@ const routes = [
       icon: "mdi-file-document-box-plus",
       i18n: "pages.suppliesSubmission._name",
       subtitle: "提交新的医院物资需求",
-      hide: true
+      hide: false
     }
   },
   // {
