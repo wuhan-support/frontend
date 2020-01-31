@@ -144,11 +144,11 @@
       class="mx-3"
     >
       <h1 class="heading">
-        医疗人员免费住宿信息
+        医护人员免费住宿
       </h1>
       <v-card>
         <v-card-text class="subtitle-2 green white--text my-2">
-          医疗人员请注意：大多数住宿地点均要求各位携带相关证件（医护工作证 + 身份证）实名入住；请记得准备好上述证件后，致电相关住宿提供方确认空房情况哦～ 你们辛苦了！
+          医护人员请注意：大多数住宿地点均要求各位携带相关证件（医护工作证 + 身份证）实名入住；请记得准备好上述证件后，致电相关住宿提供方确认空房情况哦～ 你们辛苦啦～
         </v-card-text>
       </v-card>
       <p class="subtitle-1">
@@ -167,7 +167,24 @@
         type="card@4"
       >
         <div>
+          <v-row
+            justify="space-between"
+            align="center"
+            class="mx-3"
+          >
+            <v-checkbox
+              v-model="filters.available"
+              class="d-inline-flex"
+              label="只看有房"
+            />
+            <v-checkbox
+              v-model="filters.linBaoRuZhu"
+              class="d-inline-flex"
+              label="不需自带三件套"
+            />
+          </v-row>
           <DataTable
+            enable-geolocation
             :items="dataset"
           >
             <template v-slot:default="{ items }">
@@ -183,15 +200,28 @@
                 </v-card-title>
                 <v-card-text>
                   <span class="float-right ml-4">
-                    <v-icon
-                      class="mr-1"
-                      small
-                    >mdi-bed-empty</v-icon> {{ o.beds ? o.beds : "未知" }}
-                    <br>
-                    <v-icon
-                      class="mr-1"
-                      small
-                    >mdi-home-circle</v-icon> {{ o.room ? o.room : "未知" }}
+                    <template v-if="o.beds">
+                      <v-icon
+                        class="mr-1"
+                        small
+                      >mdi-bed-empty</v-icon> {{ o.beds }}
+                      <br>
+                    </template>
+
+                    <template v-if="o.room">
+                      <v-icon
+                        class="mr-1"
+                        small
+                      >mdi-home-circle</v-icon> {{ o.room }}
+                      <br>
+                    </template>
+
+                    <template v-if="o.distance !== null">
+                      <v-icon
+                        class="mr-1"
+                        small
+                      >mdi-ruler</v-icon> {{ o.distance.toFixed(1) }}km
+                    </template>
                   </span>
                   <span class="subtitle-1">
                     {{ o.province }} {{ o.city }} {{ o.suburb }}<br>地址：{{ o.address }}
@@ -228,13 +258,11 @@
                   </v-btn>
                   <v-spacer />
                   <v-btn
-                    icon
+                    outlined
                     color="error darken-1"
                     @click="openReport(o)"
                   >
-                    <v-icon>
-                      mdi-flag
-                    </v-icon>
+                    纠错
                   </v-btn>
                 </v-card-actions>
               </v-card>
@@ -247,9 +275,9 @@
 </template>
 
 <script>
-  import api from "../apis/api";
-  import strings from "../utils/strings";
-  import DataTable from "../components/DataTable";
+  import api from "../../apis/api";
+  import strings from "../../utils/strings";
+  import DataTable from "../../components/DataTable";
 
   export default {
     name: "Accommodations",
@@ -274,13 +302,22 @@
           cause: "",
           causes: ['地址不存在/未找到', '联系不上', '已被征用', '已住满', '其他原因无法接待', '缺少必需物资无法营业', '信息重复', '其他'],
           content: ""
+        },
+        filters: {
+          available: true,
+          linBaoRuZhu: true
         }
       }
     },
     computed: {
       dataset() {
-        console.log(this.data)
-        return this.data.filter(el => el.name.length);
+        let data = this.data.filter(el => el.name.length).map(el => {
+          el.notes = el.notes ? el.notes.toString() : ""
+          return el
+        })
+        if (this.filters.available) data = data.filter(el => !/住满|不接待|征用/.test(el.notes))
+        if (this.filters.linBaoRuZhu) data = data.filter(el => !/([34三四])件套/.test(el.notes))
+        return data
       },
       xs () {
         return this.$vuetify.breakpoint.xsOnly

@@ -20,6 +20,9 @@
     },
     "psychological": {
       "_name": "Psychological"
+    },
+    "suppliesSubmission": {
+      "_name": "Submit Supplies"
     }
   },
   "partials": {

@@ -15,10 +15,10 @@
             v-if="!route.children || route.meta.forceSingle"
             :key="route.name"
             link
-            :class="route.meta.classes"
-            @click="onMenuItemClicked(route)"
+            :to="{path: route.path}"
+            active-class="red font-weight-bold white--text"
           >
-            <v-list-item-icon>
+            <v-list-item-icon :class="route.meta.classes">
               <v-icon v-text="route.meta.icon" />
             </v-list-item-icon>
             <v-list-item-content>
@@ -81,16 +81,46 @@
         </div>
       </v-toolbar-title>
     </v-app-bar>
-    <v-content class="mb-8">
-      <transition
-        name="slide-fade"
-        mode="out-in"
-      >
-        <v-container>
+    <v-content
+      app
+      class="mb-8"
+    >
+      <v-container>
+        <transition
+          name="slide-fade"
+          mode="out-in"
+        >
           <router-view />
-        </v-container>
-      </transition>
+        </transition>
+      </v-container>
     </v-content>
+    <v-footer
+      padless
+    >
+      <v-card
+        flat
+        tile
+        class="text-center"
+        color="grey lighten-2"
+        style="width: 100%"
+      >
+        <v-card-text>
+          <span>{{ new Date().getFullYear() }} — <strong>feiyan.help</strong></span>
+
+          <v-btn
+            outlined
+            small
+            class="ml-3"
+            href="https://github.com/wuhan-support"
+          >
+            <v-icon left>
+              mdi-github-circle
+            </v-icon>
+            Github
+          </v-btn>
+        </v-card-text>
+      </v-card>
+    </v-footer>
   </v-app>
 </template>
 
@@ -162,16 +192,6 @@ export default {
         document.body.style.backgroundColor = "#303030";
       } else {
         document.body.style.backgroundColor = "#fafafa";
-      }
-    },
-
-    onMenuItemClicked(route) {
-      if (route.meta && route.meta.externalRedirect) {
-        if (route.meta.link) {
-          window.open(route.meta.link);
-        }
-      } else {
-        this.$router.push({ name: route.name });
       }
     },
     changeLocale(localeId, save = true) {

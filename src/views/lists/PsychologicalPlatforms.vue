@@ -285,9 +285,9 @@
 </template>
 
 <script>
-import api from "../apis/api";
-import Paginator from "../components/Paginator";
-import strings from "../utils/strings";
+import api from "../../apis/api";
+import Paginator from "../../components/Paginator";
+import strings from "../../utils/strings";
 
 export default {
     name: "Psychological",

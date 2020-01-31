@@ -1,6 +1,6 @@
 import Vue from 'vue'
+import VueAnalytics from 'vue-analytics'
 import App from './App.vue'
-import './registerServiceWorker'
 import router from './router'
 import config from './config'
 import store from './store'
@@ -10,7 +10,7 @@ import * as Sentry from '@sentry/browser'
 import * as Integrations from '@sentry/integrations'
 
 import vRegion from 'v-region';
-Vue.use(vRegion, { });
+Vue.use(vRegion, {});
 
 Vue.config.productionTip = false
 
@@ -23,6 +23,26 @@ if (production) {
     logErrors: true,
     release: 'frontend@' + (config.version || 'unknown')
   })
+
+  Vue.use(VueAnalytics, {
+    id: 'UA-69113723-14',
+    // customResourceURL: "https://www.google-analytics.com/analytics.js",
+    router,
+    debug: {
+      // enabled: process.env.NODE_ENV === "development",
+      enabled: false,
+      sendHitTask: production
+    },
+    batch: {
+      enabled: true, // enable/disable
+      amount: 5, // amount of events fired
+      delay: 2000 // delay in milliseconds
+    },
+    autoTracking: {
+      exception: true,
+      exceptionLogs: true
+    }
+  });
 }
 
 new Vue({

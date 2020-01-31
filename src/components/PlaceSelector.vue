@@ -15,7 +15,9 @@ export default {
   name: 'PlaceSelector',
   data() {
     return {
-      regions: {},
+      regions: {
+        province: "420000"
+      },
       data: [],
       timer: null,
       windowSize: {
@@ -55,7 +57,10 @@ export default {
   text-overflow: ellipsis;
   padding: 6px 20px 6px 10px;
 }
-.place-selector >>> .v-dropdown-container ul.rg-select__list li {
-  color: black;
-}
+</style>
+
+<style>
+  .rg-select__list li {
+    color: black !important;
+  }
 </style>

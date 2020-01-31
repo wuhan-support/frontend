@@ -7,7 +7,7 @@
       "_name": "首页"
     },
     "supplies": {
-      "_name": "医院需求信息"
+      "_name": "医院物资需求列表"
     },
     "about": {
       "_name": "关于我们"
@@ -16,13 +16,16 @@
       "_name": "实时播报"
     },
     "accommodations": {
-      "_name": "医疗人员免费住宿信息"
+      "_name": "医护人员免费住宿信息"
     },
     "platforms": {
       "_name": "线上诊断平台"
     },
     "psychological": {
       "_name": "心理咨询平台"
+    },
+    "suppliesSubmission": {
+      "_name": "提交新的物资需求"
     }
   },
   "partials": {
