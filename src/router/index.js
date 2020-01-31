@@ -36,7 +36,7 @@ const routes = [
     meta: {
       icon: "mdi-hotel",
       i18n: "pages.accommodations._name",
-      subtitle: "为医护人员提供免费住宿信息列表，支持地理位置排序与地区过滤，为医护人员提供生活保障"
+      subtitle: "为医护人员提供免费住宿信息列表，支持地理位置排序与地区过滤，以此提供基本生活保障"
     }
   },
   {
@@ -46,7 +46,7 @@ const routes = [
     meta: {
       icon: "mdi-hospital",
       i18n: "pages.supplies._name",
-      subtitle: "支持紧急程度与需求核验公示、按照地区过滤等多种功能，以便社会各界能更好地帮助他们"
+      subtitle: "支持紧急程度与需求核验公示、按照地区过滤等多种功能，方便直观了解情况"
     }
   },
   // {
