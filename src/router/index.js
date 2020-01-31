@@ -16,7 +16,7 @@ const routes = [
     name: 'home',
     component: Home,
     meta: {
-      icon: "iconfont icon-Home",
+      icon: "wsicon wsicon-Home",
       i18n: "pages.home._name"
     }
   },
@@ -34,7 +34,7 @@ const routes = [
     name: 'accommodations',
     component: Accommodations,
     meta: {
-      icon: "iconfont icon-hotel",
+      icon: "wsicon wsicon-hotel",
       i18n: "pages.accommodations._name",
       subtitle: "为医护人员提供免费住宿信息列表，支持地理位置排序与地区过滤，以此提供基本生活保障"
     }
@@ -44,7 +44,7 @@ const routes = [
     name: 'supplies',
     component: Supplies,
     meta: {
-      icon: "iconfont icon-hospital",
+      icon: "wsicon wsicon-hospital",
       i18n: "pages.supplies._name",
       subtitle: "支持紧急程度与需求核验公示、按照地区过滤等多种功能，方便直观了解情况"
     }

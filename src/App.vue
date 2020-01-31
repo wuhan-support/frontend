@@ -55,6 +55,7 @@
           </v-list-group>
         </template>
       </v-list>
+      <v-icon size=50 center class="logo">wsicon wsicon-logo-zh</v-icon>
     </v-navigation-drawer>
     <v-app-bar
       app
@@ -64,15 +65,13 @@
       class="appBar"
       height=50
     >
-      <v-app-bar-nav-icon
-        class="black--text"
-        @click.stop="drawer = !drawer"
-      />
+      <v-icon size=16 class="black--text navButtonIcon" @click.stop="drawer = !drawer">wsicon wsicon-Menu</v-icon>
       <v-toolbar-title dark class="pl-1 toolbarTitle">
-        <div class="title">
+        <div class="toolbarTitle">
           {{ $t($router.currentRoute.meta.i18n) }}
         </div>
       </v-toolbar-title>
+      <v-icon size=30 right class="red--text logoIcon">wsicon wsicon-logo-icon</v-icon>
     </v-app-bar>
     <v-content
       app
@@ -214,9 +213,12 @@ export default {
   text-rendering: optimizeLegibility;
 }
 .logo {
-  display: block;
-  width: 165px;
-  height: 50px;
+  position: absolute;
+  bottom: 30px;
+  font-size: 160px !important;
+  color: #cccccc !important;
+  margin: 0 auto;
+  width: 100%;
 }
 .navigationDrawer {
   padding-top: 21px;
@@ -246,8 +248,19 @@ export default {
 .appBar {
   box-shadow: 0 1px 0 rgba(0,0,0,0.2) !important;
 }
-.toolbarTitle .title {
+.appBar .navButtonIcon {
+  color: #000000;
+  margin: 0 5px;
+}
+.appBar .logoIcon {
+  margin-left: auto;
+}
+.appBar .toolbarTitle {
+  font-family: PingFangSC-Medium;
+  font-size: 16px;
   color: #333E48;
+  letter-spacing: 0;
+  margin-left: 5px;
 }
 .slide-fade-enter-active {
   transition: all 0.225s cubic-bezier(0.165, 0.84, 0.44, 1);
