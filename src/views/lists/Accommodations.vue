@@ -148,7 +148,7 @@
       </h1>
       <v-card>
         <v-card-text class="subtitle-2 green white--text my-2">
-          医护人员请注意：大多数住宿地点均要求各位携带相关证件（医护工作证 + 身份证）实名入住；请记得准备好上述证件后，致电相关住宿提供方确认空房情况哦～ 你们辛苦了！
+          医护人员请注意：大多数住宿地点均要求各位携带相关证件（医护工作证 + 身份证）实名入住；请记得准备好上述证件后，致电相关住宿提供方确认空房情况哦～ 你们辛苦啦～
         </v-card-text>
       </v-card>
       <p class="subtitle-1">
@@ -167,6 +167,22 @@
         type="card@4"
       >
         <div>
+          <v-row
+            justify="space-between"
+            align="center"
+            class="mx-3"
+          >
+            <v-checkbox
+              v-model="filters.available"
+              class="d-inline-flex"
+              label="只看有房"
+            />
+            <v-checkbox
+              v-model="filters.linBaoRuZhu"
+              class="d-inline-flex"
+              label="不需自带三件套"
+            />
+          </v-row>
           <DataTable
             :items="dataset"
           >
@@ -285,12 +301,22 @@
           cause: "",
           causes: ['地址不存在/未找到', '联系不上', '已被征用', '已住满', '其他原因无法接待', '缺少必需物资无法营业', '信息重复', '其他'],
           content: ""
+        },
+        filters: {
+          available: false,
+          linBaoRuZhu: false
         }
       }
     },
     computed: {
       dataset() {
-        return this.data.filter(el => el.name.length)
+        let data = this.data.filter(el => el.name.length).map(el => {
+          el.notes = el.notes ? el.notes.toString() : ""
+          return el
+        })
+        if (this.filters.available) data = data.filter(el => !el.notes.includes("住满"))
+        if (this.filters.linBaoRuZhu) data = data.filter(el => !el.notes.includes("三件套") && !el.notes.includes("四件套"))
+        return data
       },
       xs () {
         return this.$vuetify.breakpoint.xsOnly
