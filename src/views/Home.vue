@@ -26,12 +26,14 @@
               :to="{path: route.path}"
             >
               <v-sheet
-                class="d-flex align-center justify-center"
-                :class="route.meta.classes ? route.meta.classes : {'grey lighten-3': true}"
+                class="d-flex align-center justify-center grey lighten-3"
                 height="96"
                 tile
               >
-                <v-icon size="48">
+                <v-icon
+                  size="48"
+                  :class="route.meta.color ? route.meta.color : ''"
+                >
                   {{ route.meta.icon }}
                 </v-icon>
               </v-sheet>
