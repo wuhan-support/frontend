@@ -16,7 +16,7 @@ const routes = [
     name: 'home',
     component: Home,
     meta: {
-      icon: "mdi-home",
+      icon: "iconfont icon-Home",
       i18n: "pages.home._name"
     }
   },
@@ -34,9 +34,8 @@ const routes = [
     name: 'accommodations',
     component: Accommodations,
     meta: {
-      icon: "mdi-hotel",
+      icon: "iconfont icon-hotel",
       i18n: "pages.accommodations._name",
-      color: "brown--text",
       subtitle: "为医护人员提供免费住宿信息列表，支持地理位置排序与地区过滤，以此提供基本生活保障"
     }
   },
@@ -45,9 +44,8 @@ const routes = [
     name: 'supplies',
     component: Supplies,
     meta: {
-      icon: "mdi-hospital",
+      icon: "iconfont icon-hospital",
       i18n: "pages.supplies._name",
-      color: "red--text",
       subtitle: "支持紧急程度与需求核验公示、按照地区过滤等多种功能，方便直观了解情况"
     }
   },
@@ -58,7 +56,6 @@ const routes = [
     meta: {
       icon: "mdi-file-document-box-plus",
       i18n: "pages.suppliesSubmission._name",
-      color: "blue--text",
       subtitle: "提交新的医院物资需求",
       hide: true
     }

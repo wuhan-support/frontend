@@ -8,28 +8,25 @@
       color="white"
       app
       clipped
+      width="254"
+      class="navigationDrawer"
     >
-      <v-list nav>
+      <v-list>
         <template v-for="route in routes">
           <v-list-item
             v-if="!route.children || route.meta.forceSingle"
             :key="route.name"
             link
             :to="{path: route.path}"
-            active-class="red font-weight-bold white--text"
+            class="listItem"
+            active-class="listItemActive font-weight-bold white--text"
           >
-            <v-list-item-icon :class="route.meta.classes">
-              <v-icon v-text="route.meta.icon" />
+            <v-list-item-icon class="listItemIcon" :class="route.meta.classes">
+              <v-icon size=14 v-text="route.meta.icon" />
             </v-list-item-icon>
             <v-list-item-content>
-              <v-list-item-title>
-                {{ $t(route.meta.i18n) }} &nbsp;
-                <v-icon
-                  v-if="!route.component && !route.meta.forceSingle"
-                  small
-                >
-                  mdi-open-in-new
-                </v-icon>
+              <v-list-item-title class="itemTitle font-weight-bold">
+                {{ $t(route.meta.i18n) }}
               </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
@@ -65,19 +62,15 @@
       dark
       color="white"
       class="appBar"
+      height=50
     >
       <v-app-bar-nav-icon
         class="black--text"
         @click.stop="drawer = !drawer"
       />
-      <v-toolbar-title class="pl-1">
+      <v-toolbar-title dark class="pl-1 toolbarTitle">
         <div class="title">
-          <v-img
-            :src="require('@/assets/logo/feiyan.help.svg')"
-            class="logo mx-0 my-2"
-            contain
-            max-width="192px"
-          />
+          {{ $t($router.currentRoute.meta.i18n) }}
         </div>
       </v-toolbar-title>
     </v-app-bar>
@@ -105,38 +98,19 @@
         style="width: 100%"
       >
         <v-card-text>
-          <v-row
-            align="center"
-            justify="center"
-            class="mb-1"
-          >
-            <a
-              href="https://feiyan.help/privacy/"
-              target="_blank"
-              class="font-weight-bold secondary--text text--darken-2"
-            >
-              隐私声明
-            </a>
-          </v-row>
-          <v-row
-            align="center"
-            justify="center"
-          >
-            <span>{{ new Date().getFullYear() }} — <strong>feiyan.help</strong></span>
+          <span>{{ new Date().getFullYear() }} — <strong>feiyan.help</strong></span>
 
-            <v-btn
-              outlined
-              small
-              class="ml-3"
-              href="https://github.com/wuhan-support"
-              target="_blank"
-            >
-              <v-icon left>
-                mdi-github-circle
-              </v-icon>
-              Github
-            </v-btn>
-          </v-row>
+          <v-btn
+            outlined
+            small
+            class="ml-3"
+            href="https://github.com/wuhan-support"
+          >
+            <v-icon left>
+              mdi-github-circle
+            </v-icon>
+            Github
+          </v-btn>
         </v-card-text>
       </v-card>
     </v-footer>
@@ -231,14 +205,49 @@ export default {
 </script>
 
 <style>
+* {
+  font-family: core_sans_n45_regular, "Avenir Next", "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Source Han Sans SC", "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi MicroHei", sans-serif;
+  box-sizing: border-box;
+  -webkit-font-feature-settings: "palt";
+  font-feature-settings: "palt";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
 .logo {
   display: block;
   width: 165px;
   height: 50px;
 }
+.navigationDrawer {
+  padding-top: 21px;
+}
+.navigationDrawer .listItem {
+  height: 60px;
+  padding: 0 20px !important;
+  border-left: 7px solid transparent;
+}
+.navigationDrawer .listItem.home {
+  letter-spacing: 1px;
+}
+.navigationDrawer .listItem .listItemIcon {
+  display: inline !important;
+  margin-right: 17px !important;
+}
+.listItemIcon:not(.listItemActive) i {
+  color: #333333;
+}
+.navigationDrawer .listItemActive {
+  background: #6CBD0F;
+  border-left: 7px solid #64A020;
+}
+.navigationDrawer .listItem .itemTitle {
+  font-size: 16px !important;
+}
 .appBar {
-  -webkit-box-shadow: 0 2px 10px 0 rgba(0,0,0,.05) !important;
-  box-shadow: 0 2px 10px 0 rgba(0,0,0,.05) !important;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.2) !important;
+}
+.toolbarTitle .title {
+  color: #333E48;
 }
 .slide-fade-enter-active {
   transition: all 0.225s cubic-bezier(0.165, 0.84, 0.44, 1);
