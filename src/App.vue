@@ -15,7 +15,8 @@
             v-if="!route.children || route.meta.forceSingle"
             :key="route.name"
             link
-            @click="onMenuItemClicked(route)"
+            :to="{path: route.path}"
+            active-class="red font-weight-bold white--text"
           >
             <v-list-item-icon :class="route.meta.classes">
               <v-icon v-text="route.meta.icon" />
@@ -191,16 +192,6 @@ export default {
         document.body.style.backgroundColor = "#303030";
       } else {
         document.body.style.backgroundColor = "#fafafa";
-      }
-    },
-
-    onMenuItemClicked(route) {
-      if (route.meta && route.meta.externalRedirect) {
-        if (route.meta.link) {
-          window.open(route.meta.link);
-        }
-      } else {
-        this.$router.push({ name: route.name });
       }
     },
     changeLocale(localeId, save = true) {

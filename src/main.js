@@ -23,27 +23,27 @@ if (production) {
     logErrors: true,
     release: 'frontend@' + (config.version || 'unknown')
   })
-}
 
-Vue.use(VueAnalytics, {
-  id: 'UA-69113723-14',
-  // customResourceURL: "https://www.google-analytics.com/analytics.js",
-  router,
-  debug: {
-    // enabled: process.env.NODE_ENV === "development",
-    enabled: false,
-    sendHitTask: production
-  },
-  batch: {
-    enabled: true, // enable/disable
-    amount: 5, // amount of events fired
-    delay: 2000 // delay in milliseconds
-  },
-  autoTracking: {
-    exception: true,
-    exceptionLogs: !production
-  }
-});
+  Vue.use(VueAnalytics, {
+    id: 'UA-69113723-14',
+    // customResourceURL: "https://www.google-analytics.com/analytics.js",
+    router,
+    debug: {
+      // enabled: process.env.NODE_ENV === "development",
+      enabled: false,
+      sendHitTask: production
+    },
+    batch: {
+      enabled: true, // enable/disable
+      amount: 5, // amount of events fired
+      delay: 2000 // delay in milliseconds
+    },
+    autoTracking: {
+      exception: true,
+      exceptionLogs: true
+    }
+  });
+}
 
 new Vue({
   router,

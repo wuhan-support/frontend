@@ -144,11 +144,11 @@
       class="mx-3"
     >
       <h1 class="heading">
-        医疗人员免费住宿
+        医护人员免费住宿
       </h1>
       <v-card>
         <v-card-text class="subtitle-2 green white--text my-2">
-          医疗人员请注意：大多数住宿地点均要求各位携带相关证件（医护工作证 + 身份证）实名入住；请记得准备好上述证件后，致电相关住宿提供方确认空房情况哦～ 你们辛苦了！
+          医护人员请注意：大多数住宿地点均要求各位携带相关证件（医护工作证 + 身份证）实名入住；请记得准备好上述证件后，致电相关住宿提供方确认空房情况哦～ 你们辛苦了！
         </v-card-text>
       </v-card>
       <p class="subtitle-1">
@@ -183,15 +183,28 @@
                 </v-card-title>
                 <v-card-text>
                   <span class="float-right ml-4">
-                    <v-icon
-                      class="mr-1"
-                      small
-                    >mdi-bed-empty</v-icon> {{ o.beds ? o.beds : "未知" }}
-                    <br>
-                    <v-icon
-                      class="mr-1"
-                      small
-                    >mdi-home-circle</v-icon> {{ o.room ? o.room : "未知" }}
+                    <template v-if="o.beds">
+                      <v-icon
+                        class="mr-1"
+                        small
+                      >mdi-bed-empty</v-icon> {{ o.beds }}
+                      <br>
+                    </template>
+
+                    <template v-if="o.room">
+                      <v-icon
+                        class="mr-1"
+                        small
+                      >mdi-home-circle</v-icon> {{ o.room }}
+                      <br>
+                    </template>
+
+                    <template v-if="o.distance !== null">
+                      <v-icon
+                        class="mr-1"
+                        small
+                      >mdi-ruler</v-icon> {{ o.distance.toFixed(1) }}km
+                    </template>
                   </span>
                   <span class="subtitle-1">
                     {{ o.province }} {{ o.city }} {{ o.suburb }}<br>地址：{{ o.address }}
@@ -277,8 +290,7 @@
     },
     computed: {
       dataset() {
-        console.log(this.data)
-        return this.data.filter(el => el.name.length);
+        return this.data.filter(el => el.name.length)
       },
       xs () {
         return this.$vuetify.breakpoint.xsOnly

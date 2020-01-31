@@ -12,19 +12,19 @@
         class="mx-0 mb-1"
       />
       <v-spacer />
-      <!--      <v-btn-->
-      <!--        right-->
-      <!--        icon-->
-      <!--        :loading="geolocation.determining"-->
-      <!--        :class="{'red&#45;&#45;text': geolocation.failed, 'green&#45;&#45;text': location}"-->
-      <!--        @click="geolocate"-->
-      <!--      >-->
-      <!--        <v-icon-->
-      <!--          @click="geolocate"-->
-      <!--        >-->
-      <!--          mdi-crosshairs-gps-->
-      <!--        </v-icon>-->
-      <!--      </v-btn>-->
+      <v-btn
+        right
+        icon
+        :loading="geolocation.determining"
+        :class="{'red--text': geolocation.failed, 'green--text': location}"
+        @click="geolocate"
+      >
+        <v-icon
+          @click="geolocate"
+        >
+          mdi-crosshairs-gps
+        </v-icon>
+      </v-btn>
     </v-row>
     <v-expand-transition>
       <v-row
@@ -37,7 +37,13 @@
           class="subtitle-1 text-center green--text font-weight-bold"
         >
           <span>
-            已按照最近距离排序列表
+            已按照最近距离排序列表 <v-btn
+              outlined
+              small
+              @click="(geolocation.lat = null) && (geolocation.lng = null)"
+            >
+              关闭
+            </v-btn>
           </span>
         </v-col>
       </v-row>
@@ -136,7 +142,7 @@
         return filters
       },
       data() {
-        return this.items.filter((el) => {
+        const filtered = this.items.filter((el) => {
           if ("province" in el && "city" in el && "suburb" in el) {
             return this.filters.every((func) => {
               return func(el)
@@ -145,6 +151,31 @@
             return true
           }
         });
+        const haveDistance = filtered.filter(el => {
+          if (this.location) {
+            if (el.latitude && el.longitude) {
+              console.log(el.name, el.latitude, el.longitude)
+              return true
+            } else {
+              return false
+            }
+          } else {
+            return true
+          }
+        })
+
+        const calculatedDistance = haveDistance.map(el => {
+          if (this.location)  {
+            el.distance = geo.distance(el.latitude, el.longitude, this.location.lat, this.location.lng)
+          } else {
+            el.distance = null
+          }
+          return el
+        })
+        const sorted = calculatedDistance.sort((a, b) => {
+          return a.distance - b.distance
+        })
+        return sorted
       },
       location () {
         if (this.geolocation.lat && this.geolocation.lng && !this.geolocation.failed) {
