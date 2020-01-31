@@ -17,16 +17,22 @@
             v-if="!route.children || route.meta.forceSingle"
             :key="route.name"
             link
-            :to="{path: route.path}"
+            :to="{name: route.name}"
             class="listItem"
             active-class="listItemActive font-weight-bold white--text"
           >
-            <v-list-item-icon class="listItemIcon" :class="route.meta.classes">
-              <v-icon size=14 v-text="route.meta.icon" />
+            <v-list-item-icon
+              class="listItemIcon"
+              :class="route.meta.classes"
+            >
+              <v-icon
+                size="14"
+                v-text="route.meta.icon"
+              />
             </v-list-item-icon>
             <v-list-item-content>
               <v-list-item-title class="itemTitle font-weight-bold">
-                {{ $t(route.meta.i18n) }}
+                {{ route.meta.name }}
               </v-list-item-title>
             </v-list-item-content>
           </v-list-item>
@@ -38,13 +44,13 @@
             no-action
           >
             <template v-slot:activator>
-              <v-list-item-title>{{ $t(route.meta.i18n) }}</v-list-item-title>
+              <v-list-item-title>{{ route.meta.name }}</v-list-item-title>
             </template>
 
             <v-list-item
               v-for="child in route.children.filter(el => !el.meta.hide)"
               :key="child.name"
-              @click="onMenuItemClicked(child)"
+              :to="{name: child.name}"
             >
               <v-list-item-title>{{ $t(child.meta.i18n) }}</v-list-item-title>
 
@@ -55,7 +61,13 @@
           </v-list-group>
         </template>
       </v-list>
-      <v-icon size=50 center class="logo">wsicon wsicon-logo-zh</v-icon>
+      <v-icon
+        size="50"
+        center
+        class="logo"
+      >
+        wsicon wsicon-logo-zh
+      </v-icon>
     </v-navigation-drawer>
     <v-app-bar
       app
@@ -63,15 +75,30 @@
       dark
       color="white"
       class="appBar"
-      height=50
+      height="50"
     >
-      <v-icon size=16 class="black--text navButtonIcon" @click.stop="drawer = !drawer">wsicon wsicon-Menu</v-icon>
-      <v-toolbar-title dark class="pl-1 toolbarTitle">
+      <v-icon
+        size="16"
+        class="black--text navButtonIcon"
+        @click.stop="drawer = !drawer"
+      >
+        wsicon wsicon-Menu
+      </v-icon>
+      <v-toolbar-title
+        dark
+        class="pl-1 toolbarTitle"
+      >
         <div class="toolbarTitle">
           {{ $t($router.currentRoute.meta.i18n) }}
         </div>
       </v-toolbar-title>
-      <v-icon size=30 right class="red--text logoIcon">wsicon wsicon-logo-icon</v-icon>
+      <v-icon
+        size="30"
+        right
+        class="red--text logoIcon"
+      >
+        wsicon wsicon-logo-icon
+      </v-icon>
     </v-app-bar>
     <v-content
       app
@@ -97,6 +124,29 @@
         style="width: 100%"
       >
         <v-card-text>
+          <v-row
+            align="center"
+            justify="center"
+            class="mb-1"
+          >
+            <a
+              href="https://feiyan.help/privacy/"
+              target="_blank"
+              class="font-weight-bold secondary--text text--darken-2"
+            >
+              用户协议
+            </a>
+
+
+            <a
+              href="https://feiyan.help/privacy/"
+              target="_blank"
+              class="font-weight-bold secondary--text text--darken-2"
+            >
+              隐私声明
+            </a>
+          </v-row>
+
           <span>{{ new Date().getFullYear() }} — <strong>feiyan.help</strong></span>
 
           <v-btn

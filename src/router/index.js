@@ -3,12 +3,16 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home'
 import I18n from "../i18n";
 import Accommodations from "../views/lists/Accommodations";
-import PsychologicalPlatforms from "../views/lists/PsychologicalPlatforms";
-import MedicalPlatforms from '../views/lists/MedicalPlatforms';
+// import PsychologicalPlatforms from "../views/PsychologicalPlatforms";
+// import MedicalPlatforms from '../views/MedicalPlatforms';
 import Supplies from "../views/supplies/Supplies";
 import SuppliesSubmission from "../views/supplies/SuppliesSubmission";
-import Staff from "../views/roles/Staff";
-import People from "../views/roles/People";
+import PeopleLayout from "../layouts/PeopleLayout";
+import StaffLayout from "../layouts/StaffLayout";
+import MedicalPlatforms from "../views/lists/MedicalPlatforms";
+import PsychologicalPlatforms from "../views/lists/PsychologicalPlatforms";
+import Staff from "../views/indexes/Staff";
+import People from "../views/indexes/People";
 
 Vue.use(VueRouter)
 
@@ -18,85 +22,101 @@ const routes = [
     name: 'home',
     component: Home,
     meta: {
-      icon: "wsicon wsicon-Home",
+      icon: "mdi-home",
       i18n: "pages.home._name"
     }
   },
-  // {
-  //   path: '/stream',
-  //   name: 'stream',
-  //   component: Stream,
-  //   meta: {
-  //     icon: "mdi-timeline-clock",
-  //     i18n: "pages.stream._name"
-  //   }
-  // },
   {
-    path: '/accommodations',
-    name: 'accommodations',
-    component: Accommodations,
+    path: "/people",
+    name: "people",
+    component: PeopleLayout,
     meta: {
-      icon: "wsicon wsicon-hotel",
-      i18n: "pages.accommodations._name",
-      subtitle: "为医护人员提供免费住宿信息列表，支持地理位置排序与地区过滤，以此提供基本生活保障"
-    }
-  },
-  {
-    path: '/hospital/supplies',
-    name: 'supplies',
-    component: Supplies,
-    meta: {
-      icon: "wsicon wsicon-hospital",
-      i18n: "pages.supplies._name",
-      subtitle: "支持紧急程度与需求核验公示、按照地区过滤等多种功能，方便直观了解情况"
-    }
-  },
-  {
-    path: '/hospital/supplies/submit',
-    name: 'suppliesSubmission',
-    component: SuppliesSubmission,
-    meta: {
-      icon: "mdi-file-document-box-plus",
-      i18n: "pages.suppliesSubmission._name",
-      subtitle: "提交新的医院物资需求",
-      hide: true
-    }
-  },
-  {
-      path: '/MedicalPlatforms',
-      name: 'MedicalPlatforms',
-      component: MedicalPlatforms,
-      meta: {
+      icon: "mdi-account-multiple",
+      title: "民众",
+      subtitle: "线上医疗诊断平台、心理咨询平台，均可在这里找到"
+    },
+    children: [
+      {
+        path: '',
+        name: 'peopleIndex',
+        component: People,
+        meta: {
+          hide: true
+        }
+      },
+      {
+        path: '/platforms/medical',
+        name: 'medicalPlatform',
+        component: MedicalPlatforms,
+        meta: {
           icon: "mdi-hospital",
-          i18n: "pages.medical._name"
-      }
+          title: "线上医疗诊断平台"
+        }
+      },
+      {
+        path: '/platforms/psychological',
+        name: 'psychologicalPlatform',
+        component: PsychologicalPlatforms,
+        meta: {
+          icon: "mdi-heart",
+          title: "线上心理咨询平台"
+        }
+      },
+    ]
   },
   {
-      path: '/psychological',
-      name: 'psychological',
-      component: PsychologicalPlatforms,
-      meta: {
-          icon: "mdi-heart",
-          i18n: "pages.psychological._name"
-      }
-  },
-  {
-      path: '/staff',
-      name: 'staff',
-      component: Staff,
-      meta: {
-          icon: "mdi-heart",
-          i18n: "pages.staff._name"
-      }
-  },
-  {
-      path: '/people',
-      name: 'people',
-      component: People,
-      meta: {
-          icon: "mdi-heart",
-          i18n: "pages.people._name"
-      }
+    path: "/staff",
+    name: "staff",
+    component: StaffLayout,
+    meta: {
+      icon: "mdi-account-multiple",
+      title: "医护人员",
+      subtitle: "免费住宿信息、医院物资需求列表、提交新的物资需求，均可在这里找到"
+    },
+    children: [
+      {
+        path: '',
+        name: 'staffIndex',
+        component: Staff,
+        meta: {
+          hide: true
+        }
+      },
+      {
+        path: '/accommodations',
+        name: 'accommodations',
+        component: Accommodations,
+        meta: {
+          icon: "mdi-hotel",
+          title: "医护人员免费住宿信息",
+          color: "brown--text",
+          subtitle: "为医护人员提供免费住宿信息列表，支持地理位置排序与地区过滤，以此提供基本生活保障"
+        }
+      },
+      {
+        path: '/supplies',
+        name: 'supplies',
+        component: Supplies,
+        meta: {
+          icon: "mdi-hospital",
+          title: "医院物资需求列表",
+          color: "red--text",
+          subtitle: "支持紧急程度与需求核验公示、按照地区过滤等多种功能，方便直观了解情况"
+        }
+      },
+      {
+        path: '/supplies/submit',
+        name: 'suppliesSubmission',
+        component: SuppliesSubmission,
+        meta: {
+          icon: "mdi-file-document-box-plus",
+          title: "提交新的物资需求",
+          color: "blue--text",
+          subtitle: "提交新的医院物资需求",
+          hide: true
+        }
+      },
+    ]
   },
   {
     path: '*',

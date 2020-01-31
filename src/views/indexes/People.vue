@@ -19,8 +19,11 @@
         >
           <v-col cols="12">
             <h1 class="heading text-center">
-              请选择您的角色
+              民众
             </h1>
+            <h4 class="subtitle-1 text-center">
+              这里是一些说明信息
+            </h4>
           </v-col>
         </v-row>
         <v-row>
@@ -33,26 +36,28 @@
           >
             <v-card
               hover
-              :to="{name: route.children[0].name}"
+              :to="{path: route.path}"
             >
               <v-sheet
                 class="d-flex align-center justify-center grey lighten-3"
-                height="160"
+                height="96"
                 tile
               >
                 <v-icon
-                  size="72"
+                  size="48"
                   :class="route.meta.color ? route.meta.color : ''"
                 >
                   {{ route.meta.icon }}
                 </v-icon>
               </v-sheet>
               <v-card-title
+                :class="route.meta.classes"
                 class="darken-1"
               >
                 {{ route.meta.title }}
               </v-card-title>
               <v-card-subtitle
+                :class="route.meta.classes"
                 class="darken-1"
               >
                 {{ route.meta.subtitle }}
@@ -60,17 +65,34 @@
             </v-card>
           </v-col>
         </v-row>
+        <v-row
+          justify="center"
+          align="center"
+        >
+          <v-col class="text-center">
+            <span class="caption">
+              下拉了解项目详情
+            </span>
+          </v-col>
+        </v-row>
+        <v-divider class="my-5" />
+        <HomeDescription />
       </v-col>
     </v-row>
   </div>
 </template>
 
 <script>
+
+import HomeDescription from "../../components/HomeDescription";
 export default {
   name: 'Home',
+  components: {
+    HomeDescription
+  },
   computed: {
     routes () {
-      return this.$router.options.routes.filter(el => el.path !== '/' && !el.meta.hide)
+      return this.$router.options.routes.find(el => el.name === this.$route.matched[0].name).children.filter(el => el.path !== "")
     }
   },
 }
