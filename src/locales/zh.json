@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "app.feiyan.help"
+    "name": "feiyan.help"
   },
   "pages": {
     "home": {
@@ -16,16 +16,16 @@
       "_name": "实时播报"
     },
     "accommodations": {
-      "_name": "医护人员免费住宿信息"
+      "_name": ""
     },
     "platforms": {
-      "_name": "线上诊断平台"
+      "_name": ""
     },
     "psychological": {
-      "_name": "心理咨询平台"
+      "_name": ""
     },
     "suppliesSubmission": {
-      "_name": "提交新的物资需求"
+      "_name": ""
     }
   },
   "partials": {

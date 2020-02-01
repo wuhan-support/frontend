@@ -161,7 +161,7 @@
             x-small
             color="red lighten-4"
           >
-            mdi-flag
+            mdi-file-document-box-remove
           </v-icon> 纠错按钮提交纠错请求，我们将再次与医院进行二次审核，以保证消息时效性。
         </v-card-text>
       </v-card>
@@ -212,34 +212,39 @@
                 </v-card-text>
                 <v-card-actions class="mx-2">
                   <v-btn
-                    outlined
+                    icon
                     color="primary"
                     :href="`https://ditu.amap.com/search?query=${encodeURIComponent(o.name)}`"
                     target="_blank"
                   >
-                    <v-icon left>
+                    <v-icon>
                       mdi-map-marker
                     </v-icon>
-                    地图
                   </v-btn>
 
                   <v-btn
-                    outlined
+                    rounded
+                    icon
                     color="secondary"
                     @click="openDialog(o)"
                   >
-                    <v-icon left>
-                      mdi-contact-phone
+                    <v-icon>
+                      mdi-phone
                     </v-icon>
-                    联系方式
                   </v-btn>
 
                   <v-spacer />
                   <v-btn
-                    icon
+                    outlined
+                    rounded
                     @click="showOrHideCard(o)"
                   >
-                    <v-icon>{{ show[o.name] ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</v-icon>
+                    <v-icon
+                      left
+                    >
+                      {{ show[o.name] ? "mdi-chevron-up" : "mdi-chevron-down" }}
+                    </v-icon>
+                    {{ show[o.name] ? "收起" : "展开" }}
                   </v-btn>
                   <v-btn
                     icon
@@ -247,7 +252,7 @@
                     @click="openReport(o)"
                   >
                     <v-icon>
-                      mdi-flag
+                      mdi-file-document-box-remove
                     </v-icon>
                   </v-btn>
                 </v-card-actions>
@@ -305,7 +310,7 @@
         report: {
           enabled: false,
           cause: "",
-          causes: ['地址不存在/未找到', '联系不上', '已被征用', '已住满', '其他原因无法接待', '缺少必需物资无法营业', '信息重复', '其他'],
+          causes: ['地址不存在/未找到', '联系不上医院方', '物资被拒收', '信息重复', '其他'],
           content: ""
         }
       }

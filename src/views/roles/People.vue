@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="home"
-  >
+  <div class="home">
     <v-row
       align="center"
       justify="center"
@@ -20,11 +18,8 @@
           align="center"
         >
           <v-col cols="12">
-            <h2 class="overline text-center">
-              多维度信息共享平台 引导页
-            </h2>
             <h1 class="heading text-center">
-              您是?
+              市民信息
             </h1>
           </v-col>
         </v-row>
@@ -35,34 +30,31 @@
             cols="12"
             sm="12"
             md="6"
-            lg="6"
-            xl="4"
           >
             <v-card
-              replace
               hover
-              :to="{name: route.children[0].name}"
+              :to="{path: route.path}"
             >
-              <v-img
-                class="white--text align-center text-center"
-                height="200px"
-                :src="route.meta.banner"
-                gradient="to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)"
+              <v-sheet
+                class="d-flex align-center justify-center grey lighten-3"
+                height="96"
+                tile
               >
                 <v-icon
-                  size="72"
+                  size="48"
                   :class="route.meta.color ? route.meta.color : ''"
-                  color="white"
                 >
                   {{ route.meta.icon }}
                 </v-icon>
-              </v-img>
+              </v-sheet>
               <v-card-title
+                :class="route.meta.classes"
                 class="darken-1"
               >
-                我是{{ route.meta.title }}
+                {{ route.meta.title }}
               </v-card-title>
               <v-card-subtitle
+                :class="route.meta.classes"
                 class="darken-1"
               >
                 {{ route.meta.subtitle }}
@@ -70,21 +62,39 @@
             </v-card>
           </v-col>
         </v-row>
+        <v-row
+          justify="center"
+          align="center"
+        >
+          <v-col class="text-center">
+            <span class="caption">
+              下拉了解项目详情
+            </span>
+          </v-col>
+        </v-row>
+        <v-divider class="my-5" />
+        <HomeDescription />
       </v-col>
     </v-row>
   </div>
 </template>
 
 <script>
+
+import HomeDescription from "../../components/HomeDescription";
 export default {
-  name: 'Home',
+  name: 'PeopleHome',
+  components: {
+    HomeDescription
+  },
   computed: {
     routes () {
-      return this.$router.options.routes.filter(el => el.path !== '/' && !el.meta.hide)
+      return this.$router.options.routes.find(el => el.name === this.$route.matched[0].name).children.filter(el => el.path !== "")
     }
   },
 }
 </script>
 
 <style scoped>
+
 </style>
