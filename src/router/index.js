@@ -36,8 +36,8 @@ const routes = [
     component: PeopleLayout,
     meta: {
       icon: "mdi-face",
-      title: "普通民众",
-      subtitle: "为普通民众准备的线上医疗诊断平台、线上心理咨询平台等",
+      title: "普通市民",
+      subtitle: "为普通市民准备的线上医疗诊断平台、线上心理咨询平台等",
       banner: `${config.cdn.global}/images/people.jpg`
     },
     children: [
@@ -47,7 +47,7 @@ const routes = [
         component: People,
         meta: {
           icon: "mdi-home",
-          title: "民众信息主页",
+          title: "市民信息主页",
         }
       },
       {

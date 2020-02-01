@@ -19,11 +19,8 @@
         >
           <v-col cols="12">
             <h1 class="heading text-center">
-              民众信息
+              市民信息
             </h1>
-            <h4 class="subtitle-1 text-center">
-              这里是一些说明信息
-            </h4>
           </v-col>
         </v-row>
         <v-row>
