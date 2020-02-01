@@ -45,6 +45,7 @@
 export default {
   name: 'PlaceSelector',
   props: {
+    // 自定义区域数据
     customDataset: {
       type: Object,
       default: () => require('./../../public/pca.json')
@@ -122,54 +123,20 @@ export default {
         this._events[e.name] && this.$emit(e.name, e.data)
       })
     }
-    // // 监听地址选择
-    // handleRegionChange (regions) {
-    //   this.data = Object.values(regions)
-    //     .filter(_ => !!_)
-    //     .map(_ => _.value)
-    //   const events = [
-    //     {
-    //       name: 'input',
-    //       data: this.data
-    //     },
-    //     {
-    //       name: 'change',
-    //       data: regions
-    //     }
-    //   ]
-    //   events.forEach(e => {
-    //     this._events[e.name] && this.$emit(e.name, e.data)
-    //   })
-    // }
   }
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .place-selector {
   flex: 1;
-}
-.place-selector >>> .v-label {
-  font-size: 14px;
-}
-.place-selector .selection {
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-}
-.place-selector >>> .v-region div.rg-select div.rg-select__el div.rg-select__content {
-  display: table-cell;
-  width: 100px;
-  max-width: 100px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  padding: 6px 20px 6px 10px;
-}
-</style>
-
-<style>
-.rg-select__list li {
-  color: black !important;
+  >>> .v-label {
+    font-size: 14px;
+  }
+  .selection {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
 }
 </style>
