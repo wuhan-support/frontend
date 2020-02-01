@@ -166,7 +166,7 @@
           <template v-else>
             <h1 class="overline mb-4">
               医护工作者、武汉市民与湖北居民<br>
-              同仇敌忾 我们与你同在
+              我们与你同在
             </h1>
             <h1 class="overline mb-5">
               疫情不息 援助不止
@@ -179,7 +179,7 @@
             class="mb-1"
           >
             <a
-              href="https://feiyan.help/eula/"
+              href="https://wuhan.support/about/eula/"
               target="_blank"
               class="font-weight-bold secondary--text text--darken-2"
               style="text-decoration: none;"
@@ -193,7 +193,7 @@
             />
 
             <a
-              href="https://feiyan.help/privacy/"
+              href="https://wuhan.support/about/privacy/"
               target="_blank"
               class="font-weight-bold secondary--text text--darken-2"
               style="text-decoration: none;"
@@ -209,12 +209,12 @@
             small
             outlined
             class="mt-1"
-            href="https://github.com/wuhan-support"
+            href="https://wuhan.support/"
           >
             <v-icon left>
               mdi-github-circle
             </v-icon>
-            查看源代码
+            wuhan.support
           </v-btn>
         </v-card-text>
       </v-card>
