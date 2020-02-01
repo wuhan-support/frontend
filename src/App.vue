@@ -179,7 +179,7 @@
             class="mb-1"
           >
             <a
-              href="https://wuhan.support/about/eula/"
+              href="https://wuhan.support/eula/"
               target="_blank"
               class="font-weight-bold secondary--text text--darken-2"
               style="text-decoration: none;"
@@ -193,7 +193,7 @@
             />
 
             <a
-              href="https://wuhan.support/about/privacy/"
+              href="https://wuhan.support/privacy/"
               target="_blank"
               class="font-weight-bold secondary--text text--darken-2"
               style="text-decoration: none;"
