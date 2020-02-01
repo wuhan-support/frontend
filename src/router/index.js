@@ -25,7 +25,7 @@ const routes = [
     component: Home,
     meta: {
       icon: "mdi-home",
-      title: "",
+      title: "首页",
       hide: true,
       hideDrawer: true
     }
