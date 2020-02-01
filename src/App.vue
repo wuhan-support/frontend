@@ -231,7 +231,7 @@ export default {
   data() {
     return {
       routes: [],
-      rawDrawer: !this.$vuetify.breakpoint.xsOnly,
+      rawDrawer: !this.$vuetify.breakpoint.smAndDown,
     };
   },
   computed: {

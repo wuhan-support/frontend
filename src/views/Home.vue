@@ -15,13 +15,22 @@
           contain
           class="mx-auto"
         />
+        <v-card-title
+          class="display-1 font-weight-bold"
+          style="word-break: normal"
+        >
+          我们是？
+        </v-card-title>
+        <v-card-text class="subtitle-1 line-height-wide black--text">
+          我们关注的是你所关注的：面向疫区内外民众和医疗机构的多维度信息整合平台<br>
+        </v-card-text>
         <v-row
           justify="center"
           align="center"
         >
           <v-col cols="12">
             <h2 class="overline text-center">
-              多维度信息共享平台 引导页
+              多维度信息整合平台
             </h2>
             <h1 class="heading text-center">
               您是?
@@ -76,8 +85,10 @@
 </template>
 
 <script>
+// import HomeDescription from "../components/HomeDescription";
 export default {
   name: 'Home',
+  components: {},
   computed: {
     routes () {
       return this.$router.options.routes.filter(el => el.path !== '/' && !el.meta.hide)
