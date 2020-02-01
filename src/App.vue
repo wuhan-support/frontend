@@ -67,6 +67,7 @@
               v-for="child in route.children.filter(el => !el.meta.hide)"
               :key="child.name"
               :to="{name: child.name}"
+              exact
               link
               class="listItem"
               active-class="listItemActive font-weight-bold white--text"

@@ -16,10 +16,13 @@
     </v-card-title>
     <v-card-text class="subtitle-1 line-height-wide black--text">
       <p>
-        <span class="font-weight-bold">对民众</span>：疫情防控、流言辟谣、义诊平台、免费心理咨询
+        <span class="font-weight-bold">对普通民众</span>：疫情防控、流言辟谣、义诊平台、免费心理咨询
       </p>
       <p>
         <span class="font-weight-bold">对医护人员</span>：需求发布平台、免费住宿及餐食、免费心理疏导咨询、医疗器械捐赠
+      </p>
+      <p>
+        <span class="font-weight-bold">对志愿者</span>：提供医院物资需求查询
       </p>
     </v-card-text>
 

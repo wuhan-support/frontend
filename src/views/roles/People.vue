@@ -86,7 +86,7 @@
 
 import HomeDescription from "../../components/HomeDescription";
 export default {
-  name: 'Home',
+  name: 'PeopleHome',
   components: {
     HomeDescription
   },

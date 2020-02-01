@@ -81,13 +81,13 @@
 
 import HomeDescription from "../../components/HomeDescription";
 export default {
-  name: 'Home',
+  name: 'StaffHome',
   components: {
     HomeDescription
   },
   computed: {
     routes () {
-      return this.$router.options.routes.find(el => el.name === this.$route.matched[0].name).children.filter(el => el.path !== "")
+      return this.$router.options.routes.find(el => el.name === this.$route.matched[0].name).children.filter(el => el.path !== "" && !el.meta.hide)
     }
   },
 }

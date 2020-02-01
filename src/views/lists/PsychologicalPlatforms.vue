@@ -81,7 +81,7 @@
       class="mx-3"
     >
       <h1 class="heading">
-        心理咨询平台
+        线上心理咨询平台
       </h1>
       <v-card>
         <v-card-text class="subtitle-1 green white--text my-2 mb-4">
@@ -284,7 +284,7 @@ export default {
         },
       regionalText(o) {
           const suffix = [];
-          if (o.regional === "地方") {
+          if (o.regional.includes("地方")) {
             if (o.province) suffix.push(o.province);
             if (o.city) suffix.push(o.city);
             if (o.suburb) suffix.push(o.suburb)
