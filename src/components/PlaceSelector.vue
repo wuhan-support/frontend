@@ -15,6 +15,7 @@
       >
         <v-select
           v-model="regions[selector.type]"
+          hide-details
           class="body-2"
           :items="selector.data"
           :no-data-text="label"
@@ -48,7 +49,7 @@ export default {
     // 自定义区域数据
     customDataset: {
       type: Object,
-      default: () => require('./../../public/pca.json')
+      default: () => require('../assets/pca.json')
     }
   },
   data() {

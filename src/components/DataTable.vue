@@ -5,11 +5,12 @@
       align="center"
       class="mx-0"
     >
-      <div class="subtitle-2 mb-4">
+      <div class="subtitle-2">
         按地区过滤：
       </div>
       <PlaceSelector
         v-model="region"
+        :custom-dataset="regionList"
         class="mx-0 mb-1"
       />
     </v-row>
@@ -115,6 +116,7 @@
   import Paginator from "./Paginator";
   import PlaceSelector from "./PlaceSelector";
   import geo from "../utils/geo";
+  import Console from "../utils/Console";
   export default {
     name: "DataTable",
     components: {PlaceSelector, Paginator},
@@ -156,17 +158,34 @@
       }
     },
     computed: {
+      cleanedData () {
+        return this.items.map((el) => {
+          if (el.province) el.province = el.province.trim().replace(" ", "");
+          if (el.city) el.city = el.city.trim().replace(" ", "");
+          if (el.suburb) el.suburb = el.suburb.trim().replace(" ", "");
+          return el
+        });
+      },
       filters () {
         const filters = [];
-        for (let [index, regionSegment] of this.region.entries()) {
+        for (const [index, regionSegment] of this.region.entries()) {
           if (index === 0) filters.push((el) => el.province === regionSegment);
           if (index === 1) filters.push((el) => el.city === regionSegment);
           if (index === 2) filters.push((el) => el.suburb === regionSegment)
         }
         return filters
       },
-      data() {
-        const filtered = this.items.filter((el) => {
+      regionList () {
+        const regionList = {};
+        for (const item of this.cleanedData) {
+          if (item.province && !regionList[item.province]) regionList[item.province] = {};
+          if (item.city && !regionList[item.province][item.city]) regionList[item.province][item.city] = [];
+          if (item.suburb && regionList[item.province][item.city]) regionList[item.province][item.city].push(item.suburb);
+        }
+        return regionList
+      },
+      data () {
+        const filtered = this.cleanedData.filter((el) => {
           if ("province" in el && "city" in el && "suburb" in el) {
             return this.filters.every((func) => {
               return func(el)
@@ -175,10 +194,11 @@
             return true
           }
         });
+
         const haveDistance = filtered.filter(el => {
           if (this.location) {
             if (el.latitude && el.longitude) {
-              console.log(el.name, el.latitude, el.longitude)
+              Console.debug(el.name, el.latitude, el.longitude)
               return true
             } else {
               return false
@@ -186,7 +206,7 @@
           } else {
             return true
           }
-        })
+        });
 
         const calculatedDistance = haveDistance.map(el => {
           if (this.location)  {
@@ -195,10 +215,12 @@
             el.distance = null
           }
           return el
-        })
+        });
+
         const sorted = calculatedDistance.sort((a, b) => {
           return a.distance - b.distance
-        })
+        });
+
         return sorted
       },
       location () {

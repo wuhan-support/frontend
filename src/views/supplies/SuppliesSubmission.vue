@@ -260,6 +260,7 @@
   import FormItem from "../../components/FormItem";
   import PlaceSelector from "../../components/PlaceSelector";
   import api from "../../apis/api";
+  import Console from "../../utils/Console";
 
   export default {
     name: 'SuppliesSubmission',
@@ -481,7 +482,7 @@
       marshalData () {
         const marshalled = {};
         const missings = [];
-        console.log(this.formKeyObj)
+        Console.log(this.formKeyObj)
         for (const form of this.formKeyObj) {
           if (form.required && !form.value) {
             missings.push(form.label)
@@ -504,8 +505,8 @@
       submit() {
         const {marshalled, missings} = this.marshalData();
         if (missings.length) return this.notifyMissings(missings);
-        console.log(marshalled);
-        console.log(api.submitSupplies(marshalled))
+        Console.log(marshalled);
+        Console.log(api.submitSupplies(marshalled))
       }
     }
   };

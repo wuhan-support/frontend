@@ -290,6 +290,7 @@
   import api from "../../apis/api";
   import strings from "../../utils/strings";
   import DataTable from "../../components/DataTable";
+  import Console from "../../utils/Console";
 
   export default {
     name: "Supplies",
@@ -317,7 +318,7 @@
     },
     computed: {
       dataset() {
-        console.log(this.data)
+        Console.log(this.data)
         return this.data.filter(el => el.name.length);
       },
       xs () {

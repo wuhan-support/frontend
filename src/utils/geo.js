@@ -1,3 +1,5 @@
+import Console from "./Console";
+
 export default {
   locate() {
     const options = {
@@ -8,11 +10,11 @@ export default {
     return new Promise(((resolve, reject) => {
       navigator.geolocation.getCurrentPosition(
         (cb) => {
-          console.log(`determined location`, cb);
+          Console.log(`determined location`, cb);
           resolve(cb)
         },
         (cb) => {
-          console.error(`could not determine location`, cb);
+          Console.error(`could not determine location`, cb);
           reject(cb)
         },
         options

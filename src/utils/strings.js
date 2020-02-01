@@ -36,7 +36,6 @@ function split (string, delimeter) {
 export default {
   contacts (name, content) {
     const results = [];
-    console.log(name, typeof name, content, typeof content);
 
     const names = split(name, " ");
     const contents = split(content, " ");
