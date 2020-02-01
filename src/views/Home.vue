@@ -35,6 +35,8 @@
             cols="12"
             sm="12"
             md="6"
+            lg="6"
+            xl="4"
           >
             <v-card
               replace

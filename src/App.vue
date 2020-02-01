@@ -11,6 +11,7 @@
       clipped
       width="254"
       class="navigationDrawer"
+      :disable-resize-watcher="$route.meta.hideDrawer"
     >
       <v-list>
         <v-list-item

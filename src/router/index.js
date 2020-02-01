@@ -145,7 +145,7 @@ const routes = [
       icon: "mdi-hand-heart",
       title: "志愿者",
       subtitle: "为志愿者准备的医院物资需求列表，方便为各个物资紧缺的医院等单位捐赠物资",
-      banner: `${config.cdn.global}/banners/volunteer.jpg`
+      banner: `${config.cdn.global}/banners/volunteers-v3.jpg`
     },
     children: [
       {
