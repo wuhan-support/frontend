@@ -2,10 +2,10 @@
   <div>
     <v-row
       v-if="!disableRegionSelector"
-      align="start"
+      align="center"
       class="mx-0"
     >
-      <div class="subtitle-2">
+      <div class="subtitle-2 mb-4">
         按地区过滤：
       </div>
       <PlaceSelector
