@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home'
-import I18n from "../i18n";
 import Accommodations from "../views/lists/Accommodations";
 // import PsychologicalPlatforms from "../views/PsychologicalPlatforms";
 // import MedicalPlatforms from '../views/MedicalPlatforms';
@@ -11,8 +10,9 @@ import PeopleLayout from "../layouts/PeopleLayout";
 import StaffLayout from "../layouts/StaffLayout";
 import MedicalPlatforms from "../views/lists/MedicalPlatforms";
 import PsychologicalPlatforms from "../views/lists/PsychologicalPlatforms";
-import Staff from "../views/indexes/Staff";
-import People from "../views/indexes/People";
+import Staff from "../views/roles/Staff";
+import People from "../views/roles/People";
+import config from "../config";
 
 Vue.use(VueRouter)
 
@@ -23,7 +23,9 @@ const routes = [
     component: Home,
     meta: {
       icon: "mdi-home",
-      i18n: "pages.home._name"
+      title: "",
+      hide: true,
+      hideDrawer: true
     }
   },
   {
@@ -31,9 +33,10 @@ const routes = [
     name: "people",
     component: PeopleLayout,
     meta: {
-      icon: "mdi-account-multiple",
+      icon: "mdi-face",
       title: "民众",
-      subtitle: "线上医疗诊断平台、心理咨询平台，均可在这里找到"
+      subtitle: "线上医疗诊断平台、心理咨询平台，均可在这里找到",
+      banner: `${config.cdn.global}/banners/people.jpg`
     },
     children: [
       {
@@ -45,21 +48,23 @@ const routes = [
         }
       },
       {
-        path: '/platforms/medical',
+        path: 'platforms/medical',
         name: 'medicalPlatform',
         component: MedicalPlatforms,
         meta: {
           icon: "mdi-hospital",
-          title: "线上医疗诊断平台"
+          title: "线上医疗诊断平台",
+          subtitle: "为民众提供线上医疗诊断的平台列表"
         }
       },
       {
-        path: '/platforms/psychological',
+        path: 'platforms/psychological',
         name: 'psychologicalPlatform',
         component: PsychologicalPlatforms,
         meta: {
           icon: "mdi-heart",
-          title: "线上心理咨询平台"
+          title: "线上心理咨询平台",
+          subtitle: "为民众提供线上免费心理咨询的平台列表"
         }
       },
     ]
@@ -69,9 +74,10 @@ const routes = [
     name: "staff",
     component: StaffLayout,
     meta: {
-      icon: "mdi-account-multiple",
+      icon: "mdi-hospital-box",
       title: "医护人员",
-      subtitle: "免费住宿信息、医院物资需求列表、提交新的物资需求，均可在这里找到"
+      subtitle: "免费住宿信息、医院物资需求列表、提交新的物资需求，均可在这里找到",
+      banner: `${config.cdn.global}/banners/staff.jpg`
     },
     children: [
       {
@@ -83,18 +89,18 @@ const routes = [
         }
       },
       {
-        path: '/accommodations',
+        path: 'accommodations',
         name: 'accommodations',
         component: Accommodations,
         meta: {
           icon: "mdi-hotel",
-          title: "医护人员免费住宿信息",
+          title: "医护人员免费住宿",
           color: "brown--text",
           subtitle: "为医护人员提供免费住宿信息列表，支持地理位置排序与地区过滤，以此提供基本生活保障"
         }
       },
       {
-        path: '/supplies',
+        path: 'supplies',
         name: 'supplies',
         component: Supplies,
         meta: {
@@ -105,7 +111,7 @@ const routes = [
         }
       },
       {
-        path: '/supplies/submit',
+        path: 'supplies/submit',
         name: 'suppliesSubmission',
         component: SuppliesSubmission,
         meta: {
@@ -139,7 +145,7 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  document.title = `${I18n.t(to.meta.i18n)} | ${I18n.t('app.name')}`;
+  document.title = `${to.meta.title} | ${config.app.name}`;
   next();
 });
 

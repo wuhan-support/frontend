@@ -1,5 +1,7 @@
 <template>
-  <div class="home">
+  <div
+    class="home"
+  >
     <v-row
       align="center"
       justify="center"
@@ -18,8 +20,11 @@
           align="center"
         >
           <v-col cols="12">
+            <h2 class="overline text-center">
+              多维度信息共享平台
+            </h2>
             <h1 class="heading text-center">
-              请选择您的角色
+              您是?
             </h1>
           </v-col>
         </v-row>
@@ -32,25 +37,28 @@
             md="6"
           >
             <v-card
+              replace
               hover
               :to="{name: route.children[0].name}"
             >
-              <v-sheet
-                class="d-flex align-center justify-center grey lighten-3"
-                height="160"
-                tile
+              <v-img
+                class="white--text align-center text-center"
+                height="200px"
+                :src="route.meta.banner"
+                gradient="to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)"
               >
                 <v-icon
                   size="72"
                   :class="route.meta.color ? route.meta.color : ''"
+                  color="white"
                 >
                   {{ route.meta.icon }}
                 </v-icon>
-              </v-sheet>
+              </v-img>
               <v-card-title
                 class="darken-1"
               >
-                {{ route.meta.title }}
+                我是{{ route.meta.title }}
               </v-card-title>
               <v-card-subtitle
                 class="darken-1"
@@ -77,5 +85,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

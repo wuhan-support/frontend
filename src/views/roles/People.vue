@@ -1,19 +1,103 @@
 <template>
-    <div class="people">
-        普通民众
-        <br />
-        <div @click="$router.push('/')">返回</div>
-    </div>
+  <div class="home">
+    <v-row
+      align="center"
+      justify="center"
+      class="fill-height"
+    >
+      <v-col cols="12">
+        <v-img
+          :src="require('@/assets/logo/feiyan.help.svg')"
+          aspect-ratio="2"
+          max-width="128px"
+          contain
+          class="mx-auto"
+        />
+        <v-row
+          justify="center"
+          align="center"
+        >
+          <v-col cols="12">
+            <h1 class="heading text-center">
+              民众信息
+            </h1>
+            <h4 class="subtitle-1 text-center">
+              这里是一些说明信息
+            </h4>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col
+            v-for="(route, i) in routes"
+            :key="i"
+            cols="12"
+            sm="12"
+            md="6"
+          >
+            <v-card
+              hover
+              :to="{path: route.path}"
+            >
+              <v-sheet
+                class="d-flex align-center justify-center grey lighten-3"
+                height="96"
+                tile
+              >
+                <v-icon
+                  size="48"
+                  :class="route.meta.color ? route.meta.color : ''"
+                >
+                  {{ route.meta.icon }}
+                </v-icon>
+              </v-sheet>
+              <v-card-title
+                :class="route.meta.classes"
+                class="darken-1"
+              >
+                {{ route.meta.title }}
+              </v-card-title>
+              <v-card-subtitle
+                :class="route.meta.classes"
+                class="darken-1"
+              >
+                {{ route.meta.subtitle }}
+              </v-card-subtitle>
+            </v-card>
+          </v-col>
+        </v-row>
+        <v-row
+          justify="center"
+          align="center"
+        >
+          <v-col class="text-center">
+            <span class="caption">
+              下拉了解项目详情
+            </span>
+          </v-col>
+        </v-row>
+        <v-divider class="my-5" />
+        <HomeDescription />
+      </v-col>
+    </v-row>
+  </div>
 </template>
 
 <script>
 
+import HomeDescription from "../../components/HomeDescription";
 export default {
-    name: 'People',
-    components: {},
-    computed: {}
+  name: 'Home',
+  components: {
+    HomeDescription
+  },
+  computed: {
+    routes () {
+      return this.$router.options.routes.find(el => el.name === this.$route.matched[0].name).children.filter(el => el.path !== "")
+    }
+  },
 }
 </script>
 
 <style scoped>
+
 </style>

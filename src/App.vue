@@ -2,6 +2,7 @@
   <v-app
     id="__app_root"
     :dark="dark"
+    :style="{'background': $route.name === 'home' ? '#f0f0f0' : null}"
   >
     <v-navigation-drawer
       v-model="drawer"
@@ -12,9 +13,24 @@
       class="navigationDrawer"
     >
       <v-list>
+        <v-list-item
+          link
+          :to="{path: '/'}"
+        >
+          <v-list-item-icon>
+            <v-icon>
+              mdi-chevron-left
+            </v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title class="itemTitle font-weight-bold">
+              回到欢迎界面
+            </v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
         <template v-for="route in routes">
           <v-list-item
-            v-if="!route.children || route.meta.forceSingle"
+            v-if="!route.children"
             :key="route.name"
             link
             :to="{name: route.name}"
@@ -44,18 +60,25 @@
             no-action
           >
             <template v-slot:activator>
-              <v-list-item-title>{{ route.meta.name }}</v-list-item-title>
+              <v-list-item-title>{{ route.meta.title }}</v-list-item-title>
             </template>
 
             <v-list-item
               v-for="child in route.children.filter(el => !el.meta.hide)"
               :key="child.name"
               :to="{name: child.name}"
+              link
+              class="listItem"
+              active-class="listItemActive font-weight-bold white--text"
             >
-              <v-list-item-title>{{ $t(child.meta.i18n) }}</v-list-item-title>
+              <v-list-item-title>{{ child.meta.title }}</v-list-item-title>
 
               <v-list-item-icon>
-                <v-icon v-text="child.meta.icon" />
+                <v-icon
+                  class="listItemIcon"
+                  :class="route.meta.classes"
+                  v-text="child.meta.icon"
+                />
               </v-list-item-icon>
             </v-list-item>
           </v-list-group>
@@ -70,6 +93,7 @@
       </v-icon>
     </v-navigation-drawer>
     <v-app-bar
+      v-if="!$route.meta.hideDrawer"
       app
       clipped-left
       dark
@@ -77,19 +101,23 @@
       class="appBar"
       height="50"
     >
-      <v-icon
-        size="16"
-        class="black--text navButtonIcon"
+      <!--      <v-icon-->
+      <!--        size="16"-->
+      <!--        class="black&#45;&#45;text navButtonIcon"-->
+      <!--        @click.stop="drawer = !drawer"-->
+      <!--      >-->
+      <!--        wsicon wsicon-Menu-->
+      <!--      </v-icon>-->
+      <v-app-bar-nav-icon
+        class="black--text pr-1"
         @click.stop="drawer = !drawer"
-      >
-        wsicon wsicon-Menu
-      </v-icon>
+      />
       <v-toolbar-title
         dark
-        class="pl-1 toolbarTitle"
+        class="toolbarTitle"
       >
         <div class="toolbarTitle">
-          {{ $t($router.currentRoute.meta.i18n) }}
+          {{ $router.currentRoute.meta.title }}
         </div>
       </v-toolbar-title>
       <v-icon
@@ -119,29 +147,54 @@
       <v-card
         flat
         tile
-        class="text-center"
-        color="grey lighten-2"
+        class="text-center pb-4"
+        :class="{'grey lighten-2': $route.name !== 'psychologicalPlatform', 'light-green lighten-2': $route.name === 'psychologicalPlatform'}"
         style="width: 100%"
       >
         <v-card-text>
+          <template v-if="$route.name === 'psychologicalPlatform'">
+            <h1 class="overline mb-4">
+              这个世界虽然不完美<br>
+              但我们仍然可以疗愈自己
+            </h1>
+            <h1 class="overline mb-5">
+              我们与你同在，你不是孤独的 ❤️
+            </h1>
+          </template>
+          <template v-else>
+            <h1 class="overline mb-4">
+              医护工作者、武汉市民与湖北居民<br>
+              同仇敌忾 我们与你同在
+            </h1>
+            <h1 class="overline mb-5">
+              疫情不息 援助不止
+            </h1>
+          </template>
+
           <v-row
             align="center"
             justify="center"
             class="mb-1"
           >
             <a
-              href="https://feiyan.help/privacy/"
+              href="https://feiyan.help/eula/"
               target="_blank"
               class="font-weight-bold secondary--text text--darken-2"
+              style="text-decoration: none;"
             >
               用户协议
             </a>
 
+            <v-divider
+              vertical
+              class="mx-3"
+            />
 
             <a
               href="https://feiyan.help/privacy/"
               target="_blank"
               class="font-weight-bold secondary--text text--darken-2"
+              style="text-decoration: none;"
             >
               隐私声明
             </a>
@@ -149,16 +202,17 @@
 
           <span>{{ new Date().getFullYear() }} — <strong>feiyan.help</strong></span>
 
+          <br>
           <v-btn
-            outlined
             small
-            class="ml-3"
+            outlined
+            class="mt-1"
             href="https://github.com/wuhan-support"
           >
             <v-icon left>
               mdi-github-circle
             </v-icon>
-            Github
+            查看源代码
           </v-btn>
         </v-card-text>
       </v-card>
@@ -167,7 +221,7 @@
 </template>
 
 <script>
-import Console from "@/utils/Console";
+// import Console from "@/utils/Console";
 // import utils from "./utils/utils";
 
 export default {
@@ -175,21 +229,7 @@ export default {
   data() {
     return {
       routes: [],
-      localizations: [
-        {
-          id: "zh",
-          name: "中文"
-        },
-        {
-          id: "en",
-          name: "English"
-        },
-        {
-          id: "ja",
-          name: "日本語"
-        }
-      ],
-      drawer: !this.$vuetify.breakpoint.xsOnly,
+      rawDrawer: !this.$vuetify.breakpoint.xsOnly,
     };
   },
   computed: {
@@ -201,6 +241,14 @@ export default {
         this.$store.commit("switchDark", value);
         this.$vuetify.theme.dark = value;
       },
+    },
+    drawer: {
+      get () {
+        return this.rawDrawer && !this.$route.meta.hideDrawer
+      },
+      set (value) {
+        this.rawDrawer = value
+      }
     }
   },
   watch: {
@@ -235,19 +283,6 @@ export default {
       } else {
         document.body.style.backgroundColor = "#fafafa";
       }
-    },
-    changeLocale(localeId, save = true) {
-      Console.debug(
-        "[i18n] locale changed to:",
-        localeId,
-        "| saving to vuex:",
-        save
-      );
-      this.$i18n.locale = localeId;
-      // this.$vuetify.lang.current = localeId;
-      if (save) this.$store.commit("changeLocale", localeId);
-      document.title = `${this.$t(this.$route.meta.i18n) + " | " ||
-        ""}${this.$t("app.name")}`;
     }
   }
 };
@@ -264,8 +299,8 @@ export default {
 }
 .logo {
   position: absolute;
-  bottom: 30px;
-  font-size: 160px !important;
+  bottom: 0px;
+  font-size: 168px !important;
   color: #cccccc !important;
   margin: 0 auto;
   width: 100%;
@@ -310,7 +345,7 @@ export default {
   font-size: 16px;
   color: #333E48;
   letter-spacing: 0;
-  margin-left: 5px;
+  /*margin-left: 5px;*/
 }
 .slide-fade-enter-active {
   transition: all 0.225s cubic-bezier(0.165, 0.84, 0.44, 1);

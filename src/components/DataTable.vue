@@ -1,6 +1,7 @@
 <template>
   <div>
     <v-row
+      v-if="!disableRegionSelector"
       align="start"
       class="mx-0"
     >
@@ -37,7 +38,7 @@
     <v-text-field
       v-model="search"
       :label="region.length ? '在所选地区范围内搜索' : '搜索'"
-      placeholder="名称、地区或地址"
+      :placeholder="searchText"
       dense
       class="my-1"
 
@@ -126,6 +127,18 @@
         type: Boolean,
         default () {
           return false
+        }
+      },
+      disableRegionSelector: {
+        type: Boolean,
+        default () {
+          return false
+        }
+      },
+      searchText: {
+        type: String,
+        default () {
+          return "名称、地区或地址"
         }
       }
     },

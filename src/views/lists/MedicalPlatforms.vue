@@ -1,186 +1,146 @@
-<i18n>
-  {
-    "en": {
-      "source": "Source: ",
-      "view": "Details"
-    },
-    "zh": {
-      "source": "信息来源：",
-      "view": "查看详情"
-    }
-  }
-</i18n>
-
 <template>
-    <v-row align="center" justify="center">
-        <v-snackbar :value="snackbar" color="success" bottom :timeout="4000">
-            <v-icon left color="white">
-                mdi-check
-            </v-icon>
-            感谢支持，已提交纠错信息
-            <v-spacer />
-        </v-snackbar>
-        <v-dialog v-model="dialog.enabled" max-width="450px">
-            <v-card>
-                <v-card-title>
-                    联系方式
-                </v-card-title>
-                <v-card-text>
-                    <v-list two-line>
-                        <v-list-item :href="`https://ditu.amap.com/search?query=${encodeURIComponent(dialog.address)}`">
-                            <v-list-item-avatar>
-                                <v-icon>
-                                    mdi-map
-                                </v-icon>
-                            </v-list-item-avatar>
-                            <v-list-item-content>
-                                <v-list-item-title>
-                                    地址
-                                </v-list-item-title>
-                                <v-list-item-subtitle>
-                                    {{ dialog.address }}
-                                </v-list-item-subtitle>
-                            </v-list-item-content>
-                        </v-list-item>
+  <v-row
+    align="center"
+    justify="center"
+  >
+    <v-snackbar
+      :value="snackbar"
+      color="success"
+      bottom
+      :timeout="4000"
+    >
+      <v-icon
+        left
+        color="white"
+      >
+        mdi-check
+      </v-icon>
+      感谢支持，已提交纠错信息
+      <v-spacer />
+    </v-snackbar>
+    <v-dialog
+      v-model="report.enabled"
+      persistent
+      max-width="450px"
+    >
+      <v-card>
+        <v-card-title>
+          提交纠错
+        </v-card-title>
+        <v-card-text>
+          <v-select
+            v-model="report.cause"
+            label="错误类型"
+            placeholder="请选择错误类型"
+            :items="report.causes"
+            filled
+            hide-details
+            class="mb-2"
+          />
+          收到纠错请求后我们会再次审核此条信息以保证准确性。<br>
+          <span class="red--text">注意：我们的人力资源有限，烦请不要滥用此功能，十分感谢！</span>
+        </v-card-text>
+        <v-card-actions>
+          <v-btn
+            text
+            @click="report.enabled = false"
+          >
+            取消
+          </v-btn>
 
-                        <v-list-item v-for="[i, contact] in contacts.entries()" :key="i" v-bind="contact.link">
-                            <v-list-item-avatar>
-                                <v-icon>
-                                    mdi-contact-phone
-                                </v-icon>
-                            </v-list-item-avatar>
-                            <v-list-item-content>
-                                <v-list-item-title>
-                                    {{ contact.name }}
-                                </v-list-item-title>
-                                <v-list-item-subtitle>
-                                    {{ contact.content }}
-                                </v-list-item-subtitle>
-                            </v-list-item-content>
-                            <v-list-item-action>
-                                <v-icon>
-                                    mdi-phone
-                                </v-icon>
-                            </v-list-item-action>
-                        </v-list-item>
-                    </v-list>
-                </v-card-text>
-                <v-card-actions>
-                    <v-spacer />
-                    <v-btn text @click="dialog.enabled = false">
-                        关闭
-                    </v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
-        <v-dialog v-model="report.enabled" persistent max-width="450px">
-            <v-card>
-                <v-card-title>
-                    提交纠错
-                </v-card-title>
-                <v-card-text>
-                    <v-select v-model="report.cause" label="错误类型" placeholder="请选择错误类型" :items="report.causes" filled hide-details class="mb-2" />
-                    收到纠错请求后我们会再次审核此条信息以保证准确性。<br>
-                    <span class="red--text">注意：我们的人力资源有限，烦请不要滥用此功能，十分感谢！</span>
-                </v-card-text>
-                <v-card-actions>
-                    <v-btn text @click="report.enabled = false">
-                        取消
-                    </v-btn>
+          <v-spacer />
 
-                    <v-spacer />
+          <v-btn
+            text
+            color="primary"
+            :loading="$store.getters.ajaxLoading"
+            :disabled="report.cause === ''"
+            @click="doReport"
+          >
+            确认
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 
-                    <v-btn text color="primary" :loading="$store.getters.ajaxLoading" :disabled="report.cause === ''" @click="doReport">
-                        确认
-                    </v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
-
-        <v-col cols="12" class="mx-3">
-            <h1 class="heading">
-                医院信息
-            </h1>
-            <v-card>
-                <v-card-text class="subtitle-2 green white--text my-2">
-                    提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字
-                </v-card-text>
-            </v-card>
-            <!-- <p class="subtitle-1">
+    <v-col
+      cols="12"
+      class="mx-3"
+    >
+      <h1 class="heading">
+        线上医疗诊断平台
+      </h1>
+      <!--      <v-card>-->
+      <!--        <v-card-text class="subtitle-2 green white&#45;&#45;text mt-2 mb-4">-->
+      <!--          提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字-->
+      <!--        </v-card-text>-->
+      <!--      </v-card>-->
+      <!-- <p class="subtitle-1">
                 图例：<v-icon small>
                     mdi-bed-empty
                 </v-icon> 表示床位剩余，<v-icon small>
                     mdi-home-circle
                 </v-icon> 表示房间剩余
             </p> -->
-            <v-skeleton-loader :loading="$store.getters.ajaxLoading && !data.length" type="card@4">
-                <div>
-                    <!-- <v-row justify="space-between" align="center" class="mx-3">
+      <v-skeleton-loader
+        :loading="$store.getters.ajaxLoading && !data.length"
+        type="card@4"
+      >
+        <div>
+          <!-- <v-row justify="space-between" align="center" class="mx-3">
                         <v-checkbox v-model="filters.available" class="d-inline-flex" label="只看有房" />
                         <v-checkbox v-model="filters.linBaoRuZhu" class="d-inline-flex" label="不需自带三件套" />
                     </v-row> -->
-                    <DataTable enable-geolocation :items="dataset">
-                        <template v-slot:default="{ items }">
-                            <v-card v-for="[i, o] in items.entries()" :key="i" class="my-4 pb-2 card-border">
-                                <v-card-title>
-                                    <span class="title font-weight-black">
-                                        {{ o.name }}
-                                    </span>
-                                </v-card-title>
-                                <v-card-text>
-                                    <span class="float-right ml-4">
-                                        <template v-if="o.beds">
-                                            <v-icon class="mr-1" small>mdi-bed-empty</v-icon> {{ o.beds }}
-                                            <br>
-                                        </template>
-
-                                        <template v-if="o.room">
-                                            <v-icon class="mr-1" small>mdi-home-circle</v-icon> {{ o.room }}
-                                            <br>
-                                        </template>
-
-                                        <template v-if="o.distance !== null">
-                                            <v-icon class="mr-1" small>mdi-ruler</v-icon> {{ o.distance.toFixed(1) }}km
-                                        </template>
-                                    </span>
-                                    <span class="subtitle-1">
-                                        {{ o.province }} {{ o.city }} {{ o.suburb }}<br>地址：{{ o.address }}
-                                    </span>
-                                    <br>
-                                    <span v-if="o.notes" class="subtitle-2 red--text">
-                                        备注：{{ o.notes }}
-                                    </span>
-                                </v-card-text>
-                                <v-card-actions class="mx-2">
-                                    <v-btn outlined color="primary" :href="`https://ditu.amap.com/search?query=${encodeURIComponent(o.name)}`" target="_blank">
-                                        <v-icon left>
-                                            mdi-map-marker
-                                        </v-icon>
-                                        地图
-                                    </v-btn>
-                                    <v-btn outlined color="green" @click="openDialog(o)">
-                                        <v-icon left>
-                                            mdi-contact-phone
-                                        </v-icon>
-                                        联系方式
-                                    </v-btn>
-                                    <v-spacer />
-                                    <v-btn outlined color="error darken-1" @click="openReport(o)">
-                                        纠错
-                                    </v-btn>
-                                </v-card-actions>
-                            </v-card>
-                        </template>
-                    </DataTable>
-                </div>
-            </v-skeleton-loader>
-        </v-col>
-    </v-row>
+          <DataTable
+            disable-region-selector
+            search-text="平台名称"
+            :items="dataset"
+          >
+            <template v-slot:default="{ items }">
+              <v-card
+                v-for="item in items"
+                :key="item.id"
+                class="my-4 pb-2 card-border"
+              >
+                <v-card-title>
+                  <span class="title font-weight-black">
+                    {{ item.platformname }} <span class="caption font-weight-bold">诊断平台</span>
+                  </span>
+                </v-card-title>
+                <v-card-text v-if="!item.address.startsWith('http')">
+                  使用方法：{{ item.address }}
+                </v-card-text>
+                <v-card-actions class="mx-2">
+                  <v-btn
+                    v-if="redirection(item)"
+                    color="primary darken-1"
+                    :href="redirection(item).l"
+                  >
+                    <v-icon left>
+                      mdi-open-in-new
+                    </v-icon>
+                    打开{{ redirection(item).t }}
+                  </v-btn>
+                  <v-spacer />
+                  <v-btn
+                    outlined
+                    color="error darken-1"
+                    @click="openReport(item)"
+                  >
+                    纠错
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </template>
+          </DataTable>
+        </div>
+      </v-skeleton-loader>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
 import api from "../../apis/api";
-import strings from "../../utils/strings";
 import DataTable from "../../components/DataTable";
 
 export default {
@@ -204,7 +164,7 @@ export default {
             report: {
                 enabled: false,
                 cause: "",
-                causes: ['地址不存在/未找到', '联系不上', '已被征用', '已住满', '其他原因无法接待', '缺少必需物资无法营业', '信息重复', '其他'],
+                causes: ['联系不上', '链接失效', '信息重复', '其他'],
                 content: ""
             },
             filters: {
@@ -215,22 +175,10 @@ export default {
     },
     computed: {
         dataset () {
-            let data = this.data.filter(el => el.name.length).map(el => {
-                el.notes = el.notes ? el.notes.toString() : ""
-                return el
-            })
-            if (this.filters.available) data = data.filter(el => !/住满|不接待|征用/.test(el.notes))
-            if (this.filters.linBaoRuZhu) data = data.filter(el => !/([34三四])件套/.test(el.notes))
-            return data
+            return this.data
         },
         xs () {
             return this.$vuetify.breakpoint.xsOnly
-        },
-        contacts () {
-            return strings.contacts(
-                this.dialog.contact.name,
-                this.dialog.contact.content,
-            )
         }
     },
     beforeMount () {
@@ -239,6 +187,19 @@ export default {
         }
     },
     methods: {
+      redirection(o) {
+        if (o.address.startsWith("http")) {
+          return {t: "链接", l: o.address}
+        } else if (o.address.includes("微信")) {
+          return {t: "微信", l: "weixin://"}
+        } else if (o.address.includes("京东")) {
+          return {t: "京东APP", l: "openapp.jdmobile://"}
+        } else if (o.address.includes("支付宝")) {
+          return {t: "支付宝APP", l: "alipay://"}
+        } else {
+          return null
+        }
+      },
         update () {
             api.medicalPlatform().then(({ data }) => {
                 this.data = data
