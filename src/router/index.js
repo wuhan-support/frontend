@@ -38,7 +38,7 @@ const routes = [
       icon: "mdi-face",
       title: "普通民众",
       subtitle: "为普通民众准备的线上医疗诊断平台、线上心理咨询平台等",
-      banner: `${config.cdn.global}/banners/people.jpg`
+      banner: `${config.cdn.global}/images/people.jpg`
     },
     children: [
       {
@@ -80,7 +80,7 @@ const routes = [
       icon: "mdi-hospital-box",
       title: "医护人员",
       subtitle: "为医护人员准备的免费住宿与心理咨询平台信息",
-      banner: `${config.cdn.global}/banners/staff.jpg`
+      banner: `${config.cdn.global}/images/staff.jpg`
     },
     children: [
       {
@@ -145,7 +145,7 @@ const routes = [
       icon: "mdi-hand-heart",
       title: "志愿者",
       subtitle: "为志愿者准备的医院物资需求列表，方便为各个物资紧缺的医院等单位捐赠物资",
-      banner: `${config.cdn.global}/banners/volunteers-v3.jpg`
+      banner: `${config.cdn.global}/images/volunteers-v3.jpg`
     },
     children: [
       {
