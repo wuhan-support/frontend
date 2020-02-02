@@ -13,6 +13,13 @@
       class="navigationDrawer"
       :disable-resize-watcher="$route.meta.hideDrawer"
     >
+      <v-img
+        :src="require('@/assets/logo/gray.svg')"
+        aspect-ratio="2"
+        max-width="512px"
+        contain
+        class="mx-auto logo"
+      />
       <v-list>
         <v-list-item
           link
@@ -86,13 +93,6 @@
           </v-list-group>
         </template>
       </v-list>
-      <v-icon
-        size="50"
-        center
-        class="logo"
-      >
-        wsicon wsicon-logo-zh
-      </v-icon>
     </v-navigation-drawer>
     <v-app-bar
       v-if="!$route.meta.hideDrawer"
@@ -300,12 +300,8 @@ export default {
   text-rendering: optimizeLegibility;
 }
 .logo {
-  position: absolute;
-  bottom: 0px;
-  font-size: 168px !important;
-  color: #cccccc !important;
-  margin: 0 auto;
-  width: 100%;
+  margin: 20px;
+  height: 45px;
 }
 .navigationDrawer {
   padding-top: 21px;
@@ -339,15 +335,14 @@ export default {
   color: #000000;
   margin: 0 5px;
 }
-.appBar .logoIcon {
-  margin-left: auto;
-}
 .appBar .toolbarTitle {
   font-family: PingFangSC-Medium;
   font-size: 16px;
   color: #333E48;
   letter-spacing: 0;
-  /*margin-left: 5px;*/
+}
+.appBar .logoIcon {
+  margin-left: auto;
 }
 .slide-fade-enter-active {
   transition: all 0.225s cubic-bezier(0.165, 0.84, 0.44, 1);
