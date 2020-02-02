@@ -125,7 +125,7 @@
       <v-icon
         size="30"
         right
-        color="#8b3830"
+        color="#a20002"
         class="logoIcon"
       >
         wsicon wsicon-logo-icon
@@ -323,8 +323,8 @@ export default {
   color: #333333;
 }
 .navigationDrawer .listItemActive {
-  background: #6CBD0F;
-  border-left: 7px solid #64A020;
+  background: #a20002;
+  border-left: 7px solid #910002;
 }
 .navigationDrawer .listItem .itemTitle {
   font-size: 16px !important;
