@@ -100,7 +100,7 @@
               <v-card
                 v-for="item in items"
                 :key="item.id"
-                class="my-4 pb-2 card-border"
+                class="viewCard redBorder"
               >
                 <v-card-title>
                   <span class="title font-weight-black">
@@ -110,25 +110,27 @@
                 <v-card-text v-if="!item.address.startsWith('http')">
                   使用方法：{{ item.address }}
                 </v-card-text>
-                <v-card-actions class="mx-2">
-                  <v-btn
-                    v-if="redirection(item)"
-                    color="primary darken-1"
-                    :href="redirection(item).l"
-                  >
-                    <v-icon left>
-                      mdi-open-in-new
-                    </v-icon>
-                    打开{{ redirection(item).t }}
-                  </v-btn>
-                  <v-spacer />
-                  <v-btn
-                    outlined
-                    color="error darken-1"
-                    @click="openReport(item)"
-                  >
-                    纠错
-                  </v-btn>
+                <v-divider></v-divider>
+                <v-card-actions>
+                  <v-col class="text-center d-flex justify-space-between">
+                    <v-btn
+                      tile
+                      small
+                      text
+                      v-if="redirection(item)"
+                      :href="redirection(item).l"
+                    >
+                    <v-icon class="iconRed" left>mdi-open-in-new</v-icon>打开{{ redirection(item).t }}
+                    </v-btn>
+                    <v-btn
+                      tile
+                      text
+                      small
+                      @click="openReport(item)"
+                    >
+                    <v-icon class="iconRed" left>wsicon wsicon-info</v-icon>信息纠错
+                    </v-btn>
+                  </v-col>
                 </v-card-actions>
               </v-card>
             </template>

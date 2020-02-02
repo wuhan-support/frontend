@@ -34,6 +34,7 @@
           >
             <v-card
               hover
+              class="viewCard"
               :to="{path: route.path}"
             >
               <v-sheet

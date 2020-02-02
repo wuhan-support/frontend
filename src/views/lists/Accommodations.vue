@@ -147,7 +147,7 @@
         医护人员免费住宿
       </h1>
       <v-card class="elevation-0">
-        <v-card-text class="alertCardText white--text my-2">
+        <v-card-text class="alertRedCardText white--text my-2">
           请注意：大多数住宿地点均要求各位携带相关证件（医护工作证 + 身份证）实名入住；请记得准备好上述证件后，致电相关住宿提供方确认空房情况哦～ 您辛苦啦～
         </v-card-text>
       </v-card>
@@ -191,7 +191,7 @@
               <v-card
                 v-for="[i, o] in items.entries()"
                 :key="i"
-                class="viewCard"
+                class="viewCard redBorder"
               >
                   <span class="float-right surplusInfo">
                     <div class="content">
@@ -233,32 +233,32 @@
                 </v-card-text>
                 <v-divider></v-divider>
                 <v-card-actions>
-                      <v-col class="text-center d-flex justify-space-between">
-                          <v-btn
-                            tile
-                            small
-                            text
-                            :href="`https://ditu.amap.com/search?query=${encodeURIComponent(o.name)}`"
-                            target="_blank"
-                          >
-                          <v-icon class="iconGreen" left>wsicon wsicon-local</v-icon>查看地图
-                          </v-btn>
-                          <v-btn
-                            tile
-                            text
-                            small
-                            @click="openDialog(o)"
-                          >
-                          <v-icon class="iconGreen" left>wsicon wsicon-contact</v-icon>联系方式
-                          </v-btn>
-                          <v-btn
-                            tile
-                            text
-                            small
-                            @click="openReport(o)"
-                          ><v-icon class="iconGreen" left>wsicon wsicon-info</v-icon>信息纠错
-                          </v-btn>
-                      </v-col>
+                  <v-col class="text-center d-flex justify-space-between">
+                      <v-btn
+                        tile
+                        small
+                        text
+                        :href="`https://ditu.amap.com/search?query=${encodeURIComponent(o.name)}`"
+                        target="_blank"
+                      >
+                      <v-icon class="iconRed" left>wsicon wsicon-local</v-icon>查看地图
+                      </v-btn>
+                      <v-btn
+                        tile
+                        text
+                        small
+                        @click="openDialog(o)"
+                      >
+                      <v-icon class="iconRed" left>wsicon wsicon-contact</v-icon>联系方式
+                      </v-btn>
+                      <v-btn
+                        tile
+                        text
+                        small
+                        @click="openReport(o)"
+                      ><v-icon class="iconRed" left>wsicon wsicon-info</v-icon>信息纠错
+                      </v-btn>
+                  </v-col>
                 </v-card-actions>
               </v-card>
             </template>
@@ -364,11 +364,13 @@
 </script>
 
 <style>
-.iconGreen {
+.iconRed {
   color: #a20002 !important;
 }
-.viewCard {
+.redBorder {
   border-top: 4px solid #a20002 !important;
+}
+.viewCard {
   background: #FFFFFF;
   box-shadow: 0 3px 20px 0 rgba(0,0,0,0.10);
   border-radius: 4px;
@@ -376,7 +378,7 @@
   margin-bottom: 20px;
   overflow: hidden;
 }
-.alertCardText {
+.alertRedCardText {
   background: #a20002;
   font-size: 15px !important;
 }

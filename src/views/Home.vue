@@ -50,6 +50,7 @@
             <v-card
               hover
               :to="{name: route.children[0].name}"
+              class="viewCard"
             >
               <v-img
                 class="white--text align-center text-center"
