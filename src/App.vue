@@ -125,7 +125,8 @@
       <v-icon
         size="30"
         right
-        class="red--text logoIcon"
+        color="#8b3830"
+        class="logoIcon"
       >
         wsicon wsicon-logo-icon
       </v-icon>
