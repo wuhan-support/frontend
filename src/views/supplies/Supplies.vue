@@ -58,7 +58,9 @@
             </v-list-item>
 
             <v-list-item
-              :href="`tel://${dialog.contact.content}`"
+              v-for="[i, contact] in contacts.entries()"
+              :key="i"
+              v-bind="contact.link"
             >
               <v-list-item-avatar>
                 <v-icon>
@@ -67,10 +69,10 @@
               </v-list-item-avatar>
               <v-list-item-content>
                 <v-list-item-title>
-                  负责人：{{ dialog.contact.name ? dialog.contact.name : "（暂无姓名）" }}
+                  {{ contact.name }}
                 </v-list-item-title>
                 <v-list-item-subtitle>
-                  电话：{{ dialog.contact.content ? dialog.contact.name : "（暂无电话：可选择去官网查询）" }}
+                  {{ contact.content }}
                 </v-list-item-subtitle>
               </v-list-item-content>
               <v-list-item-action>
@@ -158,8 +160,9 @@
       <v-card>
         <v-card-text class="caption grey white--text my-2">
           若您发现信息有不完整、已过期等情况，请点击相应数据卡片右下角的 <v-icon
-            x-small
-            color="red lighten-4"
+            small
+            color="grey lighten-3"
+            style="margin-top: -4px;"
           >
             mdi-file-document-box-remove
           </v-icon> 纠错按钮提交纠错请求，我们将再次与医院进行二次审核，以保证消息时效性。
@@ -290,6 +293,7 @@
   import api from "../../apis/api";
   import strings from "../../utils/strings";
   import DataTable from "../../components/DataTable";
+  import Console from "../../utils/Console";
 
   export default {
     name: "Supplies",
@@ -317,7 +321,7 @@
     },
     computed: {
       dataset() {
-        console.log(this.data)
+        Console.log(this.data)
         return this.data.filter(el => el.name.length);
       },
       xs () {

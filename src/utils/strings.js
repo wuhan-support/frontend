@@ -1,3 +1,5 @@
+import Console from "./Console";
+
 function isNull(o) {
   return o === "" || o === null || o === undefined;
 }
@@ -17,14 +19,13 @@ function link (url, targetBlank=false) {
 function formatContact (name, content) {
   // if there's nothing we will do nothing
   if (isNull(name) && isNull(content)) return null;
+  Console.debug("contact", name, content)
 
-  name = `负责人：${!isNull(name) ? name : "(未知姓名)"}`;
-
-  let url = content ? link(`tel://${content}`) : null;
-
-  content = `电话：${!isNull(content) ? content : "(未知电话)"}`;
-
-  return {name, content, url}
+  return {
+    name: `负责人：${!isNull(name) ? name : "(姓名未知)"}`,
+    content: `电话：${!isNull(content) ? content : "(电话未知)"}`,
+    link: content ? link(`tel://${content}`) : null
+  }
 }
 
 function split (string, delimeter) {
@@ -36,7 +37,6 @@ function split (string, delimeter) {
 export default {
   contacts (name, content) {
     const results = [];
-    console.log(name, typeof name, content, typeof content);
 
     const names = split(name, " ");
     const contents = split(content, " ");

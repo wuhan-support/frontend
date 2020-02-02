@@ -2,7 +2,7 @@
   <div>
     <v-row
       v-if="!disableRegionSelector"
-      align="start"
+      align="center"
       class="mx-0"
     >
       <div class="subtitle-2">
@@ -10,6 +10,7 @@
       </div>
       <PlaceSelector
         v-model="region"
+        :custom-dataset="regionList"
         class="mx-0 mb-1"
       />
     </v-row>
@@ -66,6 +67,7 @@
       </template>
     </v-text-field>
     <v-data-iterator
+      id="data-table--content"
       :items="data"
       :search="search"
       :page="page"
@@ -104,7 +106,7 @@
         <Paginator
           :page="page"
           :pagination="pagination"
-          @change="(newPage) => {page = newPage; $vuetify.goTo(0, {duration: 225, offset: 0, easing: 'easeOutQuad'})}"
+          @change="(newPage) => {page = newPage; $vuetify.goTo('#data-table--content', {duration: 125, offset: 0, easing: 'easeOutQuad'})}"
         />
       </template>
     </v-data-iterator>
@@ -156,17 +158,44 @@
       }
     },
     computed: {
+      // 清洗行政区划内的多余空格
+      cleanedData () {
+        return this.items.map((el) => {
+          if (el.province) {
+            el.province = el.province.replace(" ", "");
+            if (el.province.length === 2) {
+              el.province = `${el.province}省`
+            }
+          }
+          if (el.city) el.city = el.city.replace(" ", "");
+          if (el.suburb) el.suburb = el.suburb.replace(" ", "");
+          return el
+        });
+      },
+      // 根据当前行政区划选择，过滤当前数据集
       filters () {
         const filters = [];
-        for (let [index, regionSegment] of this.region.entries()) {
+        for (const [index, regionSegment] of this.region.entries()) {
           if (index === 0) filters.push((el) => el.province === regionSegment);
           if (index === 1) filters.push((el) => el.city === regionSegment);
           if (index === 2) filters.push((el) => el.suburb === regionSegment)
         }
         return filters
       },
-      data() {
-        const filtered = this.items.filter((el) => {
+      // 根据列表数据，生成行政区划选择列表
+      regionList () {
+        const regionList = {};
+        for (const item of this.cleanedData) {
+          if (item.province && !regionList[item.province]) regionList[item.province] = {};
+          if (item.city && !regionList[item.province][item.city]) regionList[item.province][item.city] = [];
+          if (item.suburb && regionList[item.province][item.city]) regionList[item.province][item.city].push(item.suburb);
+        }
+        return regionList
+      },
+      // 经过过滤器、数据清洗、地理位置计算、排序后的数据
+      data () {
+        // 行政区划过滤
+        const filtered = this.cleanedData.filter((el) => {
           if ("province" in el && "city" in el && "suburb" in el) {
             return this.filters.every((func) => {
               return func(el)
@@ -175,19 +204,17 @@
             return true
           }
         });
+
+        // 若开启地理位置排序，则清理掉没有地理位置信息的数据
         const haveDistance = filtered.filter(el => {
           if (this.location) {
-            if (el.latitude && el.longitude) {
-              console.log(el.name, el.latitude, el.longitude)
-              return true
-            } else {
-              return false
-            }
+            return !!(el.latitude && el.longitude);
           } else {
             return true
           }
-        })
+        });
 
+        // 计算当前地理位置与特定记录的距离
         const calculatedDistance = haveDistance.map(el => {
           if (this.location)  {
             el.distance = geo.distance(el.latitude, el.longitude, this.location.lat, this.location.lng)
@@ -195,12 +222,16 @@
             el.distance = null
           }
           return el
-        })
+        });
+
+        // 按地理位置排序结果
         const sorted = calculatedDistance.sort((a, b) => {
           return a.distance - b.distance
-        })
+        });
+
         return sorted
       },
+      // 返回当前地理位置信息
       location () {
         if (this.geolocation.lat && this.geolocation.lng && !this.geolocation.failed) {
           return this.geolocation
@@ -210,6 +241,7 @@
       }
     },
     methods: {
+      // 确定用户地理位置
       geolocate() {
         this.geolocation.determining = true;
 

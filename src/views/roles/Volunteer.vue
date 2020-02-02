@@ -30,6 +30,7 @@
             cols="12"
             sm="12"
             md="6"
+            lg="4"
           >
             <v-card
               hover
@@ -87,7 +88,8 @@ export default {
   },
   computed: {
     routes () {
-      return this.$router.options.routes.find(el => el.name === this.$route.matched[0].name).children.filter(el => el.path !== "" && !el.meta.hide)
+      return this.$router.options.routes.find(el =>
+        el.name === this.$route.matched[0].name).children.filter(el => el.path !== "" && !el.meta.hide)
     }
   },
 }
