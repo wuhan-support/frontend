@@ -63,8 +63,13 @@ jobs:
         echo VERSION=$VERSION
         docker tag image $IMAGE_ID:$VERSION
         docker push $IMAGE_ID:$VERSION
+
     - name: executing remote ssh commands using password
       uses: appleboy/ssh-action@master
+      on:
+        push:
+          tags:
+            - v*
       with:
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USERNAME }}
