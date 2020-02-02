@@ -67,6 +67,7 @@
       </template>
     </v-text-field>
     <v-data-iterator
+      id="data-table--content"
       :items="data"
       :search="search"
       :page="page"
@@ -105,7 +106,7 @@
         <Paginator
           :page="page"
           :pagination="pagination"
-          @change="(newPage) => {page = newPage; $vuetify.goTo(0, {duration: 225, offset: 0, easing: 'easeOutQuad'})}"
+          @change="(newPage) => {page = newPage; $vuetify.goTo('#data-table--content', {duration: 125, offset: 0, easing: 'easeOutQuad'})}"
         />
       </template>
     </v-data-iterator>

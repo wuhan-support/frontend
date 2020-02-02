@@ -30,6 +30,7 @@
             cols="12"
             sm="12"
             md="6"
+            lg="4"
           >
             <v-card
               hover

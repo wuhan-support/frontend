@@ -48,13 +48,12 @@
             xl="4"
           >
             <v-card
-              replace
               hover
               :to="{name: route.children[0].name}"
             >
               <v-img
                 class="white--text align-center text-center"
-                height="200px"
+                height="192px"
                 :src="route.meta.banner"
                 gradient="to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)"
               >
