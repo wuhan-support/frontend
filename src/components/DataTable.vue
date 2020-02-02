@@ -161,7 +161,12 @@
       // 清洗行政区划内的多余空格
       cleanedData () {
         return this.items.map((el) => {
-          if (el.province) el.province = el.province.replace(" ", "");
+          if (el.province) {
+            el.province = el.province.replace(" ", "");
+            if (el.province.length === 2) {
+              el.province = `${el.province}省`
+            }
+          }
           if (el.city) el.city = el.city.replace(" ", "");
           if (el.suburb) el.suburb = el.suburb.replace(" ", "");
           return el

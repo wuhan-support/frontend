@@ -14,7 +14,7 @@ import Staff from "../views/roles/Staff";
 import People from "../views/roles/People";
 import config from "../config";
 import VolunteerLayout from "../layouts/SponsorLayout";
-import Sponsor from "../views/roles/Sponsor";
+import Volunteer from "../views/roles/Volunteer";
 
 Vue.use(VueRouter)
 
@@ -151,7 +151,7 @@ const routes = [
       {
         path: '',
         name: 'volunteerIndex',
-        component: Sponsor,
+        component: Volunteer,
         meta: {
           icon: "mdi-home",
           title: "志愿者信息主页"
