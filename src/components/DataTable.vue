@@ -116,7 +116,6 @@
   import Paginator from "./Paginator";
   import PlaceSelector from "./PlaceSelector";
   import geo from "../utils/geo";
-  import Console from "../utils/Console";
   export default {
     name: "DataTable",
     components: {PlaceSelector, Paginator},
@@ -158,14 +157,16 @@
       }
     },
     computed: {
+      // 清洗行政区划内的多余空格
       cleanedData () {
         return this.items.map((el) => {
-          if (el.province) el.province = el.province.trim().replace(" ", "");
-          if (el.city) el.city = el.city.trim().replace(" ", "");
-          if (el.suburb) el.suburb = el.suburb.trim().replace(" ", "");
+          if (el.province) el.province = el.province.replace(" ", "");
+          if (el.city) el.city = el.city.replace(" ", "");
+          if (el.suburb) el.suburb = el.suburb.replace(" ", "");
           return el
         });
       },
+      // 根据当前行政区划选择，过滤当前数据集
       filters () {
         const filters = [];
         for (const [index, regionSegment] of this.region.entries()) {
@@ -175,6 +176,7 @@
         }
         return filters
       },
+      // 根据列表数据，生成行政区划选择列表
       regionList () {
         const regionList = {};
         for (const item of this.cleanedData) {
@@ -184,7 +186,9 @@
         }
         return regionList
       },
+      // 经过过滤器、数据清洗、地理位置计算、排序后的数据
       data () {
+        // 行政区划过滤
         const filtered = this.cleanedData.filter((el) => {
           if ("province" in el && "city" in el && "suburb" in el) {
             return this.filters.every((func) => {
@@ -195,19 +199,16 @@
           }
         });
 
+        // 若开启地理位置排序，则清理掉没有地理位置信息的数据
         const haveDistance = filtered.filter(el => {
           if (this.location) {
-            if (el.latitude && el.longitude) {
-              Console.debug(el.name, el.latitude, el.longitude)
-              return true
-            } else {
-              return false
-            }
+            return !!(el.latitude && el.longitude);
           } else {
             return true
           }
         });
 
+        // 计算当前地理位置与特定记录的距离
         const calculatedDistance = haveDistance.map(el => {
           if (this.location)  {
             el.distance = geo.distance(el.latitude, el.longitude, this.location.lat, this.location.lng)
@@ -217,12 +218,14 @@
           return el
         });
 
+        // 按地理位置排序结果
         const sorted = calculatedDistance.sort((a, b) => {
           return a.distance - b.distance
         });
 
         return sorted
       },
+      // 返回当前地理位置信息
       location () {
         if (this.geolocation.lat && this.geolocation.lng && !this.geolocation.failed) {
           return this.geolocation
@@ -232,6 +235,7 @@
       }
     },
     methods: {
+      // 确定用户地理位置
       geolocate() {
         this.geolocation.determining = true;
 

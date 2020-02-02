@@ -111,7 +111,7 @@
       <!--        wsicon wsicon-Menu-->
       <!--      </v-icon>-->
       <v-app-bar-nav-icon
-        class="black--text pr-1"
+        class="black--text"
         @click.stop="drawer = !drawer"
       />
       <v-toolbar-title
