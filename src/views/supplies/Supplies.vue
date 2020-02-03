@@ -1,16 +1,3 @@
-<i18n>
-  {
-    "en": {
-      "source": "Source: ",
-      "view": "Details"
-    },
-    "zh": {
-      "source": "信息来源：",
-      "view": "查看详情"
-    }
-  }
-</i18n>
-
 <template>
   <v-row
     align="center"
@@ -213,45 +200,62 @@
                     {{ o.province }} {{ o.city }} {{ o.suburb }}<br>地址：{{ o.address }}
                   </span>
                 </v-card-text>
-                <v-divider></v-divider>
+                <v-divider />
                 <v-card-actions>
                   <v-col class="text-right">
-                      <v-btn
-                        tile
-                        small
-                        text
-                        :href="`https://ditu.amap.com/search?query=${encodeURIComponent(o.name)}`"
-                        target="_blank"
+                    <v-btn
+                      tile
+                      small
+                      text
+                      :href="`https://ditu.amap.com/search?query=${encodeURIComponent(o.name)}`"
+                      target="_blank"
+                    >
+                      <v-icon
+                        class="iconRed"
+                        left
                       >
-                      <v-icon class="iconRed" left>wsicon wsicon-local</v-icon>查看地图
-                      </v-btn>
-                      <v-btn
-                        tile
-                        text
-                        small
-                        @click="openDialog(o)"
+                        wsicon wsicon-local
+                      </v-icon>查看地图
+                    </v-btn>
+                    <v-btn
+                      tile
+                      text
+                      small
+                      @click="openDialog(o)"
+                    >
+                      <v-icon
+                        class="iconRed"
+                        left
                       >
-                      <v-icon class="iconRed" left>wsicon wsicon-contact</v-icon>联系方式
-                      </v-btn>
-                      <v-btn
-                        tile
-                        text
-                        small
-                        @click="openReport(o)"
-                      ><v-icon class="iconRed" left>wsicon wsicon-info</v-icon>信息纠错
-                      </v-btn>
-                      <v-btn
-                        text
-                        small
-                        outlined
-                        rounded
-                        @click="showOrHideCard(o)"
-                      ><v-icon
-                          left
-                        >
-                          {{ show[o.name] ? "mdi-chevron-up" : "mdi-chevron-down" }}
-                        </v-icon>{{ show[o.name] ? "收起" : "展开" }}
-                      </v-btn>
+                        wsicon wsicon-contact
+                      </v-icon>联系方式
+                    </v-btn>
+                    <v-btn
+                      tile
+                      text
+                      small
+                      @click="openReport(o)"
+                    >
+                      <v-icon
+                        class="iconRed"
+                        left
+                      >
+                        wsicon wsicon-info
+                      </v-icon>信息纠错
+                    </v-btn>
+                    <v-btn
+                      text
+                      small
+                      outlined
+                      rounded
+                      @click="showOrHideCard(o)"
+                    >
+                      <v-icon
+                        left
+                      >
+                        {{ show[o.name] ? "mdi-chevron-up" : "mdi-chevron-down" }}
+                      </v-icon>{{ show[o.name] ? "收起" : "展开" }}
+                    </v-btn>
                   </v-col>
                 </v-card-actions>
                 <v-expand-transition>

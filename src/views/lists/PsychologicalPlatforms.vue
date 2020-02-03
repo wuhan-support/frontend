@@ -1,16 +1,3 @@
-<i18n>
-  {
-    "en": {
-      "source": "Source: ",
-      "view": "Details"
-    },
-    "zh": {
-      "source": "信息来源：",
-      "view": "查看详情"
-    }
-  }
-</i18n>
-
 <template>
   <v-row
     align="center"
@@ -159,26 +146,36 @@
                     备注：{{ o.notes }}
                   </p>
                 </v-card-text>
-                <v-divider></v-divider>
+                <v-divider />
                 <v-card-actions>
                   <v-col class="text-center d-flex justify-space-between">
-                      <v-btn
-                        tile
-                        small
-                        text
-                        :href="o.source"
-                        target="_blank"
+                    <v-btn
+                      tile
+                      small
+                      text
+                      :href="o.source"
+                      target="_blank"
+                    >
+                      <v-icon
+                        class="iconRed"
+                        left
                       >
-                      <v-icon class="iconRed" left>mdi-open-in-new</v-icon>查看信息来源
-                      </v-btn>
-                      <v-btn
-                        tile
-                        text
-                        small
-                        @click="openReport(o)"
+                        mdi-open-in-new
+                      </v-icon>查看信息来源
+                    </v-btn>
+                    <v-btn
+                      tile
+                      text
+                      small
+                      @click="openReport(o)"
+                    >
+                      <v-icon
+                        class="iconRed"
+                        left
                       >
-                      <v-icon class="iconRed" left>wsicon wsicon-info</v-icon>信息纠错
-                      </v-btn>
+                        wsicon wsicon-info
+                      </v-icon>信息纠错
+                    </v-btn>
                   </v-col>
                 </v-card-actions>
               </v-card>

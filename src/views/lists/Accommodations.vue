@@ -1,16 +1,3 @@
-<i18n>
-  {
-    "en": {
-      "source": "Source: ",
-      "view": "Details"
-    },
-    "zh": {
-      "source": "信息来源：",
-      "view": "查看详情"
-    }
-  }
-</i18n>
-
 <template>
   <v-row
     align="center"
@@ -193,27 +180,27 @@
                 :key="i"
                 class="viewCard redBorder"
               >
-                  <span class="float-right surplusInfo">
-                    <div class="content">
-                      <template v-if="o.beds">
-                        <span class="number">{{ o.beds }}</span>
-                        剩余床位
-                        <br>
-                      </template>
-                      <template v-if="o.room">
-                        <span class="number">{{ o.room }}</span>
-                        剩余房间
-                      </template>
+                <span class="float-right surplusInfo">
+                  <div class="content">
+                    <template v-if="o.beds">
+                      <span class="number">{{ o.beds }}</span>
+                      剩余床位
+                      <br>
+                    </template>
+                    <template v-if="o.room">
+                      <span class="number">{{ o.room }}</span>
+                      剩余房间
+                    </template>
 
-                      <template v-if="o.distance !== null">
-                        <v-icon
-                          class="mr-1"
-                          small
-                        >mdi-ruler</v-icon> {{ o.distance.toFixed(1) }}km
-                      </template>
-                    </div>
-                    <v-icon class="bgIcon">wsicon wsicon-hotel</v-icon>
-                  </span>
+                    <template v-if="o.distance !== null">
+                      <v-icon
+                        class="mr-1"
+                        small
+                      >mdi-ruler</v-icon> {{ o.distance.toFixed(1) }}km
+                    </template>
+                  </div>
+                  <v-icon class="bgIcon">wsicon wsicon-hotel</v-icon>
+                </span>
                 <v-card-title>
                   <span class="cardTitle font-weight-black">
                     {{ o.name }}
@@ -231,33 +218,49 @@
                     备注：{{ o.notes }}
                   </span>
                 </v-card-text>
-                <v-divider></v-divider>
+                <v-divider />
                 <v-card-actions>
                   <v-col class="text-center d-flex justify-space-between">
-                      <v-btn
-                        tile
-                        small
-                        text
-                        :href="`https://ditu.amap.com/search?query=${encodeURIComponent(o.name)}`"
-                        target="_blank"
+                    <v-btn
+                      tile
+                      small
+                      text
+                      :href="`https://ditu.amap.com/search?query=${encodeURIComponent(o.name)}`"
+                      target="_blank"
+                    >
+                      <v-icon
+                        class="iconRed"
+                        left
                       >
-                      <v-icon class="iconRed" left>wsicon wsicon-local</v-icon>查看地图
-                      </v-btn>
-                      <v-btn
-                        tile
-                        text
-                        small
-                        @click="openDialog(o)"
+                        wsicon wsicon-local
+                      </v-icon>查看地图
+                    </v-btn>
+                    <v-btn
+                      tile
+                      text
+                      small
+                      @click="openDialog(o)"
+                    >
+                      <v-icon
+                        class="iconRed"
+                        left
                       >
-                      <v-icon class="iconRed" left>wsicon wsicon-contact</v-icon>联系方式
-                      </v-btn>
-                      <v-btn
-                        tile
-                        text
-                        small
-                        @click="openReport(o)"
-                      ><v-icon class="iconRed" left>wsicon wsicon-info</v-icon>信息纠错
-                      </v-btn>
+                        wsicon wsicon-contact
+                      </v-icon>联系方式
+                    </v-btn>
+                    <v-btn
+                      tile
+                      text
+                      small
+                      @click="openReport(o)"
+                    >
+                      <v-icon
+                        class="iconRed"
+                        left
+                      >
+                        wsicon wsicon-info
+                      </v-icon>信息纠错
+                    </v-btn>
                   </v-col>
                 </v-card-actions>
               </v-card>
