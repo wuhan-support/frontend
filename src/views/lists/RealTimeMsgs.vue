@@ -1,110 +1,181 @@
 <template>
-    <v-row align="center" justify="center">
-        <v-snackbar :value="snackbar" color="success" bottom :timeout="4000">
-            <v-icon left color="white">
-                mdi-check
-            </v-icon>
-            感谢支持，已提交纠错信息
-            <v-spacer />
-        </v-snackbar>
-        <v-dialog v-model="report.enabled" persistent max-width="450px">
-            <v-card>
-                <v-card-title>
-                    提交纠错
-                </v-card-title>
-                <v-card-text>
-                    <v-select v-model="report.cause" label="错误类型" placeholder="请选择错误类型" :items="report.causes" filled hide-details class="mb-2" />
-                    收到纠错请求后我们会再次审核此条信息以保证准确性。<br>
-                    <span class="red--text">注意：我们的人力资源有限，烦请不要滥用此功能，十分感谢！</span>
-                </v-card-text>
-                <v-card-actions>
-                    <v-btn text @click="report.enabled = false">
-                        取消
-                    </v-btn>
+  <v-row
+    align="center"
+    justify="center"
+  >
+    <v-snackbar
+      :value="snackbar"
+      color="success"
+      bottom
+      :timeout="4000"
+    >
+      <v-icon
+        left
+        color="white"
+      >
+        mdi-check
+      </v-icon>
+      感谢支持，已提交纠错信息
+      <v-spacer />
+    </v-snackbar>
+    <v-dialog
+      v-model="report.enabled"
+      persistent
+      max-width="450px"
+    >
+      <v-card>
+        <v-card-title>
+          提交纠错
+        </v-card-title>
+        <v-card-text>
+          <v-select
+            v-model="report.cause"
+            label="错误类型"
+            placeholder="请选择错误类型"
+            :items="report.causes"
+            filled
+            hide-details
+            class="mb-2"
+          />
+          收到纠错请求后我们会再次审核此条信息以保证准确性。<br>
+          <span class="red--text">注意：我们的人力资源有限，烦请不要滥用此功能，十分感谢！</span>
+        </v-card-text>
+        <v-card-actions>
+          <v-btn
+            text
+            @click="report.enabled = false"
+          >
+            取消
+          </v-btn>
 
-                    <v-spacer />
+          <v-spacer />
 
-                    <v-btn text color="primary" :loading="$store.getters.ajaxLoading" :disabled="report.cause === ''" @click="doReport">
-                        确认
-                    </v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
+          <v-btn
+            text
+            color="primary"
+            :loading="$store.getters.ajaxLoading"
+            :disabled="report.cause === ''"
+            @click="doReport"
+          >
+            确认
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 
-        <v-col cols="12" class="mx-3">
-            <h1 class="heading">
-                实时信息
-            </h1>
-            <v-card class="elevation-0">
-                <v-card-text class="alertRedCardText white--text my-2">
-                    实时信息实时信息实时信息实时信息实时信息实时信息实时信息实时信息实时信息实时信息实时信息实时信息实时信息实时信息实时信息实时信息实时信息实时信息实时信息实时信息实时信息
-                </v-card-text>
-            </v-card>
-            <!-- <p class="subtitle-1">
+    <v-col
+      cols="12"
+      class="mx-3"
+    >
+      <h1 class="heading">
+        实时信息
+      </h1>
+      <v-card class="elevation-0">
+        <v-card-text class="alertRedCardText white--text my-2">
+          实时信息更新粒度为5分钟一次；请留意以下内容的消息来源
+        </v-card-text>
+      </v-card>
+      <!-- <p class="subtitle-1">
                 图例：<v-icon small>
                     mdi-bed-empty
                 </v-icon> 表示床位剩余，<v-icon small>
                     mdi-home-circle
                 </v-icon> 表示房间剩余
             </p> -->
-            <v-skeleton-loader :loading="$store.getters.ajaxLoading && !data.length" type="card@4">
-                <div>
-                    <!-- <v-row justify="space-between" align="center" class="mx-3">
+      <v-skeleton-loader
+        :loading="$store.getters.ajaxLoading && !data.length"
+        type="card@4"
+      >
+        <div>
+          <!-- <v-row justify="space-between" align="center" class="mx-3">
                         <v-checkbox v-model="filters.available" class="d-inline-flex" label="只看有房" />
                         <v-checkbox v-model="filters.linBaoRuZhu" class="d-inline-flex" label="不需自带三件套" />
                     </v-row> -->
-                    <DataTable :items="dataset" disable-region-selector search-text="平台名称、地区或咨询方式">
-                        <template v-slot:default="{ items }">
-                            <v-card v-for="[i, o] in items.entries()" :key="i" class="viewCard redBorder">
-                                <!-- id 信息序号 -->
-                                <!-- <v-card-title>
+          <DataTable
+            :items="dataset"
+            disable-region-selector
+            search-text="平台名称、地区或咨询方式"
+          >
+            <template v-slot:default="{ items }">
+              <v-card
+                v-for="[i, o] in items.entries()"
+                :key="i"
+                class="viewCard redBorder"
+              >
+                <!-- id 信息序号 -->
+                <!-- <v-card-title>
                                     <span class="title font-weight-black">
                                         {{ o.organization }}
                                     </span>
                                 </v-card-title> -->
-                                <v-card-title>
-                                    <span class="title font-weight-black">
-                                        {{ o.title }}
-                                    </span>
-                                </v-card-title>
-                                <v-card-text class="pb-0">
-                                    <p class="subtitle-2 card-subTitle">
-                                        信息类别：{{ o.category }}
-                                        <span style="float: right">
-                                            信息贡献者：{{ o.contributor }}
-                                        </span>
-                                    </p>
-                                    <p class="subtitle-1 card-content" :isShowMore="showMoreList.indexOf(o.id) >= 0">
-                                        {{ o.content }}
-                                        <img v-if="o.image" alt="相关图片" :src="o.image" />
-                                        <span class="showMore" @click="showMoreList.push(o.id)" v-if="showMoreList.indexOf(o.id) < 0">展示全文</span>
-                                    </p>
-                                    <p class="subtitle-1 mt-3">
-                                        创建时间：{{ o.createdTime }}
-                                    </p>
-                                </v-card-text>
-                                <v-divider />
-                                <v-card-actions>
-                                    <v-col class="text-center d-flex justify-space-between">
-                                        <v-btn tile small text :href="o.source" target="_blank">
-                                            <v-icon class="iconRed" left>
-                                                mdi-open-in-new
-                                            </v-icon>查看信息来源
-                                        </v-btn>
-                                        <v-btn tile text small @click="openReport(o)">
-                                            <v-icon class="iconRed" left>
-                                                wsicon wsicon-info
-                                            </v-icon>信息纠错
-                                        </v-btn>
-                                    </v-col>
-                                </v-card-actions>
-                            </v-card>
-                        </template>
-                    </DataTable>
-                </div>
-            </v-skeleton-loader>
-        </v-col>
-    </v-row>
+                <v-card-title>
+                  <span class="title font-weight-black">
+                    {{ o.title }}
+                  </span>
+                </v-card-title>
+                <v-card-text class="pb-0">
+                  <p class="subtitle-1">
+                    创建时间：{{ o.createdTime }}
+                  </p>
+                  <p class="subtitle-2 card-subTitle">
+                    信息类别：{{ o.category }}
+                  </p>
+                  <p
+                    class="subtitle-1 card-content"
+                    :isShowMore="showMoreList.indexOf(o.id) >= 0"
+                  >
+                    {{ o.content }}
+                    <img
+                      v-if="o.image"
+                      alt="相关图片"
+                      :src="o.image"
+                    >
+                    <span
+                      v-if="showMoreList.indexOf(o.id) < 0"
+                      class="showMore"
+                      @click="showMoreList.push(o.id)"
+                    >展示全文</span>
+                  </p>
+                </v-card-text>
+                <v-divider />
+                <v-card-actions>
+                  <v-col class="text-center d-flex justify-space-between">
+                    <v-btn
+                      tile
+                      small
+                      text
+                      :href="o.source"
+                      target="_blank"
+                    >
+                      <v-icon
+                        class="iconRed"
+                        left
+                      >
+                        mdi-open-in-new
+                      </v-icon>查看信息来源
+                    </v-btn>
+                    <v-btn
+                      tile
+                      text
+                      small
+                      @click="openReport(o)"
+                    >
+                      <v-icon
+                        class="iconRed"
+                        left
+                      >
+                        wsicon wsicon-info
+                      </v-icon>信息纠错
+                    </v-btn>
+                  </v-col>
+                </v-card-actions>
+              </v-card>
+            </template>
+          </DataTable>
+        </div>
+      </v-skeleton-loader>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
@@ -133,12 +204,8 @@ export default {
             report: {
                 enabled: false,
                 cause: "",
-                causes: ['地址不存在/未找到', '联系不上', '已被征用', '已住满', '其他原因无法接待', '缺少必需物资无法营业', '信息重复', '其他'],
+                causes: ['信息内容错误', '信息来源错误', '信息时间错误', '信息重复', '其他'],
                 content: ""
-            },
-            filters: {
-                available: true,
-                linBaoRuZhu: true
             }
         }
     },
@@ -236,6 +303,7 @@ export default {
             right: 0;
             bottom: 0;
             background: #fff;
+          cursor: pointer !important;
 
             &:before {
                 content: "";

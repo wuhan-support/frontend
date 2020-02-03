@@ -65,6 +65,15 @@ const routes = [{
       title: "线上心理咨询平台",
       subtitle: "我们提供免费心理咨询平台的查询，包括基本信息与其联系方式"
     }
+  }, {
+    path: "/stream",
+    name: "stream",
+    component: RealTimeMsgs,
+    meta: {
+      icon: "mdi-hospital-box",
+      title: "实时信息",
+      subtitle: "实时信息列表"
+    }
   }]
 }, {
   path: "/staff",
@@ -164,15 +173,6 @@ const routes = [{
       hide: true
     }
   }]
-}, {
-  path: "/realTimeMsgs",
-  name: "realTimeMsgs",
-  component: RealTimeMsgs,
-  meta: {
-    icon: "mdi-hospital-box",
-    title: "实时信息",
-    subtitle: "实时信息列表"
-  }
 }, {
   path: '*',
   beforeEnter: (to, from, next) => {

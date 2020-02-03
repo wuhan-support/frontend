@@ -70,8 +70,8 @@
       <h1 class="heading">
         线上心理咨询平台
       </h1>
-      <v-card class="elevation-0">
-        <v-card-text class="alertRedCardText white--text my-2">
+      <v-card>
+        <v-card-text class="green white--text font-weight-bold subtitle-1 my-2">
           点开这个页面的小可爱你好呀～ 下面有一些可以帮助到你的哥哥姐姐们，一定要联系他们哦！加油！
         </v-card-text>
       </v-card>
@@ -95,12 +95,13 @@
             :items="dataset"
             disable-region-selector
             search-text="平台名称、地区或咨询方式"
+            color="green"
           >
             <template v-slot:default="{ items }">
               <v-card
                 v-for="[i, o] in items.entries()"
                 :key="i"
-                class="viewCard redBorder"
+                class="viewCard card-border"
               >
                 <v-card-title>
                   <span class="title font-weight-black">
@@ -111,9 +112,8 @@
                   <v-chip
                     v-for="tag in o.tags"
                     :key="tag.t"
-                    class="ma-2"
-                    color="#a20002"
-                    text-color="white"
+                    class="mx-1 white--text pl-4"
+                    :color="tag.c"
                   >
                     <v-icon
                       left
@@ -136,7 +136,10 @@
                   <p class="subtitle-1">
                     地方性：{{ o.regional }}{{ regionalText(o) }}
                   </p>
-                  <v-card-text class="alertRedCardText white--text my-2">
+                  <v-card-text
+                    class="green darken-2 font-weight-bold my-2 white--text"
+                    style="border-radius: 4px"
+                  >
                     咨询方式：{{ o.contact }}
                   </v-card-text>
                   <p
@@ -157,7 +160,6 @@
                       target="_blank"
                     >
                       <v-icon
-                        class="iconRed"
                         left
                       >
                         mdi-open-in-new
@@ -170,7 +172,6 @@
                       @click="openReport(o)"
                     >
                       <v-icon
-                        class="iconRed"
                         left
                       >
                         wsicon wsicon-info
@@ -212,7 +213,7 @@ export default {
             report: {
                 enabled: false,
                 cause: "",
-                causes: ['地址不存在/未找到', '联系不上', '已被征用', '已住满', '其他原因无法接待', '缺少必需物资无法营业', '信息重复', '其他'],
+                causes: ['联系不上', '信息错误', '已下线', '信息重复', '其他'],
                 content: ""
             },
             filters: {
