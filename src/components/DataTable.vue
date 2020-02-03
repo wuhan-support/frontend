@@ -38,33 +38,13 @@
     </v-expand-transition>
     <v-text-field
       v-model="search"
-      :label="region.length ? '在所选地区范围内搜索' : '搜索'"
       :placeholder="searchText"
       dense
-      class="my-1"
-
+      class="searchBar"
       outlined
       hide-details
       clearable
     >
-      <template
-        v-if="enableGeolocation"
-        v-slot:append-outer
-      >
-        <v-btn
-          icon
-          :loading="geolocation.determining"
-          :class="{'red--text': geolocation.failed, 'green--text': location}"
-          style="margin-top: -7px"
-          @click="geolocate"
-        >
-          <v-icon
-            @click="geolocate"
-          >
-            mdi-crosshairs-gps
-          </v-icon>
-        </v-btn>
-      </template>
     </v-text-field>
     <v-data-iterator
       id="data-table--content"
@@ -140,7 +120,7 @@
       searchText: {
         type: String,
         default () {
-          return "名称、地区或地址"
+          return "请输入 名称 / 地区 / 地址 进行搜索"
         }
       }
     },
@@ -267,5 +247,11 @@
 </script>
 
 <style scoped>
-
+.searchBar {
+  background: #FFFFFF;
+  border: 1px solid #a20002;
+  box-shadow: 0 3px 20px 0 rgba(0,0,0,0.10);
+  border-radius: 4px;
+  border-radius: 4px;
+}
 </style>

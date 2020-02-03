@@ -1,16 +1,3 @@
-<i18n>
-  {
-    "en": {
-      "source": "Source: ",
-      "view": "Details"
-    },
-    "zh": {
-      "source": "信息来源：",
-      "view": "查看详情"
-    }
-  }
-</i18n>
-
 <template>
   <v-row
     align="center"
@@ -83,8 +70,8 @@
       <h1 class="heading">
         线上心理咨询平台
       </h1>
-      <v-card>
-        <v-card-text class="subtitle-1 green white--text my-2 mb-4">
+      <v-card class="elevation-0">
+        <v-card-text class="alertRedCardText white--text my-2">
           点开这个页面的小可爱你好呀～ 下面有一些可以帮助到你的哥哥姐姐们，一定要联系他们哦！加油！
         </v-card-text>
       </v-card>
@@ -113,7 +100,7 @@
               <v-card
                 v-for="[i, o] in items.entries()"
                 :key="i"
-                class="my-4 pb-2 card-border"
+                class="viewCard redBorder"
               >
                 <v-card-title>
                   <span class="title font-weight-black">
@@ -124,10 +111,9 @@
                   <v-chip
                     v-for="tag in o.tags"
                     :key="tag.t"
-                    label
-                    :color="tag.c"
-                    class="mx-1"
-                    dark
+                    class="ma-2"
+                    color="#a20002"
+                    text-color="white"
                   >
                     <v-icon
                       left
@@ -150,13 +136,9 @@
                   <p class="subtitle-1">
                     地方性：{{ o.regional }}{{ regionalText(o) }}
                   </p>
-                  <v-divider class="my-2" />
-                  <p
-                    v-if="o.contact"
-                    class="title green--text font-weight-black"
-                  >
+                  <v-card-text class="alertRedCardText white--text my-2">
                     咨询方式：{{ o.contact }}
-                  </p>
+                  </v-card-text>
                   <p
                     v-if="o.notes"
                     class="caption"
@@ -164,27 +146,37 @@
                     备注：{{ o.notes }}
                   </p>
                 </v-card-text>
-                <v-card-actions class="mx-2">
-                  <v-btn
-                    outlined
-                    small
-                    color="secondary"
-                    :href="o.source"
-                    target="_blank"
-                  >
-                    <v-icon left>
-                      mdi-open-in-new
-                    </v-icon>
-                    查看信息来源
-                  </v-btn>
-                  <v-spacer />
-                  <v-btn
-                    outlined
-                    color="error darken-1"
-                    @click="openReport(o)"
-                  >
-                    纠错
-                  </v-btn>
+                <v-divider />
+                <v-card-actions>
+                  <v-col class="text-center d-flex justify-space-between">
+                    <v-btn
+                      tile
+                      small
+                      text
+                      :href="o.source"
+                      target="_blank"
+                    >
+                      <v-icon
+                        class="iconRed"
+                        left
+                      >
+                        mdi-open-in-new
+                      </v-icon>查看信息来源
+                    </v-btn>
+                    <v-btn
+                      tile
+                      text
+                      small
+                      @click="openReport(o)"
+                    >
+                      <v-icon
+                        class="iconRed"
+                        left
+                      >
+                        wsicon wsicon-info
+                      </v-icon>信息纠错
+                    </v-btn>
+                  </v-col>
                 </v-card-actions>
               </v-card>
             </template>

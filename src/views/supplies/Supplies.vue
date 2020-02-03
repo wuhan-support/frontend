@@ -1,16 +1,3 @@
-<i18n>
-  {
-    "en": {
-      "source": "Source: ",
-      "view": "Details"
-    },
-    "zh": {
-      "source": "信息来源：",
-      "view": "查看详情"
-    }
-  }
-</i18n>
-
 <template>
   <v-row
     align="center"
@@ -146,18 +133,18 @@
       <h1 class="heading">
         医院需求信息
       </h1>
-      <v-card>
+      <v-card class="elevation-0">
         <v-card-text class="subtitle-1 red font-weight-bold white--text my-2">
           本列表中的所有医院均存在<span class="font-weight-black title">非常紧急</span>的物资缺口状况，急需社会各界紧急援助！若您身边有相关资源（包括物流资源、消耗品资源等）请速与这些医院进行联系！
         </v-card-text>
       </v-card>
-      <v-card>
+      <v-card class="elevation-0">
         <v-card-text class="subtitle-2 green white--text my-2">
           捐赠者请知悉：为保证需求真实性，本列表中几乎所有数据均通过【电话-微信视频-带相片工作证-医院官方电话】的方式核验联系人信息（已通过标签方式标明需求核验状况）
         </v-card-text>
       </v-card>
 
-      <v-card>
+      <v-card class="elevation-0">
         <v-card-text class="caption grey white--text my-2">
           若您发现信息有不完整、已过期等情况，请点击相应数据卡片右下角的 <v-icon
             small
@@ -181,7 +168,7 @@
               <v-card
                 v-for="[i, o] in items.entries()"
                 :key="i"
-                class="my-4 pb-2"
+                class="viewCard"
                 :class="{'card-border pb-0': o.isextremeemergency !== 'Y'}"
               >
                 <v-card-title
@@ -213,51 +200,63 @@
                     {{ o.province }} {{ o.city }} {{ o.suburb }}<br>地址：{{ o.address }}
                   </span>
                 </v-card-text>
-                <v-card-actions class="mx-2">
-                  <v-btn
-                    icon
-                    color="primary"
-                    :href="`https://ditu.amap.com/search?query=${encodeURIComponent(o.name)}`"
-                    target="_blank"
-                  >
-                    <v-icon>
-                      mdi-map-marker
-                    </v-icon>
-                  </v-btn>
-
-                  <v-btn
-                    rounded
-                    icon
-                    color="secondary"
-                    @click="openDialog(o)"
-                  >
-                    <v-icon>
-                      mdi-phone
-                    </v-icon>
-                  </v-btn>
-
-                  <v-spacer />
-                  <v-btn
-                    outlined
-                    rounded
-                    @click="showOrHideCard(o)"
-                  >
-                    <v-icon
-                      left
+                <v-divider />
+                <v-card-actions>
+                  <v-col class="text-right">
+                    <v-btn
+                      tile
+                      small
+                      text
+                      :href="`https://ditu.amap.com/search?query=${encodeURIComponent(o.name)}`"
+                      target="_blank"
                     >
-                      {{ show[o.name] ? "mdi-chevron-up" : "mdi-chevron-down" }}
-                    </v-icon>
-                    {{ show[o.name] ? "收起" : "展开" }}
-                  </v-btn>
-                  <v-btn
-                    icon
-                    color="error darken-1"
-                    @click="openReport(o)"
-                  >
-                    <v-icon>
-                      mdi-file-document-box-remove
-                    </v-icon>
-                  </v-btn>
+                      <v-icon
+                        class="iconRed"
+                        left
+                      >
+                        wsicon wsicon-local
+                      </v-icon>查看地图
+                    </v-btn>
+                    <v-btn
+                      tile
+                      text
+                      small
+                      @click="openDialog(o)"
+                    >
+                      <v-icon
+                        class="iconRed"
+                        left
+                      >
+                        wsicon wsicon-contact
+                      </v-icon>联系方式
+                    </v-btn>
+                    <v-btn
+                      tile
+                      text
+                      small
+                      @click="openReport(o)"
+                    >
+                      <v-icon
+                        class="iconRed"
+                        left
+                      >
+                        wsicon wsicon-info
+                      </v-icon>信息纠错
+                    </v-btn>
+                    <v-btn
+                      text
+                      small
+                      outlined
+                      rounded
+                      @click="showOrHideCard(o)"
+                    >
+                      <v-icon
+                        left
+                      >
+                        {{ show[o.name] ? "mdi-chevron-up" : "mdi-chevron-down" }}
+                      </v-icon>{{ show[o.name] ? "收起" : "展开" }}
+                    </v-btn>
+                  </v-col>
                 </v-card-actions>
                 <v-expand-transition>
                   <div v-show="show[o.name]">

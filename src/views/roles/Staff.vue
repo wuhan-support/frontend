@@ -7,9 +7,9 @@
     >
       <v-col cols="12">
         <v-img
-          :src="require('@/assets/logo/feiyan.help.svg')"
+          :src="require('@/assets/logo/red.svg')"
           aspect-ratio="2"
-          max-width="128px"
+          max-width="192px"
           contain
           class="mx-auto"
         />
@@ -34,6 +34,7 @@
           >
             <v-card
               hover
+              class="viewCard"
               :to="{path: route.path}"
             >
               <v-sheet

@@ -1,16 +1,3 @@
-<i18n>
-  {
-    "en": {
-      "source": "Source: ",
-      "view": "Details"
-    },
-    "zh": {
-      "source": "信息来源：",
-      "view": "查看详情"
-    }
-  }
-</i18n>
-
 <template>
   <v-row
     align="center"
@@ -146,9 +133,9 @@
       <h1 class="heading">
         医护人员免费住宿
       </h1>
-      <v-card>
-        <v-card-text class="subtitle-2 green white--text my-2">
-          医护人员请注意：大多数住宿地点均要求各位携带相关证件（医护工作证 + 身份证）实名入住；请记得准备好上述证件后，致电相关住宿提供方确认空房情况哦～ 你们辛苦啦～
+      <v-card class="elevation-0">
+        <v-card-text class="alertRedCardText white--text my-2">
+          请注意：大多数住宿地点均要求各位携带相关证件（医护工作证 + 身份证）实名入住；请记得准备好上述证件后，致电相关住宿提供方确认空房情况哦～ 您辛苦啦～
         </v-card-text>
       </v-card>
       <p class="subtitle-1">
@@ -191,29 +178,18 @@
               <v-card
                 v-for="[i, o] in items.entries()"
                 :key="i"
-                class="my-4 pb-2 card-border"
+                class="viewCard redBorder"
               >
-                <v-card-title>
-                  <span class="title font-weight-black">
-                    {{ o.name }}
-                  </span>
-                </v-card-title>
-                <v-card-text>
-                  <span class="float-right ml-4">
+                <span class="float-right surplusInfo">
+                  <div class="content">
                     <template v-if="o.beds">
-                      <v-icon
-                        class="mr-1"
-                        small
-                      >mdi-bed-empty</v-icon> {{ o.beds }}
+                      <span class="number">{{ o.beds }}</span>
+                      剩余床位
                       <br>
                     </template>
-
                     <template v-if="o.room">
-                      <v-icon
-                        class="mr-1"
-                        small
-                      >mdi-home-circle</v-icon> {{ o.room }}
-                      <br>
+                      <span class="number">{{ o.room }}</span>
+                      剩余房间
                     </template>
 
                     <template v-if="o.distance !== null">
@@ -222,8 +198,16 @@
                         small
                       >mdi-ruler</v-icon> {{ o.distance.toFixed(1) }}km
                     </template>
+                  </div>
+                  <v-icon class="bgIcon">wsicon wsicon-hotel</v-icon>
+                </span>
+                <v-card-title>
+                  <span class="cardTitle font-weight-black">
+                    {{ o.name }}
                   </span>
-                  <span class="subtitle-1">
+                </v-card-title>
+                <v-card-text>
+                  <span class="subtitle-4">
                     {{ o.province }} {{ o.city }} {{ o.suburb }}<br>地址：{{ o.address }}
                   </span>
                   <br>
@@ -234,36 +218,50 @@
                     备注：{{ o.notes }}
                   </span>
                 </v-card-text>
-                <v-card-actions class="mx-2">
-                  <v-btn
-                    outlined
-                    color="primary"
-                    :href="`https://ditu.amap.com/search?query=${encodeURIComponent(o.name)}`"
-                    target="_blank"
-                  >
-                    <v-icon left>
-                      mdi-map-marker
-                    </v-icon>
-                    地图
-                  </v-btn>
-                  <v-btn
-                    outlined
-                    color="green"
-                    @click="openDialog(o)"
-                  >
-                    <v-icon left>
-                      mdi-contact-phone
-                    </v-icon>
-                    联系方式
-                  </v-btn>
-                  <v-spacer />
-                  <v-btn
-                    outlined
-                    color="error darken-1"
-                    @click="openReport(o)"
-                  >
-                    纠错
-                  </v-btn>
+                <v-divider />
+                <v-card-actions>
+                  <v-col class="text-center d-flex justify-space-between">
+                    <v-btn
+                      tile
+                      small
+                      text
+                      :href="`https://ditu.amap.com/search?query=${encodeURIComponent(o.name)}`"
+                      target="_blank"
+                    >
+                      <v-icon
+                        class="iconRed"
+                        left
+                      >
+                        wsicon wsicon-local
+                      </v-icon>查看地图
+                    </v-btn>
+                    <v-btn
+                      tile
+                      text
+                      small
+                      @click="openDialog(o)"
+                    >
+                      <v-icon
+                        class="iconRed"
+                        left
+                      >
+                        wsicon wsicon-contact
+                      </v-icon>联系方式
+                    </v-btn>
+                    <v-btn
+                      tile
+                      text
+                      small
+                      @click="openReport(o)"
+                    >
+                      <v-icon
+                        class="iconRed"
+                        left
+                      >
+                        wsicon wsicon-info
+                      </v-icon>信息纠错
+                    </v-btn>
+                  </v-col>
                 </v-card-actions>
               </v-card>
             </template>
@@ -368,8 +366,60 @@
   }
 </script>
 
-<style scoped>
-.card-border {
-  border-top: 4px solid rgba(0, 0, 0, .5) !important
+<style>
+.iconRed {
+  color: #a20002 !important;
+}
+.redBorder {
+  border-top: 4px solid #a20002 !important;
+}
+.viewCard {
+  background: #FFFFFF;
+  box-shadow: 0 3px 20px 0 rgba(0,0,0,0.10);
+  border-radius: 4px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+.alertRedCardText {
+  background: #a20002;
+  font-size: 15px !important;
+}
+.cardTitle {
+  font-family: PingFangSC-Medium;
+  font-size: 16px;
+  color: #333E48;
+  letter-spacing: 0;
+}
+.surplusInfo .content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 20px;
+  font-family: PingFangSC-Medium;
+  font-size: 14px;
+  color: #333E48;
+  letter-spacing: 0;
+  text-align: center;
+  min-height: 100px;
+  z-index: 2;
+}
+.surplusInfo .number {
+  font-family: DINPro-Bold;
+  font-weight: bold;
+  font-size: 20px;
+  color: #a20002;
+  letter-spacing: 1px;
+  text-align: center;
+}
+.surplusInfo .bgIcon {
+  position: absolute;
+  top: 5px;
+  right: -20px;
+  font-size: 150px;
+  color: #a20002;
+  opacity: .05;
+  z-index: 1;
 }
 </style>
