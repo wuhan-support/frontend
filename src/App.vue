@@ -150,7 +150,8 @@
       <v-card
         flat
         tile
-        class="text-center pb-6 grey lighten-2"
+        class="text-center pb-6"
+        :class="{'grey lighten-2': $route.name !== 'psychologicalPlatform', 'green lighten-1': $route.name === 'psychologicalPlatform'}"
         style="width: 100%"
       >
         <v-card-text>
