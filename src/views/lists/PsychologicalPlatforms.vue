@@ -72,7 +72,7 @@
       </h1>
       <v-card>
         <v-card-text class="green white--text font-weight-bold subtitle-1 my-2">
-          点开这个页面的小可爱你好呀～ 下面有一些可以帮助到你的哥哥姐姐们，一定要联系他们哦！加油！
+          你好呀～我们这里给你准备了一些可以帮助到你的专业人员们；如果你觉得需要心理援助的话，请一定要联系他们哦！加油！❤️
         </v-card-text>
       </v-card>
       <!-- <p class="subtitle-1">
@@ -114,6 +114,7 @@
                     :key="tag.t"
                     class="mx-1 white--text pl-4"
                     :color="tag.c"
+                    label
                   >
                     <v-icon
                       left
