@@ -5,8 +5,6 @@ import router from './router'
 import config from './config'
 import store from './store'
 import vuetify from './plugins/vuetify'
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
 import i18n from './i18n'
 import * as Sentry from '@sentry/browser'
 import * as Integrations from '@sentry/integrations'
@@ -14,7 +12,6 @@ import './assets/icon/wsicon.css'
 
 import vRegion from 'v-region';
 Vue.use(vRegion, {});
-Vue.use(ElementUI);
 
 Vue.config.productionTip = false
 

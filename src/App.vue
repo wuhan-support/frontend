@@ -150,7 +150,7 @@
       <v-card
         flat
         tile
-        class="text-center pb-4 grey lighten-2"
+        class="text-center pb-6 grey lighten-2"
         style="width: 100%"
       >
         <v-card-text>
@@ -202,7 +202,7 @@
             </a>
           </v-row>
 
-          <span>{{ new Date().getFullYear() }} — <strong>feiyan.help</strong></span>
+          <span>{{ new Date().getFullYear() }} — <strong>wuhan.support 公益团队</strong></span>
 
           <br>
           <v-btn
@@ -214,7 +214,7 @@
             <v-icon left>
               mdi-github-circle
             </v-icon>
-            wuhan.support
+            项目源代码
           </v-btn>
         </v-card-text>
       </v-card>

@@ -9,7 +9,7 @@
         <v-img
           :src="require('@/assets/logo/red.svg')"
           aspect-ratio="2"
-          max-width="512px"
+          max-width="192px"
           contain
           class="mx-auto"
         />
