@@ -149,7 +149,11 @@
           if (el.province) {
             el.province = el.province.replace(" ", "");
             if (el.province.length === 2) {
-              el.province = `${el.province}省`
+              if (!/(北京|天津|上海|重庆)/.test(el.province)) {
+                el.province = `${el.province}省`
+              } else {
+                el.province = `${el.province}市`
+              }
             }
           }
           if (el.city) el.city = el.city.replace(" ", "");

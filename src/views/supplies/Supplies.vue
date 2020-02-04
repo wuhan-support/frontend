@@ -160,7 +160,7 @@
       </v-card>
       <v-card class="elevation-0">
         <v-card-text class="subtitle-2 green white--text my-2">
-          捐赠者请知悉：为保证需求真实性，本列表中大部分数据均通过【真人电话/微信视频/带相片工作证照片/医院官方电话】的方式核验联系人信息；同时已通过标签方式标明需求核验状况，便于查验
+          捐赠者请知悉：为保证需求真实性，本列表中大部分数据均通过【真人电话/微信视频/带相片工作证照片/医院官方电话】的方式核验联系人信息；同时已通过标签方式标明需求核验状况，便于各位捐赠者查验
         </v-card-text>
       </v-card>
 
@@ -248,7 +248,12 @@
                   </template>
 
                   <div class="subtitle-1 mt-3">
-                    {{ o.province }} {{ o.city }}<br>地址：{{ o.address ? o.address : "（暂无详细地址，可点击下方搜索）" }}
+                    {{ o.province }} {{ o.city }}
+                  </div>
+
+
+                  <div class="subtitle-2">
+                    地址：{{ o.address ? o.address : "（暂无详细地址，可点击下方搜索）" }}
                   </div>
 
                   <div
@@ -319,7 +324,7 @@
                         left
                       >
                         {{ show[o.name] ? "mdi-chevron-up" : "mdi-chevron-down" }}
-                      </v-icon>{{ show[o.name] ? "收起" : "展开" }}{{ o.supplies.length ? "" : " (无需求数据)" }}
+                      </v-icon>{{ show[o.name] ? "收起详细需求" : "展开详细需求" }}{{ o.supplies.length ? "" : " (无需求数据)" }}
                     </v-btn>
                   </v-col>
                 </v-card-actions>
@@ -329,7 +334,7 @@
 
                     <v-card-text>
                       <div
-                        v-for="supply in o.supplies"
+                        v-for="[index, supply] in Object.entries(o.supplies)"
                         :key="supply.n"
                         class="mb-3"
                       >
@@ -348,11 +353,12 @@
             </template>
           </DataTable>
         </div>
-        <div class="text-right grey--text overline">
-          数据合作方：WeStar 公益团队（<a
+        <div class="text-right grey--text overline mt-4">
+          此页面数据合作方<br><a
             href="https://mp.weixin.qq.com/s/U_IAuov_AR13S87cJYjlSg"
             target="_blank"
-          >官方微信公众号</a>)
+            style="text-decoration: none"
+          >WeStar 公益团队</a>
         </div>
       </v-skeleton-loader>
     </v-col>
@@ -384,7 +390,7 @@
         report: {
           enabled: false,
           cause: "",
-          causes: ['地址不存在/未找到', '联系不上医院方', '物资被拒收', '信息重复', '其他'],
+          causes: ['地址不存在/未找到', '联系不上医院方', '物资被拒收或拦截', '物资已够用', '信息重复', '其他'],
           content: ""
         }
       }
@@ -501,7 +507,7 @@
   border-top: 4px solid rgba(226, 82, 66, 1) !important
 }
 .red-breathe {
-  animation: breathe 1.8s ease-in-out alternate infinite;
+  animation: breathe 1.5s ease-in-out alternate infinite;
 }
 
   @keyframes breathe {
