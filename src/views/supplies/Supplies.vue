@@ -69,12 +69,32 @@
               </v-list-item-action>
             </v-list-item>
           </v-list>
+          <v-btn
+            outlined
+            small
+            @click="dialog.forced = !dialog.forced"
+          >
+            {{ dialog.forced ? "收起" : "排版有误？" }}
+          </v-btn>
+          <v-expand-transition>
+            <div v-if="dialog.forced">
+              <v-divider
+                class="my-3"
+              />
+              <h2 class="subtitle-1">
+                以下是未经排版的数据
+              </h2>
+              <div>
+                联系人：{{ dialog.contact.name }}<br>电话：{{ dialog.contact.content }}
+              </div>
+            </div>
+          </v-expand-transition>
         </v-card-text>
         <v-card-actions>
           <v-spacer />
           <v-btn
             text
-            @click="dialog.enabled = false"
+            @click="closeDialog"
           >
             关闭
           </v-btn>
@@ -140,7 +160,7 @@
       </v-card>
       <v-card class="elevation-0">
         <v-card-text class="subtitle-2 green white--text my-2">
-          捐赠者请知悉：为保证需求真实性，本列表中几乎所有数据均通过【电话-微信视频-带相片工作证-医院官方电话】的方式核验联系人信息（已通过标签方式标明需求核验状况）
+          捐赠者请知悉：为保证需求真实性，本列表中大部分数据均通过【真人电话/微信视频/带相片工作证照片/医院官方电话】的方式核验联系人信息；同时已通过标签方式标明需求核验状况，便于查验
         </v-card-text>
       </v-card>
 
@@ -152,9 +172,26 @@
             style="margin-top: -4px;"
           >
             mdi-file-document-box-remove
-          </v-icon> 纠错按钮提交纠错请求，我们将再次与医院进行二次审核，以保证消息时效性。
+          </v-icon> 纠错按钮发起纠错请求，我们将再次与医院进行二次审核，以保证消息时效性。
         </v-card-text>
       </v-card>
+
+      <!--      <v-card class="elevation-0">-->
+      <!--        <v-row-->
+      <!--          align="center"-->
+      <!--          justify="center"-->
+      <!--        >-->
+      <!--          <v-col cols="4">-->
+      <!--            总计种类<br>{{ data ? Object.keys(this.data[0]).length : "" }}-->
+      <!--          </v-col>-->
+      <!--          <v-col cols="4">-->
+      <!--            总计数量<br>{{ stats }}-->
+      <!--          </v-col>-->
+      <!--          <v-col cols="4">-->
+      <!--            总计医院<br>{{ data ? this.data.length : "" }}-->
+      <!--          </v-col>-->
+      <!--        </v-row>-->
+      <!--      </v-card>-->
 
       <v-skeleton-loader
         :loading="$store.getters.ajaxLoading && !data.length"
@@ -169,36 +206,63 @@
                 v-for="[i, o] in items.entries()"
                 :key="i"
                 class="viewCard"
-                :class="{'card-border pb-0': o.isextremeemergency !== 'Y'}"
+                :class="{'redBorder pb-0': !o.urge}"
               >
                 <v-card-title
                   class="mb-2"
-                  :class="{'red darken-1 white--text': o.isextremeemergency === 'Y'}"
+                  :class="{'red darken-1 white--text red-breathe': o.urge, 'grey lighten-3': !o.urge}"
                 >
                   <span
                     class="title font-weight-black"
                   >
-                    {{ o.isextremeemergency === 'Y' ? "[紧急]": "" }} {{ o.name }}
+                    {{ o.urge === '裸奔' ? "[库存为零] ": "" }}{{ o.name }}
                   </span>
                 </v-card-title>
-                <v-card-text>
-                  <span v-if="getTags(o).length">
+                <span class="float-right surplusInfo">
+                  <div class="content">
+                    <template v-if="o.supplies.length">
+                      <span class="number">{{ o.supplies.length }}种</span>
+                      种类
+                      <br>
+                    </template>
+                    <template v-if="o.suppliesCount">
+                      <span class="number">{{ o.suppliesCount }}{{ o.suppliesCountBias ? "+" : "" }}</span>
+                      数量
+                    </template>
+                  </div>
+                  <v-icon class="bgIcon">wsicon wsicon-hospital</v-icon>
+                </span>
+                <v-card-text class="pt-0 pb-6 card-min-height">
+                  <template v-if="o.tags.length">
                     <v-chip
-                      v-for="tag in getTags(o)"
+                      v-for="tag in o.tags"
 
                       :key="tag.t"
                       label
                       class="ma-1 font-weight-bold white--text"
+                      small
                       :color="tag.c"
                     >
                       {{ tag.t }}
                     </v-chip>
-                    <br>
-                  </span>
+                  </template>
 
-                  <span class="subtitle-1">
-                    {{ o.province }} {{ o.city }} {{ o.suburb }}<br>地址：{{ o.address }}
-                  </span>
+                  <div class="subtitle-1 mt-3">
+                    {{ o.province }} {{ o.city }}<br>地址：{{ o.address ? o.address : "（暂无详细地址，可点击下方搜索）" }}
+                  </div>
+
+                  <div
+                    v-if="o.alert"
+                    class="caption red--text"
+                  >
+                    特别备注：{{ o.alert }}
+                  </div>
+                  <div
+                    v-if="o.notes"
+                    class="caption deep-orange--text"
+                  >
+                    备注：{{ o.notes }}
+                  </div>
                 </v-card-text>
                 <v-divider />
                 <v-card-actions>
@@ -215,7 +279,7 @@
                         left
                       >
                         wsicon wsicon-local
-                      </v-icon>查看地图
+                      </v-icon>{{ o.address ? "查看" : "搜索" }}地图
                     </v-btn>
                     <v-btn
                       tile
@@ -248,13 +312,14 @@
                       small
                       outlined
                       rounded
+                      :disabled="!o.supplies.length"
                       @click="showOrHideCard(o)"
                     >
                       <v-icon
                         left
                       >
                         {{ show[o.name] ? "mdi-chevron-up" : "mdi-chevron-down" }}
-                      </v-icon>{{ show[o.name] ? "收起" : "展开" }}
+                      </v-icon>{{ show[o.name] ? "收起" : "展开" }}{{ o.supplies.length ? "" : " (无需求数据)" }}
                     </v-btn>
                   </v-col>
                 </v-card-actions>
@@ -264,15 +329,15 @@
 
                     <v-card-text>
                       <div
-                        v-for="content in getContent(o)"
-                        :key="content.title"
+                        v-for="supply in o.supplies"
+                        :key="supply.n"
                         class="mb-3"
                       >
                         <h2 class="title">
-                          {{ content.title }}
+                          {{ supply.n }}
                         </h2>
-                        <p>
-                          {{ content.content }}
+                        <p class="font-weight-bold red--text display-1">
+                          {{ typeof supply.v === "number" ? "&times; " : "" }}{{ supply.v }}
                         </p>
                         <v-divider />
                       </div>
@@ -283,6 +348,12 @@
             </template>
           </DataTable>
         </div>
+        <div class="text-right grey--text overline">
+          数据合作方：WeStar 公益团队（<a
+            href="https://mp.weixin.qq.com/s/U_IAuov_AR13S87cJYjlSg"
+            target="_blank"
+          >官方微信公众号</a>)
+        </div>
       </v-skeleton-loader>
     </v-col>
   </v-row>
@@ -292,7 +363,6 @@
   import api from "../../apis/api";
   import strings from "../../utils/strings";
   import DataTable from "../../components/DataTable";
-  import Console from "../../utils/Console";
 
   export default {
     name: "Supplies",
@@ -304,6 +374,7 @@
         snackbar: false,
         dialog: {
           enabled: false,
+          forced: false,
           contact: {
             name: "",
             content: ""
@@ -320,8 +391,48 @@
     },
     computed: {
       dataset() {
-        Console.log(this.data)
-        return this.data.filter(el => el.name.length);
+        return this.data.map(el => {
+          const result = {supplies: [], suppliesCount: 0, suppliesCountBias: false};
+
+          for (const [key, value] of Object.entries(el)) {
+            const keys = key.split(" ");
+            if (keys.length === 2) {
+              // information
+              result[keys[0]] = value
+            } else {
+              // supplies list
+              if (value) {
+                result.supplies.push({
+                  n: key.replace("n95", "N95 "),
+                  v: value === "Y" ? "需要" : value
+                });
+                if (typeof value === "number") {
+                  result.suppliesCount += value;
+                } else {
+                  result.suppliesCountBias = true
+                }
+              }
+            }
+          }
+          return result
+        }).map(el => {
+          el.tags = [];
+          if (!(!el.trueness || (el.trueness.includes("未核实") || el.trueness.includes("需确认")))) {
+            el.trueness = el.tags.push({c: 'green', t: `已核实：${el.trueness}`});
+          }
+
+          if (el.urge) {
+            if (el.urge === "裸奔") {
+              el.tags.push({c: 'red darken-2', t: "非常紧急：库存为零"});
+            } else if (el.urge === "紧缺") {
+              el.tags.push({c: 'red', t: "紧缺"});
+            } else {
+              el.tags.push({c: 'grey', t: el.urge});
+            }
+          }
+
+          return el
+        })
       },
       xs () {
         return this.$vuetify.breakpoint.xsOnly
@@ -330,6 +441,7 @@
         return strings.contacts(
           this.dialog.contact.name,
           this.dialog.contact.content,
+          "、"
         )
       }
     },
@@ -351,65 +463,6 @@
           this.$set(this.show, o.name, true)
           // this.show = Object.assign(this.show, {[o.name]: true})
         }
-
-      },
-      getTags (o) {
-        const tags = [];
-        const trueness = strings.trueness(o.trueness);
-        const nohelp = /(未|没有)(.*)援助/
-        if (trueness.t) tags.push({c: 'green', t: `已验证：${trueness.r}`});
-        if (o.supplies && o.supplies.includes("已无任何库存")) tags.push({c: 'red', t: `已无任何库存`});
-        if (o.supplies && nohelp.test(o.supplies)) tags.push({c: 'red', t: `未收到过援助`});
-        if (o.supplies && (o.supplies.includes("联系不上") || o.supplies.includes("打不通") || o.supplies.includes("无人接听"))) tags.push({c: 'grey', t: "最近联系不上"});
-
-        return tags
-      },
-      getContent(o) {
-        const contents = [];
-        const map = {
-          "supplies": "需求描述",
-          "official": "是否为官方信息（官网/官微）",
-          "drugs": "急需药品",
-          "suppliesv": "备注",
-          "suppliesw": "备注物资",
-
-          "suppliesn95": "N95 口罩（个）",
-          "suppliesmsm": "医用外科口罩（个）",
-          "suppliesa": "一次性医用口罩（个）",
-          "suppliesb": "护目镜（个）",
-          "suppliesc": "防冲击眼罩（个）",
-          "suppliesd": "一次性防水面罩（个）",
-          "suppliese": "防护服（套）",
-          "suppliesf": "手术衣（件）",
-          "suppliesg": "隔离衣（件）",
-          "suppliesh": "医用帽（个）",
-          "suppliesi": "防水、防污染鞋（长筒）（套）",
-          "suppliesj": "乳胶手套（双）",
-          "suppliesk": "免洗手消毒液",
-          "suppliesl": "红外线体温仪",
-          "suppliesm": "酒精",
-          "suppliesn": "84 消毒液",
-          "suppliesx": "奥司他韦",
-          "suppliesy": "连花清瘟胶囊",
-          "suppliesz": "移动紫外线消毒车",
-          "suppliesaa": "板蓝根",
-
-          "supplieso": "提出日期（到武汉中转站的日期）",
-          "suppliesp": "物流编码/线下配送",
-          "suppliesr": "物流状态",
-          "suppliess": "送货人",
-          "suppliest": "交付日期",
-          "suppliesu": "签收人",
-        };
-        for (const [key, value] of Object.entries(map)) {
-          if (key in o && o[key] && o[key].length) {
-            contents.push({
-              title: value,
-              content: o[key]
-            })
-          }
-        }
-        return contents
       },
       doReport() {
         api.reportIncorrect({
@@ -427,13 +480,17 @@
       },
       openDialog(o) {
         this.dialog.enabled = true;
-        this.dialog.contact.name = o.contactname;
-        this.dialog.contact.content = o.contactphone;
-        this.dialog.address = o.address;
+        this.dialog.contact.name = o.contact;
+        this.dialog.contact.content = o.phone;
+        this.dialog.address = o.address ? o.address : "暂无详细地址，可点击搜索";
       },
       openReport(o) {
         this.report.enabled = true;
         this.report.content = JSON.stringify(o)
+      },
+      closeDialog() {
+        this.dialog.enabled = false;
+        this.dialog.forced = false
       }
     },
   }
@@ -443,4 +500,34 @@
 .card-border {
   border-top: 4px solid rgba(226, 82, 66, 1) !important
 }
+.red-breathe {
+  animation: breathe 1.8s ease-in-out alternate infinite;
+}
+
+  @keyframes breathe {
+    from {
+      background: #c33e37;
+    }
+    to {
+      background: #65201d;
+    }
+  }
+
+.surplusInfo .content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 20px;
+  font-family: PingFangSC-Medium, "PingFang SC", Roboto, sans-serif;
+  font-size: 14px;
+  color: #333E48;
+  letter-spacing: 0;
+  text-align: center;
+  min-height: 100px;
+  z-index: 2;
+}
+  .card-min-height {
+    min-height: 120px;
+  }
 </style>

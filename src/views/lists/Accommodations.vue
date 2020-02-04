@@ -386,7 +386,7 @@
   font-size: 15px !important;
 }
 .cardTitle {
-  font-family: PingFangSC-Medium;
+  font-family: PingFangSC-Medium, "PingFang SC", Roboto, sans-serif;
   font-size: 16px;
   color: #333E48;
   letter-spacing: 0;
@@ -397,7 +397,7 @@
   justify-content: center;
   align-items: center;
   margin: 10px 20px;
-  font-family: PingFangSC-Medium;
+  font-family: PingFangSC-Medium, "PingFang SC", Roboto, sans-serif;
   font-size: 14px;
   color: #333E48;
   letter-spacing: 0;
@@ -406,8 +406,8 @@
   z-index: 2;
 }
 .surplusInfo .number {
-  font-family: DINPro-Bold;
-  font-weight: bold;
+  font-family: DINPro-Bold, "SF Mono", Helvetica, Futura, sans-serif;
+  font-weight: bolder;
   font-size: 20px;
   color: #a20002;
   letter-spacing: 1px;

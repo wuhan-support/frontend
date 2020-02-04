@@ -10,7 +10,7 @@ export default {
     return service.get("/platforms/medical");
   },
   supplies () {
-    return service.get("/hospital/supplies");
+    return service.get("/hospital/supplies/v2");
   },
   reportIncorrect ({ type, cause, content }) {
     return service.post("/report", { type, cause, content });

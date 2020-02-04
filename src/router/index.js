@@ -15,7 +15,7 @@ import People from "../views/roles/People";
 import config from "../config";
 import VolunteerLayout from "../layouts/SponsorLayout";
 import Volunteer from "../views/roles/Volunteer";
-import RealTimeMsgs from "../views/lists/RealTimeMsgs";
+import WikiStream from "../views/lists/RealTimeMsgs";
 
 Vue.use(VueRouter);
 
@@ -68,7 +68,7 @@ const routes = [{
   }, {
     path: "/stream",
     name: "stream",
-    component: RealTimeMsgs,
+    component: WikiStream,
     meta: {
       icon: "mdi-hospital-box",
       title: "实时信息",

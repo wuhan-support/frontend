@@ -157,7 +157,7 @@
           return el
         });
       },
-      // 根据当前行政区划选择，过滤当前数据集
+      // 根据当前行政区划选择，生成过滤器
       filters () {
         const filters = [];
         for (const [index, regionSegment] of this.region.entries()) {
@@ -181,13 +181,9 @@
       data () {
         // 行政区划过滤
         const filtered = this.cleanedData.filter((el) => {
-          if ("province" in el && "city" in el && "suburb" in el) {
-            return this.filters.every((func) => {
-              return func(el)
-            })
-          } else {
-            return true
-          }
+          return this.filters.every((func) => {
+            return func(el)
+          })
         });
 
         // 若开启地理位置排序，则清理掉没有地理位置信息的数据

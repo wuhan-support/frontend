@@ -221,7 +221,7 @@ export default {
                 // if (el.commercial && el.commercial.includes("无偿")) tags.push({ i: "mdi-currency-usd-off", c: "green darken-1", t: "无偿" });
                 el.tags = tags;
                 return el;
-            });
+            }).reverse();
         },
         xs () {
             return this.$vuetify.breakpoint.xsOnly
