@@ -70,7 +70,7 @@ const routes = [{
     name: "peopleStream",
     component: WikiStream,
     meta: {
-      icon: "mdi-hospital-box",
+      icon: "mdi-timeline-text",
       title: "信息看板",
       subtitle: "以官方渠道发布的其他信息一览"
     }
