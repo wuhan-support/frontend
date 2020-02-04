@@ -256,7 +256,6 @@
                     {{ o.province }} {{ o.city }}
                   </div>
 
-
                   <div class="subtitle-2">
                     地址：{{ o.address ? o.address : "（暂无详细地址，可点击下方搜索）" }}
                   </div>
@@ -276,7 +275,7 @@
                 </v-card-text>
                 <v-divider />
                 <v-card-actions>
-                  <v-col class="text-right">
+                  <v-col>
                     <v-btn
                       tile
                       small
@@ -358,7 +357,9 @@
             </template>
           </DataTable>
         </div>
-        <div class="text-right grey--text overline mt-4">
+        <div
+          class="text-right grey--text overline mt-4"
+        >
           此页面数据合作方<br><a
             href="https://mp.weixin.qq.com/s/U_IAuov_AR13S87cJYjlSg"
             target="_blank"
@@ -539,6 +540,6 @@
   z-index: 2;
 }
   .card-min-height {
-    min-height: 120px;
+    min-height: 130px;
   }
 </style>
