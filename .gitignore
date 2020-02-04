@@ -22,3 +22,5 @@ yarn-error.log*
 /vue.config.js
 /src/config.js
 config.js
+
+.yarn/

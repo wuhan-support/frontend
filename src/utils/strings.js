@@ -28,18 +28,18 @@ function formatContact (name, content) {
   }
 }
 
-function split (string, delimeter) {
+function split (string, delimiter) {
   if (isNull(string)) return [];
   if (typeof string !== "string") return [string];
-  return string.split(delimeter)
+  return string.split(delimiter)
 }
 
 export default {
-  contacts (name, content) {
+  contacts (name, content, delimiter=" ") {
     const results = [];
 
-    const names = split(name, " ");
-    const contents = split(content, " ");
+    const names = split(name, delimiter);
+    const contents = split(content, delimiter);
 
     if (names.length === contents.length && names.length) {
       for (const index in names) {

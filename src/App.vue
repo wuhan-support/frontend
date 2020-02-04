@@ -150,7 +150,8 @@
       <v-card
         flat
         tile
-        class="text-center pb-6 grey lighten-2"
+        class="text-center pb-6"
+        :class="{'grey lighten-2': $route.name !== 'psychologicalPlatform', 'green lighten-1': $route.name === 'psychologicalPlatform'}"
         style="width: 100%"
       >
         <v-card-text>
@@ -164,9 +165,13 @@
             </h1>
           </template>
           <template v-else>
-            <h1 class="overline mb-4">
+            <h1 class="overline mb-2">
               医护工作者、武汉市民与湖北居民<br>
-              我们与你同在
+              我们与你同在 你们并不是孤身一人 ❤️
+            </h1>
+            <h1 class="overline mb-3">
+              全国人民<br>
+              让我们一起为武汉助力
             </h1>
             <h1 class="overline mb-5">
               疫情不息 援助不止

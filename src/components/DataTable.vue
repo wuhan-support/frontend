@@ -44,8 +44,7 @@
       outlined
       hide-details
       clearable
-    >
-    </v-text-field>
+    />
     <v-data-iterator
       id="data-table--content"
       :items="data"
@@ -122,6 +121,12 @@
         default () {
           return "请输入 名称 / 地区 / 地址 进行搜索"
         }
+      },
+      color: {
+        type: String,
+        default () {
+          return "#a20002"
+        }
       }
     },
     data() {
@@ -144,7 +149,11 @@
           if (el.province) {
             el.province = el.province.replace(" ", "");
             if (el.province.length === 2) {
-              el.province = `${el.province}省`
+              if (!/(北京|天津|上海|重庆)/.test(el.province)) {
+                el.province = `${el.province}省`
+              } else {
+                el.province = `${el.province}市`
+              }
             }
           }
           if (el.city) el.city = el.city.replace(" ", "");
@@ -152,7 +161,7 @@
           return el
         });
       },
-      // 根据当前行政区划选择，过滤当前数据集
+      // 根据当前行政区划选择，生成过滤器
       filters () {
         const filters = [];
         for (const [index, regionSegment] of this.region.entries()) {
@@ -176,13 +185,9 @@
       data () {
         // 行政区划过滤
         const filtered = this.cleanedData.filter((el) => {
-          if ("province" in el && "city" in el && "suburb" in el) {
-            return this.filters.every((func) => {
-              return func(el)
-            })
-          } else {
-            return true
-          }
+          return this.filters.every((func) => {
+            return func(el)
+          })
         });
 
         // 若开启地理位置排序，则清理掉没有地理位置信息的数据
@@ -248,10 +253,9 @@
 
 <style scoped>
 .searchBar {
-  background: #FFFFFF;
+  /*background: #FFFFFF;*/
   border: 1px solid #a20002;
   box-shadow: 0 3px 20px 0 rgba(0,0,0,0.10);
-  border-radius: 4px;
   border-radius: 4px;
 }
 </style>

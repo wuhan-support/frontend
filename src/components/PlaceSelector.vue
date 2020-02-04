@@ -11,7 +11,10 @@
         :key="index"
         class="pl-2"
         cols="4"
-        sm="2"
+        sm="4"
+        md="3"
+        lg="2"
+        xl="1"
       >
         <v-select
           v-model="regions[selector.type]"

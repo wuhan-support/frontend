@@ -21,7 +21,7 @@
       class="text-center"
       style="line-height: 1;"
     >
-      <span v-if="xs">
+      <span v-if="sm">
         {{ pagination.page }} / {{ pagination.pageCount }} 页<br><span class="caption">(共 {{ pagination.itemsLength }} 条记录)</span>
       </span>
       <span v-else>
@@ -58,8 +58,8 @@
       }
     },
     computed: {
-      xs () {
-        return this.$vuetify.breakpoint.xsOnly
+      sm () {
+        return this.$vuetify.breakpoint.smAndDown
       }
     }
   }
