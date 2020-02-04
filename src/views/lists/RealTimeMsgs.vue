@@ -72,7 +72,7 @@
       </h1>
       <v-card class="elevation-0">
         <v-card-text class="alertRedCardText white--text my-2">
-          实时信息更新粒度为5分钟一次；请留意以下内容的消息来源
+          实时信息板块主要是为了方便大家查看自己需要的信息，所以我们将尽力把所有零散的信息都放到这里便于各位进行查看和分享
         </v-card-text>
       </v-card>
       <!-- <p class="subtitle-1">
@@ -94,7 +94,7 @@
           <DataTable
             :items="dataset"
             disable-region-selector
-            search-text="平台名称、地区或咨询方式"
+            search-text="信息内容或标题"
           >
             <template v-slot:default="{ items }">
               <v-card
@@ -115,7 +115,7 @@
                 </v-card-title>
                 <v-card-text class="pb-0">
                   <p class="subtitle-1">
-                    创建时间：{{ o.createdTime }}
+                    发布时间：{{ oaDate(o.createdtime).toLocaleString() }}
                   </p>
                   <p class="subtitle-2 card-subTitle">
                     信息类别：{{ o.category }}
@@ -181,6 +181,7 @@
 <script>
 import api from "../../apis/api";
 import DataTable from "../../components/DataTable";
+import time from "../../utils/time";
 
 export default {
     name: "RealTimeMsgs",
@@ -260,17 +261,8 @@ export default {
             this.report.enabled = true;
             this.report.content = JSON.stringify(o)
         },
-        regionalText (o) {
-            // const suffix = [];
-            // if (o.regional.includes("地方")) {
-            //     if (o.province) suffix.push(o.province);
-            //     if (o.city) suffix.push(o.city);
-            //     if (o.suburb) suffix.push(o.suburb)
-
-            //     return `（${suffix.join(" ")}）`
-            // } else {
-            //     return ""
-            // }
+        oaDate(d) {
+          return time.fromOADate(d)
         }
     },
 }

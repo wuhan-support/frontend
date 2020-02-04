@@ -49,7 +49,7 @@ const routes = [{
     }
   }, {
     path: 'platforms/medical',
-    name: 'medicalPlatform',
+    name: 'peopleMedicalPlatform',
     component: MedicalPlatforms,
     meta: {
       icon: "mdi-hospital",
@@ -58,7 +58,7 @@ const routes = [{
     }
   }, {
     path: 'platforms/psychological',
-    name: 'psychologicalPlatform',
+    name: 'peoplePsychologicalPlatform',
     component: PsychologicalPlatforms,
     meta: {
       icon: "mdi-heart",
@@ -66,13 +66,13 @@ const routes = [{
       subtitle: "我们提供免费心理咨询平台的查询，包括基本信息与其联系方式"
     }
   }, {
-    path: "/stream",
-    name: "stream",
+    path: "stream",
+    name: "peopleStream",
     component: WikiStream,
     meta: {
       icon: "mdi-hospital-box",
-      title: "实时信息",
-      subtitle: "实时信息列表"
+      title: "信息看板",
+      subtitle: "以官方渠道发布的其他信息一览"
     }
   }]
 }, {
@@ -95,16 +95,16 @@ const routes = [{
     }
   }, {
     path: 'accommodations',
-    name: 'accommodations',
+    name: 'staffAccommodations',
     component: Accommodations,
     meta: {
-      icon: "mdi-hotel",
+      icon: "wsicon wsicon-hotel",
       title: "医护人员免费住宿",
-      subtitle: "为医护人员提供免费住宿信息列表，支持地理位置排序与地区过滤，以此提供基本生活保障"
+      subtitle: "为医护人员提供免费住宿信息列表，支持地理位置排序与地区过滤，以提供基本生活保障"
     }
   }, {
     path: 'supplies',
-    name: 'supplies',
+    name: 'staffSupplies',
     component: Supplies,
     meta: {
       icon: "mdi-hospital",
@@ -114,7 +114,7 @@ const routes = [{
     }
   }, {
     path: 'platforms/psychological',
-    name: 'psychologicalPlatform',
+    name: 'staffPsychologicalPlatform',
     component: PsychologicalPlatforms,
     meta: {
       icon: "mdi-heart",
@@ -123,7 +123,7 @@ const routes = [{
     }
   }, {
     path: 'supplies/submit',
-    name: 'suppliesSubmission',
+    name: 'staffSuppliesSubmission',
     component: SuppliesSubmission,
     meta: {
       icon: "mdi-file-document-box-plus",
@@ -153,7 +153,7 @@ const routes = [{
     }
   }, {
     path: 'supplies',
-    name: 'supplies',
+    name: 'volunteerSupplies',
     component: Supplies,
     meta: {
       icon: "mdi-hospital",
@@ -163,7 +163,7 @@ const routes = [{
     }
   }, {
     path: 'supplies/submit',
-    name: 'suppliesSubmission',
+    name: 'volunteerSuppliesSubmission',
     component: SuppliesSubmission,
     meta: {
       icon: "mdi-file-document-box-plus",
