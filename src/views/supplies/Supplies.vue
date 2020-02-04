@@ -216,7 +216,7 @@
                 <v-card-title
                   class="mb-2"
                   :class="{'red darken-1 white--text red-breathe': o.urge, 'grey lighten-3': !o.urge}"
-                  :style="{'animation-delay': `${i*0.1}s`}"
+                  :style="{'animation-delay': `${i*0.25}s`}"
                 >
                   <span
                     class="title font-weight-black"
