@@ -276,7 +276,7 @@
                 </v-card-text>
                 <v-divider />
                 <v-card-actions>
-                  <v-col>
+                  <v-col class="text-center d-flex justify-space-between">
                     <v-btn
                       tile
                       small
@@ -317,11 +317,16 @@
                         wsicon wsicon-info
                       </v-icon>信息纠错
                     </v-btn>
+                  </v-col>
+                </v-card-actions>
+                <v-divider />
+                <v-card-actions>
+                  <v-col class="text-center d-flex justify-space-between">
                     <v-btn
                       text
-                      small
-                      outlined
-                      rounded
+                      tile
+                      color="#a20002"
+                      block
                       :disabled="!o.supplies.length"
                       @click="showOrHideCard(o)"
                     >

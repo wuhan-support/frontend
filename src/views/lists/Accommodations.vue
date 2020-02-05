@@ -415,7 +415,7 @@
 }
 .surplusInfo .bgIcon {
   position: absolute;
-  top: 5px;
+  top: 10px;
   right: -20px;
   font-size: 150px;
   color: #a20002;
