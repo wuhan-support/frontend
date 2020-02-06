@@ -157,15 +157,17 @@
           <v-row
             justify="space-between"
             align="center"
-            class="mx-3"
+            class="mx-3 my-1"
           >
             <v-checkbox
               v-model="filters.available"
+              hide-details
               class="d-inline-flex"
               label="只看有房"
             />
             <v-checkbox
               v-model="filters.linBaoRuZhu"
+              hide-details
               class="d-inline-flex"
               label="不需自带三件套"
             />

@@ -9,9 +9,6 @@ import * as Sentry from '@sentry/browser'
 import * as Integrations from '@sentry/integrations'
 import './assets/icon/wsicon.css'
 
-import vRegion from 'v-region';
-Vue.use(vRegion, {});
-
 Vue.config.productionTip = false
 
 const production = process.env.NODE_ENV === 'production'

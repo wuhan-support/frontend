@@ -35,16 +35,56 @@
           </span>
         </v-col>
       </v-row>
+      <v-row
+        v-else-if="geolocation.failed"
+        align="center"
+        justify="center"
+      >
+        <v-col
+          cols="12"
+          class="subtitle-1 text-center red--text font-weight-bold"
+        >
+          <span>
+            定位失败，请确认是否开启浏览器及网站定位权限
+            <v-btn
+              outlined
+              small
+              :loading="geolocation.determining"
+              @click="geolocate"
+            >
+              重试
+            </v-btn>
+          </span>
+        </v-col>
+      </v-row>
     </v-expand-transition>
     <v-text-field
       v-model="search"
       :placeholder="searchText"
       dense
-      class="searchBar"
       outlined
       hide-details
       clearable
-    />
+    >
+      <template
+        v-if="enableGeolocation"
+        v-slot:append-outer
+      >
+        <v-btn
+          icon
+          :loading="geolocation.determining"
+          :class="{'red--text': geolocation.failed, 'green--text': location}"
+          style="margin-top: -7px"
+          @click="geolocate"
+        >
+          <v-icon
+            @click="geolocate"
+          >
+            mdi-crosshairs-gps
+          </v-icon>
+        </v-btn>
+      </template>
+    </v-text-field>
     <v-data-iterator
       id="data-table--content"
       :items="data"
@@ -237,11 +277,11 @@
         })
         .catch(err => {
           this.geolocation.failed = true
-          setTimeout(() => {
-            this.geolocation.failed = false
-            this.geolocation.lat = null
-            this.geolocation.lng = null
-          }, 4000)
+          // setTimeout(() => {
+          //   this.geolocation.failed = false
+          //   this.geolocation.lat = null
+          //   this.geolocation.lng = null
+          // }, 4000)
         })
         .finally(() => {
           this.geolocation.determining = false
