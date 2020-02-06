@@ -321,22 +321,24 @@
                 </v-card-actions>
                 <v-divider />
                 <v-card-actions>
-                  <v-col class="text-center d-flex justify-space-between">
-                    <v-btn
-                      text
-                      tile
-                      color="#a20002"
-                      block
-                      :disabled="!o.supplies.length"
-                      @click="showOrHideCard(o)"
-                    >
+                  <v-btn
+                    text
+                    tile
+                    color="#a20002"
+                    block
+                    :disabled="!o.supplies.length"
+                    @click="showOrHideCard(o)"
+                  >
+                    <v-divider style="opacity: 0.3" />
+                    <span class="mx-4">
                       <v-icon
                         left
                       >
                         {{ show[o.name] ? "mdi-chevron-up" : "mdi-chevron-down" }}
                       </v-icon>{{ show[o.name] ? "收起详细需求" : "展开详细需求" }}{{ o.supplies.length ? "" : " (无需求数据)" }}
-                    </v-btn>
-                  </v-col>
+                    </span>
+                    <v-divider style="opacity: 0.3" />
+                  </v-btn>
                 </v-card-actions>
                 <v-expand-transition>
                   <div v-show="show[o.name]">
@@ -413,6 +415,7 @@
           const result = {supplies: [], suppliesCount: 0, suppliesCountBias: false};
 
           for (const [key, value] of Object.entries(el)) {
+            if (value === "　") continue;
             const keys = key.split(" ");
             if (keys.length === 2) {
               // information
