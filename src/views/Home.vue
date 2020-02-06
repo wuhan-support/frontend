@@ -10,27 +10,34 @@
       <v-col cols="12">
         <v-img
           :src="require('@/assets/logo/red.svg')"
-          aspect-ratio="2"
+          aspect-ratio="4.4"
           max-width="256px"
           contain
-          class="mx-auto"
+          class="mx-auto py-3"
+          style="margin-top: 36px"
         />
-        <v-card-title
-          class="display-1 font-weight-bold"
-          style="word-break: normal"
+        <v-row
+          justify="center"
+          align="center"
+          class="pb-3"
         >
-          我们是?
-        </v-card-title>
-        <v-card-text class="subtitle-1 line-height-wide black--text">
-          我们关注你所关注的，我们支持需要支持的：面向疫区内外民众和医疗机构的多维度综合信息平台。支持武汉，我们在一起！
-        </v-card-text>
+          <v-col
+            cols="12"
+            class="pt-0"
+          >
+            <h1 class="subtitle-1 font-weight-bold text-center">
+              驰援一线 传递温暖
+            </h1>
+          </v-col>
+        </v-row>
+
         <v-row
           justify="center"
           align="center"
         >
           <v-col cols="12">
             <h2 class="overline text-center">
-              欢迎访问多维度综合信息平台
+              欢迎访问综合信息平台
             </h2>
             <h1 class="heading text-center">
               您是?
