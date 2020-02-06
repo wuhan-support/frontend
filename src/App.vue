@@ -155,9 +155,6 @@
         style="width: 100%"
       >
         <v-card-text>
-          <h1 class="overline mb-4">
-            英雄 李文亮医生 一路走好
-          </h1>
           <template v-if="$route.name === 'psychologicalPlatform'">
             <h1 class="overline mb-4">
               这个世界虽然不完美<br>
@@ -168,7 +165,10 @@
             </h1>
           </template>
           <template v-else>
-            <h1 class="overline mb-2">
+            <h1 class="overline mb-3">
+              英雄 李文亮医生 一路走好
+            </h1>
+            <h1 class="overline mb-3">
               医护工作者、武汉市民与湖北居民<br>
               我们与你同在 你们并不是孤身一人 ❤️
             </h1>

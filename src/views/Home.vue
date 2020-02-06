@@ -20,7 +20,6 @@
           justify="center"
           align="center"
           class="pb-3 mx-1"
-          style="border-bottom: dashed 1px rgba(0, 0, 0, .2)"
         >
           <v-col
             cols="12"
@@ -31,6 +30,8 @@
             </h1>
           </v-col>
         </v-row>
+
+        <v-divider />
 
         <v-row
           justify="center"
