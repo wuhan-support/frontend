@@ -2,7 +2,7 @@
   <v-app
     id="__app_root"
     :dark="dark"
-    :style="{'background': $route.name === 'home' ? '#f0f0f0' : null, 'filter': $route.name === 'home' ? 'grayscale(1)' : 'grayscale(0.7)'}"
+    :style="{'background': $route.name === 'home' ? '#f0f0f0' : null}"
   >
     <v-navigation-drawer
       v-model="drawer"
@@ -165,9 +165,6 @@
             </h1>
           </template>
           <template v-else>
-            <h1 class="overline mb-3">
-              英雄 李文亮医生 一路走好
-            </h1>
             <h1 class="overline mb-3">
               医护工作者、武汉市民与湖北居民<br>
               我们与你同在 你们并不是孤身一人 ❤️
