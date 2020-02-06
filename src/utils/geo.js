@@ -4,8 +4,8 @@ export default {
   locate() {
     const options = {
       enableHighAccuracy: true,
-      timeout: 1000 * 300,
-      maximumAge: 1000 * 30
+      timeout: 1000 * 180,
+      maximumAge: 1000 * 5
     };
     return new Promise(((resolve, reject) => {
       navigator.geolocation.getCurrentPosition(
