@@ -323,9 +323,9 @@
                 <v-card-actions>
                   <v-btn
                     text
-                    tile
                     color="#a20002"
                     block
+                    large
                     :disabled="!o.supplies.length"
                     @click="showOrHideCard(o)"
                   >

@@ -165,7 +165,7 @@
             </h1>
           </template>
           <template v-else>
-            <h1 class="overline mb-2">
+            <h1 class="overline mb-3">
               医护工作者、武汉市民与湖北居民<br>
               我们与你同在 你们并不是孤身一人 ❤️
             </h1>
