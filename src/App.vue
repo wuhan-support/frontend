@@ -2,7 +2,7 @@
   <v-app
     id="__app_root"
     :dark="dark"
-    :style="{'background': $route.name === 'home' ? '#f0f0f0' : null}"
+    :style="{'background': $route.name === 'home' ? '#f0f0f0' : null, 'filter': $route.name === 'home' ? 'grayscale(1)' : 'grayscale(0.7)'}"
   >
     <v-navigation-drawer
       v-model="drawer"
@@ -155,6 +155,9 @@
         style="width: 100%"
       >
         <v-card-text>
+          <h1 class="overline mb-4">
+            英雄 李文亮医生 一路走好
+          </h1>
           <template v-if="$route.name === 'psychologicalPlatform'">
             <h1 class="overline mb-4">
               这个世界虽然不完美<br>
