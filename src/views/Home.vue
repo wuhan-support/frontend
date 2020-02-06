@@ -26,7 +26,7 @@
             class="pt-0"
           >
             <h1 class="subtitle-1 font-weight-bold text-center">
-              驰援一线 传递温暖
+              驰援一线 · 传递温暖
             </h1>
           </v-col>
         </v-row>
@@ -36,9 +36,6 @@
           align="center"
         >
           <v-col cols="12">
-            <h2 class="overline text-center">
-              欢迎访问综合信息平台
-            </h2>
             <h1 class="heading text-center">
               您是?
             </h1>
