@@ -154,18 +154,13 @@
         医院需求信息
       </h1>
       <v-card class="elevation-0">
-        <v-card-text class="caption blue white--text my-2">
-          本列表已于2020年2月3日大更新，并将在未来保持持续更新，敬请留意。
-        </v-card-text>
-      </v-card>
-      <v-card class="elevation-0">
         <v-card-text class="subtitle-1 red font-weight-bold white--text my-2">
           本列表中的所有医院均存在<span class="font-weight-black title">非常紧急</span>的物资缺口状况，急需社会各界紧急援助！若您身边有相关资源（包括物流资源、消耗品资源等）请速与这些医院进行联系！
         </v-card-text>
       </v-card>
       <v-card class="elevation-0">
         <v-card-text class="subtitle-2 green white--text my-2">
-          捐赠者请知悉：为保证需求真实性，本列表中大部分数据均通过【真人电话/微信视频/带相片工作证照片/医院官方电话】的方式核验联系人信息；同时已通过标签方式标明需求核验状况，便于各位捐赠者查验
+          为保证需求真实性，本列表中大部分数据均通过【真人电话/微信视频/带相片工作证照片/医院官方电话】的方式核验联系人信息；同时已通过标签方式标明需求核验状况，便于各位捐赠者查验
         </v-card-text>
       </v-card>
 
