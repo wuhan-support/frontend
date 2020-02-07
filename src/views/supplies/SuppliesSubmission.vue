@@ -592,7 +592,7 @@
       prefillSupplies () {
         const supplies = [
           {
-            name: "医用 N95 口罩",
+            name: "医用防护口罩（N95）",
             requirements: "GB19083-2010"
           },
           {
@@ -600,20 +600,24 @@
             requirements: "YY0469-2011"
           },
           {
-            name: "医用连体防护服",
+            name: "一次性使用医用口罩",
+            requirements: "YY/T 0969-2013"
+          },
+          {
+            name: "医用一次性防护服",
             requirements: "GB19082-2009"
           },
           {
-            name: "医用隔离面罩",
+            name: "个人用眼护具",
             requirements: "GB14866-2006"
           },
           {
-            name: "医用一次性医用橡胶手套",
+            name: "一次性使用医用橡胶检查手套",
             requirements: "GB10213-2006"
           },
           {
-            name: "一次性使用手术衣",
-            requirements: "GB15980-1995"
+            name: "手术衣",
+            requirements: "YY/T 0506.2-2016"
           },
 
         ];
