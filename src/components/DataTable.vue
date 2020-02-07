@@ -188,18 +188,20 @@
         return this.items.map((el) => {
           if (el.province) {
             el.province = el.province.replace(" ", "");
-            if (!/(省|市|自治区)/.test(el.province)) {
-              if (!/(北京|天津|上海|重庆)/.test(el.province)) {
-                el.province = `${el.province}省`
-              } else {
+            if (!/(省|市|自治区|特别行政区)/.test(el.province)) {
+              if (/(北京|天津|上海|重庆)/.test(el.province)) {
                 el.province = `${el.province}市`
+              } else if (/(澳门|香港)/.test(el.province)) {
+                el.province = `${el.province}特别行政区`
+              } else {
+                el.province = `${el.province}省`
               }
             }
           }
 
           if (el.city) {
             el.city = el.city.replace(" ", "");
-            if (!el.city.includes("市")) {
+            if (!/(区|市|级)/.test(el.city)) {
               el.city = `${el.city}市`
             }
           }

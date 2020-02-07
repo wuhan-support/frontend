@@ -128,8 +128,9 @@
               :key="index0"
               cols="12"
               sm="6"
-              md="4"
-              lg="3"
+              md="6"
+              lg="4"
+              xl="3"
             >
               <div
                 class="subItem"
@@ -167,8 +168,9 @@
             <v-col
               cols="12"
               sm="6"
-              md="4"
-              lg="3"
+              md="6"
+              lg="4"
+              xl="3"
               @click="$set(item.value, item.value.length, {...nullSupply})"
             >
               <div
@@ -536,6 +538,13 @@
             required: true,
             value: null
           }, {
+            valueKey: 'unit',
+            label: '数量单位',
+            type: 'Number',
+            placeholder: '如：500ml/瓶、20包/箱、个',
+            required: true,
+            value: null
+          }, {
             valueKey: 'need',
             label: '需求数量',
             type: 'Number',
@@ -570,6 +579,7 @@
         },
         nullSupply: {
           name: null,
+          unit: null,
           need: null,
           daily: null,
           have: null,

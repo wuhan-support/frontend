@@ -92,57 +92,74 @@
                         <v-checkbox v-model="filters.linBaoRuZhu" class="d-inline-flex" label="不需自带三件套" />
                     </v-row> -->
           <DataTable
-            enable-geolocation
             search-text="住宿名称、地址"
             :items="dataset"
           >
             <template v-slot:default="{ items }">
               <v-card
-                v-for="item in items"
-                :key="item.id"
+                v-for="[i, o] in items.entries()"
+                :key="i + '' + o.name"
                 class="viewCard redBorder"
               >
-                {{ item }}
-                <!--                <v-card-title>-->
-                <!--                  <span class="title font-weight-black">-->
-                <!--                    {{ item.platformname }} <span class="caption font-weight-bold">诊断平台</span>-->
-                <!--                  </span>-->
-                <!--                </v-card-title>-->
-                <!--                <v-card-text v-if="!item.address.startsWith('http')">-->
-                <!--                  使用方法：{{ item.address }}-->
-                <!--                </v-card-text>-->
-                <!--                <v-divider />-->
-                <!--                <v-card-actions>-->
-                <!--                  <v-col class="text-center d-flex justify-space-between">-->
-                <!--                    <v-btn-->
-                <!--                      v-if="redirection(item)"-->
-                <!--                      tile-->
-                <!--                      small-->
-                <!--                      text-->
-                <!--                      :href="redirection(item).l"-->
-                <!--                    >-->
-                <!--                      <v-icon-->
-                <!--                        class="iconRed"-->
-                <!--                        left-->
-                <!--                      >-->
-                <!--                        mdi-open-in-new-->
-                <!--                      </v-icon>打开{{ redirection(item).t }}-->
-                <!--                    </v-btn>-->
-                <!--                    <v-btn-->
-                <!--                      tile-->
-                <!--                      text-->
-                <!--                      small-->
-                <!--                      @click="openReport(item)"-->
-                <!--                    >-->
-                <!--                      <v-icon-->
-                <!--                        class="iconRed"-->
-                <!--                        left-->
-                <!--                      >-->
-                <!--                        wsicon wsicon-info-->
-                <!--                      </v-icon>信息纠错-->
-                <!--                    </v-btn>-->
-                <!--                  </v-col>-->
-                <!--                </v-card-actions>-->
+                <v-card-title>
+                  <span class="title font-weight-black">
+                    {{ o.name ? o.name : o.address }}
+                  </span>
+                </v-card-title>
+                <v-card-text>
+                  <div
+                    v-if="o.status"
+                    class="subtitle-1 font-weight-bold"
+                  >
+                    状态：{{ o.status }}
+                  </div>
+                  <div class="subtitle-2 mb-2">
+                    {{ o.province }} {{ o.city }} {{ o.suburb }}；地址：{{ o.address ? o.address : "暂无。可点击下方【查看地图】前往查看地址" }}
+                  </div>
+                  <div
+                    v-if="o.tags"
+                    class="subtitle-2"
+                  >
+                    备注：{{ o.tags }} {{ o.conditions ? o.conditions : "" }}
+                  </div>
+                  <div
+                    class="subtitle-2"
+                  >
+                    联系电话：{{ o.phone ? o.phone : "暂无。可点击下方【查看地图】前往查看电话" }}
+                  </div>
+                </v-card-text>
+                <v-divider />
+                <v-card-actions>
+                  <v-col class="text-center d-flex justify-space-between">
+                    <v-btn
+                      tile
+                      small
+                      text
+                      :href="`https://ditu.amap.com/search?query=${encodeURIComponent(o.name)}`"
+                      target="_blank"
+                    >
+                      <v-icon
+                        class="iconRed"
+                        left
+                      >
+                        wsicon wsicon-local
+                      </v-icon>查看地图
+                    </v-btn>
+                    <v-btn
+                      tile
+                      text
+                      small
+                      @click="openReport(o)"
+                    >
+                      <v-icon
+                        class="iconRed"
+                        left
+                      >
+                        wsicon wsicon-info
+                      </v-icon>信息纠错
+                    </v-btn>
+                  </v-col>
+                </v-card-actions>
               </v-card>
             </template>
           </DataTable>
@@ -188,7 +205,11 @@ export default {
     },
     computed: {
         dataset () {
-            return this.data
+            return this.data.map(el => {
+              el.tags = el.tags ? el.tags.replace(el.conditions, "") : null;
+              if (el.tags && el.tags.length === 0) el.tags = null;
+              return el
+            })
         },
         xs () {
             return this.$vuetify.breakpoint.xsOnly
@@ -218,12 +239,6 @@ export default {
                 .finally(() => {
                     this.report.enabled = false
                 })
-        },
-        openDialog (o) {
-            this.dialog.enabled = true;
-            this.dialog.contact.name = o.contacts;
-            this.dialog.contact.content = o.phone;
-            this.dialog.address = o.address;
         },
         openReport (o) {
             this.report.enabled = true;
