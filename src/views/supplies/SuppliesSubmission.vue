@@ -16,9 +16,9 @@
           <ul class="my-2">
             <li
               v-for="c in missingDialog.content"
-              :key="c"
+              :key="c.index"
             >
-              {{ c }}
+              {{ parseInt(c.index) + 1 }}. {{ c.text }}
             </li>
           </ul>
           <span class="font-weight-bold mt-2">
@@ -59,7 +59,10 @@
           >
         </template>
         <template v-else-if="item.valueKey === 'region'">
-          <PlaceSelector v-model="item.value" />
+          <PlaceSelector
+            v-model="item.value"
+            class="mx-4"
+          />
         </template>
         <template v-else-if="item.valueKey === 'address'">
           <textarea
@@ -98,60 +101,89 @@
           >
         </template>
         <template v-else-if="item.valueKey === 'supplies'">
-          <v-btn
-            color="accent"
-            dark
-            depressed
-            block
-            @click="item.value = [].concat(nullSupply, item.value || [])"
+          <!--          <v-btn-->
+          <!--            color="accent"-->
+          <!--            dark-->
+          <!--            depressed-->
+          <!--            block-->
+          <!--            -->
+          <!--          >-->
+          <!--            <v-icon left>-->
+          <!--              mdi-plus-circle-->
+          <!--            </v-icon>-->
+          <!--            添加物资-->
+          <!--          </v-btn>-->
+          <v-alert
+            dense
+            border="left"
+            type="info"
+            class="mx-4"
+            style="line-height: 1.7"
           >
-            <v-icon left>
-              mdi-plus-circle
-            </v-icon>
-            添加物资
-          </v-btn>
-          <template v-if="item.value">
-            <v-row>
-              <v-col
-                v-for="(item0, index0) in item.value"
-                :key="index0"
-                cols="12"
-                sm="6"
-                md="4"
-                lg="3"
+            为了填写效率考量，我们自动填写了大部分医院都需要的物资的名称与要求。还请二次确认是否正确！
+          </v-alert>
+          <v-row>
+            <v-col
+              v-for="(item0, index0) in item.value"
+              :key="index0"
+              cols="12"
+              sm="6"
+              md="4"
+              lg="3"
+            >
+              <div
+                class="subItem mx-2"
               >
-                <div
-                  class="subItem mx-2"
+                需求物资 <span class="font-weight-bold">{{ `#${index0 + 1}` }} {{ item0["name"] ? `${item0["name"]}` : `(未命名)` }}</span>
+                <form-item
+                  v-for="(item1, index1) in subFormKeyObj[item.valueKey]"
+                  :key="index0 + ',' + index1"
+                  :label="item1.label"
+                  dense
+                  full-width
                 >
-                  需求物资 {{ item0["name"] ? `"${item0["name"]}"` : `#${index0}` }}
-                  <form-item
-                    v-for="(item1, index1) in subFormKeyObj[item.valueKey]"
-                    :key="index1"
-                    :label="item1.label"
-                    dense
+                  <template
+                    slot="value"
                   >
-                    <template slot="value">
-                      <input
-                        v-model="item0[item1.valueKey]"
-                        :placeholder="item1.placeholder"
-                      >
-                    </template>
-                  </form-item>
-                  <v-btn
-                    color="error"
-                    class="mt-2"
-                    small
-                    @click="item.value.splice(index0, 1)"
-                  >
-                    <v-icon left>
-                      mdi-minus-circle
-                    </v-icon>
-                    移除物品
-                  </v-btn>
-                </div>
-              </v-col>
-            </v-row>
-          </template>
+                    <input
+                      v-model="item0[item1.valueKey]"
+                      :placeholder="item1.placeholder"
+                    >
+                  </template>
+                </form-item>
+                <v-btn
+                  color="error"
+                  class="mt-2"
+                  small
+                  @click="item.value.splice(index0, 1)"
+                >
+                  <v-icon left>
+                    mdi-minus-circle
+                  </v-icon>
+                  移除物品
+                </v-btn>
+              </div>
+            </v-col>
+            <v-col
+              cols="12"
+              sm="6"
+              md="4"
+              lg="3"
+              @click="$set(item.value, item.value.length, {...nullSupply})"
+            >
+              <div
+                v-ripple
+                class="subItem subItemAdd mx-2 text-center"
+              >
+                <v-icon>
+                  mdi-plus-circle
+                </v-icon>
+                <span class="font-weight-bold">
+                  添加物品
+                </span>
+              </div>
+            </v-col>
+          </v-row>
         </template>
         <template v-else-if="item.valueKey === 'pathways'">
           <input
@@ -189,6 +221,7 @@
       large
       block
       color="primary"
+      :loading="loading"
       @click="submit"
     >
       <v-icon left>
@@ -196,6 +229,92 @@
       </v-icon>
       确认提交
     </v-btn>
+    <v-dialog
+      v-model="submitted"
+      persistent
+      no-click-animation
+      overlay-opacity="0.9"
+    >
+      <v-card
+        class="pa-5 py-10"
+      >
+        <v-row justify="center">
+          <v-col
+            cols="12"
+            class="text-center"
+          >
+            <v-img
+              :src="require('@/assets/logo/red.svg')"
+              aspect-ratio="4.4"
+              max-width="128"
+              contain
+              class="mx-auto pt-1 pb-4"
+            />
+            <v-icon
+              x-large
+              class="pt-6 pb-2"
+              color="green"
+            >
+              mdi-check-circle
+            </v-icon>
+            <h1 class="overline">
+              Successfully submitted
+            </h1>
+            <h1 class="title mb-6">
+              已成功提交物资需求
+            </h1>
+            <p class="subtitle-1 mb-4">
+              我们将在审核、确保准确性后以最快速度上线信息。感谢提供！
+            </p>
+            <v-btn
+              outlined
+              :to="{name: 'volunteerIndex'}"
+            >
+              返回志愿者首页
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-card>
+    </v-dialog>
+    <v-dialog
+      v-model="error"
+    >
+      <v-card
+        class="pa-2 py-5"
+      >
+        <v-row justify="center">
+          <v-col
+            cols="12"
+            class="text-center"
+          >
+            <v-icon
+              x-large
+              class="pt-6 pb-2"
+              color="error"
+            >
+              mdi-close-circle
+            </v-icon>
+            <h1 class="overline">
+              Network Error
+            </h1>
+            <h1 class="title mb-6">
+              提交不成功
+            </h1>
+            <p class="subtitle-1 mb-4">
+              请检查网络连接后
+              <v-btn
+                small
+                outlined
+                color="primary"
+                @click="() => { error = false; submit() }"
+              >
+                尝试重新提交
+              </v-btn>
+            </p>
+          </v-col>
+        </v-row>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -238,6 +357,10 @@
             border-radius: 4px;
             padding: 0 10px;
           }
+        }
+        .subItemAdd {
+          background: #8cd778;
+          border: 2px solid #65bf4c;
         }
       }
 
@@ -296,14 +419,14 @@
             valueKey: 'patients',
             label: '医院现每天接待患者数量',
             type: 'Number',
-            placeholder: '请输入{{label}}',
+            placeholder: '(选填) 请输入{{label}}',
             required: false,
             value: null
           }, {
             valueKey: 'beds',
-            label: '医院床位数',
+            label: '医院现床位数',
             type: 'Number',
-            placeholder: '请输入{{label}}',
+            placeholder: '(选填) 请输入现{{label}}',
             required: false,
             value: null
           },
@@ -313,14 +436,14 @@
             label: '责任人姓名',
             type: 'String',
             placeholder: '请输入{{label}}',
-            required: false,
+            required: true,
             value: null
           }, {
             valueKey: 'contactOrg',
             label: '责任人所在单位或组织',
             type: 'String',
             placeholder: '请输入{{label}}',
-            required: true,
+            required: false,
             value: null
           }, {
             valueKey: 'contactPhone',
@@ -342,21 +465,21 @@
             valueKey: 'pathways',
             label: '可接受的捐物资渠道',
             type: 'Array-Number',
-            placeholder: '请输入{{label}}',
+            placeholder: '是否接受个人捐赠和/或企业等捐赠渠道？',
             required: true,
             value: null
           }, {
             valueKey: 'logisticStatus',
             label: '现在的物流状况',
             type: 'String',
-            placeholder: '请输入{{label}}',
+            placeholder: '如何将物资送抵贵院？有无特殊情况需说明？',
             required: false,
             value: null
           }, {
             valueKey: 'source',
             label: '需求信息数据来源',
             type: 'String',
-            placeholder: '请输入{{label}}链接',
+            placeholder: '链接最快最准，若无也可填文字说明',
             required: true,
             value: null
           },
@@ -365,14 +488,14 @@
             valueKey: 'proof',
             label: '需求的官方证明',
             type: 'String',
-            placeholder: '请输入{{label}}链接',
+            placeholder: '链接最快最准，若无也可填文字说明',
             required: false,
             value: null
           }, {
             valueKey: 'notes',
             label: '其他备注',
             type: 'String',
-            placeholder: '请输入{{label}}',
+            placeholder: '(选填) 有无其他备注？',
             required: false,
             value: null
           }
@@ -437,7 +560,7 @@
             valueKey: 'requirements',
             label: '供应要求',
             type: 'String',
-            placeholder: '请输入{{label}}',
+            placeholder: '如国家标准 GBxxxxx-xxxx 等',
             required: true,
             value: null
           }].map(item => {
@@ -456,7 +579,10 @@
         missingDialog: {
           enabled: false,
           content: []
-        }
+        },
+        submitted: false,
+        loading: false,
+        error: false,
       };
     },
     mounted() {
@@ -466,30 +592,48 @@
       prefillSupplies () {
         const supplies = [
           {
-            name: "N95",
-            requirements: "requ"
+            name: "医用 N95 口罩",
+            requirements: "符合 GB19083-2010"
           },
           {
-            name: "fhy"
-          }
+            name: "医用外科口罩",
+            requirements: "符合 YY0469-2011"
+          },
+          {
+            name: "医用连体防护服",
+            requirements: "符合 GB19082-2009"
+          },
+          {
+            name: "医用隔离面罩",
+            requirements: "符合 GB14866-2006"
+          },
+          {
+            name: "医用一次性医用橡胶手套",
+            requirements: "符合 GB10213-2006"
+          },
+          {
+            name: "一次性使用手术衣",
+            requirements: "符合 GB15980-1995 防渗透"
+          },
+
         ];
         const supplyObject = this.formKeyObj.find(el => el.valueKey === "supplies");
         for (const supply of supplies) {
           const merged = {...this.nullSupply, ...supply};
-          supplyObject.value = [].concat(merged, supplyObject.value || [])
+          supplyObject.value = [].concat(supplyObject.value || [], merged)
         }
       },
       marshalData () {
         const marshalled = {};
         const missings = [];
         Console.log(this.formKeyObj)
-        for (const form of this.formKeyObj) {
-          if (form.required && !form.value) {
-            missings.push(form.label)
+        for (const [index, form] of Object.entries(this.formKeyObj)) {
+          if (form.required && (!form.value || form.value === "")) {
+            missings.push({index, text: form.label})
           } else if (form.valueKey === "region" && !(form.value && form.value.length === 3)) {
-            missings.push(form.label);
+            missings.push({index, text: form.label});
           }
-          if (form.valueKey === "region" && form.value.length === 3) {
+          if (form.valueKey === "region" && form.value && form.value.length === 3) {
             marshalled["province"] = form.value[0];
             marshalled["city"] = form.value[1];
             marshalled["suburb"] = form.value[2];
@@ -505,8 +649,18 @@
       submit() {
         const {marshalled, missings} = this.marshalData();
         if (missings.length) return this.notifyMissings(missings);
-        Console.log(marshalled);
-        Console.log(api.submitSupplies(marshalled))
+
+        this.loading = true
+        api.submitSupplies(marshalled)
+          .then(() => {
+            this.submitted = true
+          })
+          .catch(() => {
+            this.error = true
+          })
+        .finally(() => {
+          this.loading = false
+        })
       }
     }
   };

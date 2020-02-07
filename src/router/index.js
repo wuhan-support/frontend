@@ -128,9 +128,8 @@ const routes = [{
     meta: {
       icon: "mdi-file-document-box-plus",
       title: "提交新的物资需求",
-      color: "blue--text",
       subtitle: "提交新的医院物资需求",
-      hide: true
+      hide: false
     }
   }]
 }, {
@@ -168,9 +167,8 @@ const routes = [{
     meta: {
       icon: "mdi-file-document-box-plus",
       title: "提交新的物资需求",
-      color: "blue--text",
       subtitle: "提交新的医院物资需求",
-      hide: true
+      hide: false
     }
   }]
 }, {

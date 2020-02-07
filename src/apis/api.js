@@ -16,7 +16,7 @@ export default {
     return service.post("/report", { type, cause, content });
   },
   submitSupplies (data) {
-    return service.post("/supplies", data);
+    return service.post("/hospital/supplies/submissions", data);
   },
   realTimeMsgs (data) {
     return service.get("/wiki/stream", data);
