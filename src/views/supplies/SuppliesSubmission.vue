@@ -149,6 +149,7 @@
                     <input
                       v-model="item0[item1.valueKey]"
                       :placeholder="item1.placeholder"
+                      :class="{'red lighten-4 requiredInput': !item0[item1.valueKey]}"
                     >
                   </template>
                 </form-item>
@@ -358,6 +359,9 @@
             background: #f8f8f8;
             border-radius: 4px;
             padding: 0 10px;
+          }
+          .requiredInput {
+            box-shadow: 0 0 0px 1px #b00000, 0 0 2px 1px rgba(176, 0, 0, 0.5);
           }
         }
         .subItemAdd {
