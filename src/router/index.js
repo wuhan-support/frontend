@@ -129,7 +129,7 @@ const routes = [{
       icon: "mdi-file-document-box-plus",
       title: "提交新的物资需求",
       subtitle: "提交新的医院物资需求",
-      hide: false
+      hide: true
     }
   }]
 }, {
@@ -168,7 +168,7 @@ const routes = [{
       icon: "mdi-file-document-box-plus",
       title: "提交新的物资需求",
       subtitle: "提交新的医院物资需求",
-      hide: false
+      hide: true
     }
   }]
 }, {
