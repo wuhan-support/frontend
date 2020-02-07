@@ -120,7 +120,7 @@
             class="mx-4"
             style="line-height: 1.7"
           >
-            为了填写效率考量，我们自动填写了大部分医院都需要的物资的名称与要求。还请二次确认是否正确！
+            为了填写效率考量，我们自动填写了大部分医院都需要的物资信息。还请二次确认是否正确！
           </v-alert>
           <v-row class="mx-2">
             <v-col
@@ -560,14 +560,14 @@
             value: null
           }, {
             valueKey: 'have',
-            label: '现在库存',
+            label: '库存数量',
             type: 'Number',
             placeholder: '请输入{{label}}',
             required: true,
             value: null
           }, {
             valueKey: 'requirements',
-            label: '供应要求',
+            label: '物资要求',
             type: 'String',
             placeholder: '如国家标准 GBxxxxx-xxxx 等',
             required: true,
@@ -602,30 +602,37 @@
         const supplies = [
           {
             name: "医用防护口罩（N95）",
+            unit: "个",
             requirements: "GB19083-2010"
           },
           {
             name: "医用外科口罩",
+            unit: "个",
             requirements: "YY0469-2011"
           },
           {
             name: "一次性使用医用口罩",
+            unit: "个",
             requirements: "YY/T 0969-2013"
           },
           {
             name: "医用一次性防护服",
+            unit: "个",
             requirements: "GB19082-2009"
           },
           {
             name: "个人用眼护具",
+            unit: "副",
             requirements: "GB14866-2006"
           },
           {
             name: "一次性使用医用橡胶检查手套",
+            unit: "双",
             requirements: "GB10213-2006"
           },
           {
             name: "手术衣",
+            unit: "个",
             requirements: "YY/T 0506.2-2016"
           },
 

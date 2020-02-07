@@ -168,7 +168,7 @@
           </template>
           <template v-else>
             <h1 class="overline mb-4">
-              李文良医生千古
+              李文亮医生千古
             </h1>
             <!-- <h1 class="overline mb-3">
               医护工作者、武汉市民与湖北居民<br>
