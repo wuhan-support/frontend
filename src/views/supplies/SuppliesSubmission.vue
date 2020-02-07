@@ -593,27 +593,27 @@
         const supplies = [
           {
             name: "医用 N95 口罩",
-            requirements: "符合 GB19083-2010"
+            requirements: "GB19083-2010"
           },
           {
             name: "医用外科口罩",
-            requirements: "符合 YY0469-2011"
+            requirements: "YY0469-2011"
           },
           {
             name: "医用连体防护服",
-            requirements: "符合 GB19082-2009"
+            requirements: "GB19082-2009"
           },
           {
             name: "医用隔离面罩",
-            requirements: "符合 GB14866-2006"
+            requirements: "GB14866-2006"
           },
           {
             name: "医用一次性医用橡胶手套",
-            requirements: "符合 GB10213-2006"
+            requirements: "GB10213-2006"
           },
           {
             name: "一次性使用手术衣",
-            requirements: "符合 GB15980-1995 防渗透"
+            requirements: "GB15980-1995"
           },
 
         ];
