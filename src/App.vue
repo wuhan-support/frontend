@@ -215,7 +215,8 @@
           <span><a
             href="https://wuhan.support/"
             target="_blank"
-          ><strong>wuhan.support团队</strong></a></span>
+            style="text-decoration: none;"
+          ><strong>wuhan.support 团队</strong></a></span>
 
           <br>
           <v-btn
