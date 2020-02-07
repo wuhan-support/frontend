@@ -157,28 +157,28 @@
         <v-card-text>
           <template v-if="$route.name === 'psychologicalPlatform'">
             <h1 class="overline mb-4">
-              这个世界虽然不完美<br>
-              但我们仍然可以疗愈自己
+              这个世界并不完美<br>
+              但我们正在让她更好
             </h1>
-            <h1 class="overline mb-5">
-              我们与你同在，你不是孤独的 ❤️
-            </h1>
+            <!-- <h1 class="overline mb-5">
+              我们和你在一起，你不是孤独的❤️
+            </h1> -->
           </template>
           <template v-else>
             <h1 class="overline mb-4">
-              英雄 李文亮医生 一路走好
+              李文良医生千古
             </h1>
-            <h1 class="overline mb-3">
+            <!-- <h1 class="overline mb-3">
               医护工作者、武汉市民与湖北居民<br>
-              我们与你同在 你们并不是孤身一人 ❤️
+              我们与你同在
             </h1>
             <h1 class="overline mb-3">
               全国人民<br>
               让我们一起为武汉助力
             </h1>
             <h1 class="overline mb-5">
-              疫情不息 援助不止
-            </h1>
+              疫情不息<br>援助不止
+            </h1> -->
           </template>
 
           <v-row
@@ -210,14 +210,14 @@
             </a>
           </v-row>
 
-          <span>{{ new Date().getFullYear() }} — <strong>wuhan.support 公益团队</strong></span>
+          <span><a href="https://wuhan.support/" target="_blank"><strong>wuhan.support团队</strong></a></span>
 
           <br>
           <v-btn
             small
             outlined
             class="mt-1"
-            href="https://wuhan.support/"
+            href="https://www.github.com/wuhan-support/"
           >
             <v-icon left>
               mdi-github-circle
