@@ -194,7 +194,7 @@
               class="font-weight-bold secondary--text text--darken-2"
               style="text-decoration: none;"
             >
-              用户协议
+              最终用户许可协议
             </a>
 
             <v-divider
