@@ -2,7 +2,7 @@
   <v-app
     id="__app_root"
     :dark="dark"
-    :style="{'background': $route.name === 'home' ? '#f0f0f0' : null, 'filter': $route.name === 'home' ? 'grayscale(1)' : 'grayscale(0.7)'}"
+    :style="{'background': $route.name === 'home' ? '#f0f0f0' : null}"
   >
     <v-navigation-drawer
       v-model="drawer"
@@ -96,6 +96,7 @@
     </v-navigation-drawer>
     <v-app-bar
       v-if="!$route.meta.hideDrawer"
+      fixed
       app
       clipped-left
       dark
@@ -134,6 +135,7 @@
     <v-content
       app
       class="mb-8"
+      :style="{'filter': $route.name === 'home' ? 'grayscale(1)' : 'grayscale(0.5)'}"
     >
       <v-container>
         <transition
@@ -166,7 +168,7 @@
           </template>
           <template v-else>
             <h1 class="overline mb-4">
-              李文良医生千古
+              李文亮医生千古
             </h1>
             <!-- <h1 class="overline mb-3">
               医护工作者、武汉市民与湖北居民<br>
@@ -192,7 +194,7 @@
               class="font-weight-bold secondary--text text--darken-2"
               style="text-decoration: none;"
             >
-              用户协议
+              最终用户许可协议
             </a>
 
             <v-divider
@@ -210,14 +212,18 @@
             </a>
           </v-row>
 
-          <span><a href="https://wuhan.support/" target="_blank"><strong>wuhan.support团队</strong></a></span>
+          <span><a
+            href="https://wuhan.support/"
+            target="_blank"
+            style="text-decoration: none;"
+          ><strong>wuhan.support 团队</strong></a></span>
 
           <br>
           <v-btn
             small
             outlined
             class="mt-1"
-            href="https://www.github.com/wuhan-support/"
+            href="https://github.com/wuhan-support/"
           >
             <v-icon left>
               mdi-github-circle

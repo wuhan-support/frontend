@@ -6,6 +6,7 @@
       </span>
       <span
         class="value d-inline-block mb-1"
+        :style="{'width': fullWidth ? 'calc(100% - 64px)' : ''}"
       >
         <slot
           name="value"
@@ -61,7 +62,13 @@ export default {
         default () {
             return false
         }
-      }
+      },
+      fullWidth: {
+        type: Boolean,
+        default () {
+          return false
+        }
+      },
     },
     data () {
         return {};
