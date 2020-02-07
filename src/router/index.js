@@ -16,6 +16,7 @@ import config from "../config";
 import VolunteerLayout from "../layouts/SponsorLayout";
 import Volunteer from "../views/roles/Volunteer";
 import WikiStream from "../views/lists/RealTimeMsgs";
+import PeopleAccommodations from "../views/lists/PeopleAccommodations";
 
 Vue.use(VueRouter);
 
@@ -36,7 +37,7 @@ const routes = [{
   meta: {
     icon: "mdi-face",
     title: "普通市民",
-    subtitle: "为普通市民准备的线上医疗诊断平台、线上心理咨询平台等",
+    subtitle: "为普通市民准备的线上医疗诊断平台、线上心理咨询平台、信息看板与武汉在外人员住宿等信息",
     banner: `${config.cdn.global}/images/people.jpg`
   },
   children: [{
@@ -66,6 +67,16 @@ const routes = [{
       subtitle: "我们提供免费心理咨询平台的查询，包括基本信息与其联系方式"
     }
   }, {
+    path: 'accommodations',
+    name: 'peopleAccommodations',
+    component: PeopleAccommodations,
+    meta: {
+      icon: "wsicon wsicon-hotel",
+      title: "武汉在外人员住宿",
+      subtitle: "提供武汉在外人员的住宿信息，保障这些群体的基本生活",
+      hide: false
+    }
+  }, {
     path: "stream",
     name: "peopleStream",
     component: WikiStream,
@@ -82,7 +93,7 @@ const routes = [{
   meta: {
     icon: "mdi-hospital-box",
     title: "医护人员",
-    subtitle: "为医护人员准备的免费住宿与心理咨询平台信息",
+    subtitle: "为医护人员准备的免费住宿、心理咨询平台与医院物资需求提交系统",
     banner: `${config.cdn.global}/images/staff.jpg`
   },
   children: [{
@@ -103,6 +114,15 @@ const routes = [{
       subtitle: "为医护人员提供免费住宿信息列表，支持地理位置排序与地区过滤，以提供基本生活保障"
     }
   }, {
+    path: 'platforms/psychological',
+    name: 'staffPsychologicalPlatform',
+    component: PsychologicalPlatforms,
+    meta: {
+      icon: "mdi-heart",
+      title: "线上心理咨询平台",
+      subtitle: "我们为您提供免费心理咨询平台的查询，包括基本信息与其联系方式"
+    }
+  }, {
     path: 'supplies',
     name: 'staffSupplies',
     component: Supplies,
@@ -113,23 +133,14 @@ const routes = [{
       subtitle: "【2月3日更新新版列表内容与界面】支持紧急程度与需求核验公示、按照地区过滤等多种功能，方便直观了解情况"
     }
   }, {
-    path: 'platforms/psychological',
-    name: 'staffPsychologicalPlatform',
-    component: PsychologicalPlatforms,
-    meta: {
-      icon: "mdi-heart",
-      title: "线上心理咨询平台",
-      subtitle: "我们为您提供免费心理咨询平台的查询，包括基本信息与其联系方式"
-    }
-  }, {
     path: 'supplies/submit',
     name: 'staffSuppliesSubmission',
     component: SuppliesSubmission,
     meta: {
       icon: "mdi-file-document-box-plus",
       title: "提交新的物资需求",
-      subtitle: "提交新的医院物资需求",
-      hide: true
+      subtitle: "提交新的医院物资需求。提交后将交由内部信息组与官方渠道进行沟通，确保真实性与时效性后，发布于需求列表中",
+      hide: false
     }
   }]
 }, {
@@ -139,7 +150,7 @@ const routes = [{
   meta: {
     icon: "mdi-hand-heart",
     title: "志愿者",
-    subtitle: "为志愿者准备的医院物资需求列表，方便为各个物资紧缺的医院等单位捐赠物资",
+    subtitle: "志愿者可实际使用的、经过多方验证后的医院物资需求列表，以及可供各个志愿者使用的物资需求提交系统",
     banner: `${config.cdn.global}/images/volunteers-v3.jpg`
   },
   children: [{
@@ -167,8 +178,8 @@ const routes = [{
     meta: {
       icon: "mdi-file-document-box-plus",
       title: "提交新的物资需求",
-      subtitle: "提交新的医院物资需求",
-      hide: true
+      subtitle: "提交新的医院物资需求。提交后将交由内部信息组与官方渠道进行沟通，确保真实性与时效性后，发布于需求列表中",
+      hide: false
     }
   }]
 }, {

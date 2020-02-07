@@ -122,7 +122,7 @@
           >
             为了填写效率考量，我们自动填写了大部分医院都需要的物资的名称与要求。还请二次确认是否正确！
           </v-alert>
-          <v-row>
+          <v-row class="mx-2">
             <v-col
               v-for="(item0, index0) in item.value"
               :key="index0"
@@ -132,7 +132,7 @@
               lg="3"
             >
               <div
-                class="subItem mx-2"
+                class="subItem"
               >
                 需求物资 <span class="font-weight-bold">{{ `#${index0 + 1}` }} {{ item0["name"] ? `${item0["name"]}` : `(未命名)` }}</span>
                 <form-item
@@ -574,7 +574,6 @@
           daily: null,
           have: null,
           requirements: null,
-          severe: null,
         },
         missingDialog: {
           enabled: false,

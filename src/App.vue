@@ -212,14 +212,17 @@
             </a>
           </v-row>
 
-          <span><a href="https://wuhan.support/" target="_blank"><strong>wuhan.support团队</strong></a></span>
+          <span><a
+            href="https://wuhan.support/"
+            target="_blank"
+          ><strong>wuhan.support团队</strong></a></span>
 
           <br>
           <v-btn
             small
             outlined
             class="mt-1"
-            href="https://www.github.com/wuhan-support/"
+            href="https://github.com/wuhan-support/"
           >
             <v-icon left>
               mdi-github-circle

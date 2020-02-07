@@ -188,7 +188,7 @@
         return this.items.map((el) => {
           if (el.province) {
             el.province = el.province.replace(" ", "");
-            if (el.province.length === 2) {
+            if (!/(省|市|自治区)/.test(el.province)) {
               if (!/(北京|天津|上海|重庆)/.test(el.province)) {
                 el.province = `${el.province}省`
               } else {
@@ -196,7 +196,14 @@
               }
             }
           }
-          if (el.city) el.city = el.city.replace(" ", "");
+
+          if (el.city) {
+            el.city = el.city.replace(" ", "");
+            if (!el.city.includes("市")) {
+              el.city = `${el.city}市`
+            }
+          }
+
           if (el.suburb) el.suburb = el.suburb.replace(" ", "");
           return el
         });
@@ -205,9 +212,9 @@
       filters () {
         const filters = [];
         for (const [index, regionSegment] of this.region.entries()) {
-          if (index === 0) filters.push((el) => el.province === regionSegment);
-          if (index === 1) filters.push((el) => el.city === regionSegment);
-          if (index === 2) filters.push((el) => el.suburb === regionSegment)
+          if (index === 0) filters.push(el => el.province === regionSegment);
+          if (index === 1) filters.push(el => el.city === regionSegment);
+          if (index === 2) filters.push(el => el.suburb === regionSegment)
         }
         return filters
       },
@@ -215,6 +222,8 @@
       regionList () {
         const regionList = {};
         for (const item of this.cleanedData) {
+          console.log(item.province, item.city, item.suburb, regionList);
+          if (!item.province || !item.city) continue;
           if (item.province && !regionList[item.province]) regionList[item.province] = {};
           if (item.city && !regionList[item.province][item.city]) regionList[item.province][item.city] = [];
           if (item.suburb && regionList[item.province][item.city]) regionList[item.province][item.city].push(item.suburb);

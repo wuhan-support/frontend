@@ -3,6 +3,9 @@ export default {
   accommodations () {
     return service.get("/accommodations");
   },
+  peopleAccommodations () {
+    return service.get("/people/accommodations");
+  },
   psychologicalPlatform () {
     return service.get("/platforms/psychological");
   },
