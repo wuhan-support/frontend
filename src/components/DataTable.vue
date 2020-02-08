@@ -224,7 +224,6 @@
       regionList () {
         const regionList = {};
         for (const item of this.cleanedData) {
-          console.log(item.province, item.city, item.suburb, regionList);
           if (!item.province || !item.city) continue;
           if (item.province && !regionList[item.province]) regionList[item.province] = {};
           if (item.city && !regionList[item.province][item.city]) regionList[item.province][item.city] = [];
