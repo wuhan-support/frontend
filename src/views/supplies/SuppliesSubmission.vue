@@ -142,21 +142,23 @@
                   :label="item1.label"
                   dense
                   full-width
+                  :required="item1.required"
                 >
                   <template
                     slot="value"
                   >
                     <input
                       v-model="item0[item1.valueKey]"
-                      :placeholder="item1.placeholder"
-                      :class="{'red lighten-4 requiredInput': !item0[item1.valueKey]}"
+                      :placeholder="item1.placeholder + (item1.required ? ' *' : '')"
+                      :class="{'red lighten-4 requiredInput': item1.required && !item0[item1.valueKey]}"
                     >
                   </template>
                 </form-item>
                 <v-btn
                   color="error"
                   class="mt-2"
-                  small
+                  depressed
+                  block
                   @click="item.value.splice(index0, 1)"
                 >
                   <v-icon left>
@@ -172,19 +174,21 @@
               md="6"
               lg="4"
               xl="3"
-              @click="$set(item.value, item.value.length, {...nullSupply})"
+              class="align-center"
             >
-              <div
-                v-ripple
-                class="subItem subItemAdd mx-2 text-center"
+              <v-btn
+                block
+                x-large
+                color="green white--text"
+                @click="$set(item.value, item.value.length, {...nullSupply})"
               >
-                <v-icon>
+                <v-icon left>
                   mdi-plus-circle
                 </v-icon>
                 <span class="font-weight-bold">
                   添加物品
                 </span>
-              </div>
+              </v-btn>
             </v-col>
           </v-row>
         </template>
@@ -221,7 +225,7 @@
       </template>
     </form-item>
     <v-btn
-      large
+      x-large
       block
       color="primary"
       :loading="loading"
@@ -361,7 +365,15 @@
             padding: 0 10px;
           }
           .requiredInput {
+            transition: all 75ms ease-out;
             box-shadow: 0 0 0px 1px #b00000, 0 0 2px 1px rgba(176, 0, 0, 0.5);
+          }
+          .requiredInput:focus {
+            box-shadow: none;
+            background-color: #fff !important;
+          }
+          .requiredInput::after {
+            content: "必填"
           }
         }
         .subItemAdd {
@@ -545,7 +557,7 @@
             valueKey: 'unit',
             label: '数量单位',
             type: 'Number',
-            placeholder: '如：500ml/瓶、20包/箱、个',
+            placeholder: '如：个、20包/箱、500ml/瓶',
             required: true,
             value: null
           }, {
@@ -560,7 +572,7 @@
             label: '每日消耗',
             type: 'Number',
             placeholder: '请输入{{label}}',
-            required: true,
+            required: false,
             value: null
           }, {
             valueKey: 'have',
@@ -574,7 +586,7 @@
             label: '物资要求',
             type: 'String',
             placeholder: '如国家标准 GBxxxxx-xxxx 等',
-            required: true,
+            required: false,
             value: null
           }].map(item => {
             item.placeholder = (item.placeholder || '').replace('{{label}}', item.label);
