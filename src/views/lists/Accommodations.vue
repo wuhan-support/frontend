@@ -151,7 +151,9 @@
       </p>
       <v-skeleton-loader
         :loading="$store.getters.ajaxLoading && !data.length"
-        type="card@4"
+        :types="{ skeleton: 'card, card, card, card' }"
+        type="skeleton"
+        transition="slide-y-transition"
       >
         <div>
           <v-row
