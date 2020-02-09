@@ -130,7 +130,7 @@ const routes = [{
       icon: "mdi-hospital",
       title: "医院物资需求列表",
       color: "red--text",
-      subtitle: "【2月3日更新新版列表内容与界面】支持紧急程度与需求核验公示、按照地区过滤等多种功能，方便直观了解情况"
+      subtitle: "支持紧急程度与需求核验公示、按照地区过滤等多种功能，方便直观了解情况"
     }
   }, {
     path: 'supplies/submit',
@@ -169,7 +169,7 @@ const routes = [{
       icon: "mdi-hospital",
       title: "医院物资需求列表",
       color: "red--text",
-      subtitle: "【2月3日更新新版列表内容与界面】支持紧急程度与需求核验公示、按照地区过滤等多种功能，方便直观了解情况"
+      subtitle: "支持紧急程度与需求核验公示、按照地区过滤等多种功能，方便直观了解情况"
     }
   }, {
     path: 'supplies/submit',

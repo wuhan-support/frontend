@@ -6,7 +6,7 @@
       </span>
       <span
         class="value d-inline-block mb-1"
-        :style="{'width': fullWidth ? 'calc(100% - 64px)' : ''}"
+        :style="{'width': fullWidth ? 'calc(100% - 96px)' : '     '}"
       >
         <slot
           name="value"

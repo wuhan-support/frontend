@@ -84,106 +84,102 @@
             </p> -->
       <v-skeleton-loader
         :loading="$store.getters.ajaxLoading && !data.length"
-        type="card@4"
+        :types="{ skeleton: 'card, card, card, card' }"
+        type="skeleton"
+        transition="slide-y-transition"
       >
-        <div>
-          <!-- <v-row justify="space-between" align="center" class="mx-3">
-                        <v-checkbox v-model="filters.available" class="d-inline-flex" label="只看有房" />
-                        <v-checkbox v-model="filters.linBaoRuZhu" class="d-inline-flex" label="不需自带三件套" />
-                    </v-row> -->
-          <DataTable
-            :items="dataset"
-            disable-region-selector
-            search-text="平台名称、地区或咨询方式"
-            color="green"
-          >
-            <template v-slot:default="{ items }">
-              <v-card
-                v-for="[i, o] in items.entries()"
-                :key="i"
-                class="viewCard card-border"
-              >
-                <v-card-title>
-                  <span class="title font-weight-black">
-                    {{ o.organization }}
-                  </span>
-                </v-card-title>
-                <v-card-text class="pb-0">
-                  <v-chip
-                    v-for="tag in o.tags"
-                    :key="tag.t"
-                    class="mx-1 white--text pl-4"
-                    :color="tag.c"
-                    label
+        <DataTable
+          :items="dataset"
+          disable-region-selector
+          search-text="平台名称、地区或咨询方式"
+          color="green"
+        >
+          <template v-slot:default="{ items }">
+            <v-card
+              v-for="[i, o] in items.entries()"
+              :key="i"
+              class="viewCard card-border"
+            >
+              <v-card-title>
+                <span class="title font-weight-black">
+                  {{ o.organization }}
+                </span>
+              </v-card-title>
+              <v-card-text class="pb-0">
+                <v-chip
+                  v-for="tag in o.tags"
+                  :key="tag.t"
+                  class="mx-1 white--text pl-4"
+                  :color="tag.c"
+                  label
+                >
+                  <v-icon
+                    left
+                    small
+                  >
+                    {{ tag.i }}
+                  </v-icon>
+                  {{ tag.t }}
+                </v-chip>
+                <p
+                  class="subtitle-1 font-weight-bold mt-3"
+                >
+                  开放时间：{{ o.opentime }}
+                </p>
+                <p
+                  class="subtitle-2 font-weight-bold"
+                >
+                  服务群体：{{ o.group ? o.group : "无指定服务群体，所有人均可咨询" }}
+                </p>
+                <p class="subtitle-1">
+                  地方性：{{ o.regional }}{{ regionalText(o) }}
+                </p>
+                <v-card-text
+                  class="green darken-2 font-weight-bold my-2 white--text"
+                  style="border-radius: 4px"
+                >
+                  咨询方式：{{ o.contact }}
+                </v-card-text>
+                <p
+                  v-if="o.notes"
+                  class="caption"
+                >
+                  备注：{{ o.notes }}
+                </p>
+              </v-card-text>
+              <v-divider />
+              <v-card-actions>
+                <v-col class="text-center d-flex justify-space-between">
+                  <v-btn
+                    tile
+                    small
+                    text
+                    :href="o.source"
+                    target="_blank"
                   >
                     <v-icon
                       left
-                      small
                     >
-                      {{ tag.i }}
-                    </v-icon>
-                    {{ tag.t }}
-                  </v-chip>
-                  <p
-                    class="subtitle-1 font-weight-bold mt-3"
+                      mdi-open-in-new
+                    </v-icon>查看信息来源
+                  </v-btn>
+                  <v-btn
+                    tile
+                    text
+                    small
+                    @click="openReport(o)"
                   >
-                    开放时间：{{ o.opentime }}
-                  </p>
-                  <p
-                    class="subtitle-2 font-weight-bold"
-                  >
-                    服务群体：{{ o.group ? o.group : "无指定服务群体，所有人均可咨询" }}
-                  </p>
-                  <p class="subtitle-1">
-                    地方性：{{ o.regional }}{{ regionalText(o) }}
-                  </p>
-                  <v-card-text
-                    class="green darken-2 font-weight-bold my-2 white--text"
-                    style="border-radius: 4px"
-                  >
-                    咨询方式：{{ o.contact }}
-                  </v-card-text>
-                  <p
-                    v-if="o.notes"
-                    class="caption"
-                  >
-                    备注：{{ o.notes }}
-                  </p>
-                </v-card-text>
-                <v-divider />
-                <v-card-actions>
-                  <v-col class="text-center d-flex justify-space-between">
-                    <v-btn
-                      tile
-                      small
-                      text
-                      :href="o.source"
-                      target="_blank"
+                    <v-icon
+                      left
                     >
-                      <v-icon
-                        left
-                      >
-                        mdi-open-in-new
-                      </v-icon>查看信息来源
-                    </v-btn>
-                    <v-btn
-                      tile
-                      text
-                      small
-                      @click="openReport(o)"
-                    >
-                      <v-icon
-                        left
-                      >
-                        wsicon wsicon-info
-                      </v-icon>信息纠错
-                    </v-btn>
-                  </v-col>
-                </v-card-actions>
-              </v-card>
-            </template>
-          </DataTable>
-        </div>
+                      wsicon wsicon-info
+                    </v-icon>信息纠错
+                  </v-btn>
+                </v-col>
+              </v-card-actions>
+            </v-card>
+          </template>
+        </DataTable>
       </v-skeleton-loader>
     </v-col>
   </v-row>
