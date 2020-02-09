@@ -84,95 +84,91 @@
             </p> -->
       <v-skeleton-loader
         :loading="$store.getters.ajaxLoading && !data.length"
-        type="card@4"
+        :types="{ skeleton: 'card, card, card, card' }"
+        type="skeleton"
+        transition="slide-y-transition"
       >
-        <div>
-          <!-- <v-row justify="space-between" align="center" class="mx-3">
-                        <v-checkbox v-model="filters.available" class="d-inline-flex" label="只看有房" />
-                        <v-checkbox v-model="filters.linBaoRuZhu" class="d-inline-flex" label="不需自带三件套" />
-                    </v-row> -->
-          <DataTable
-            :items="dataset"
-            disable-region-selector
-            search-text="信息内容或标题"
-          >
-            <template v-slot:default="{ items }">
-              <v-card
-                v-for="[i, o] in items.entries()"
-                :key="i"
-                class="viewCard redBorder"
-              >
-                <!-- id 信息序号 -->
-                <!-- <v-card-title>
-                                    <span class="title font-weight-black">
-                                        {{ o.organization }}
-                                    </span>
-                                </v-card-title> -->
-                <v-card-title>
-                  <span class="title font-weight-black">
-                    {{ o.title }}
-                  </span>
-                </v-card-title>
-                <v-card-text class="pb-0">
-                  <p class="subtitle-1">
-                    发布时间：{{ oaDate(o.createdtime).toLocaleString() }}
-                  </p>
-                  <p class="subtitle-2 card-subTitle">
-                    信息类别：{{ o.category }}
-                  </p>
-                  <p
-                    class="subtitle-1 card-content"
-                    :isShowMore="showMoreList.indexOf(o.id) >= 0"
+        <DataTable
+          :items="dataset"
+          disable-region-selector
+          search-text="信息内容或标题"
+        >
+          <template v-slot:default="{ items }">
+            <v-card
+              v-for="[i, o] in items.entries()"
+              :key="i"
+              class="viewCard redBorder"
+            >
+              <!-- id 信息序号 -->
+              <!-- <v-card-title>
+                                  <span class="title font-weight-black">
+                                      {{ o.organization }}
+                                  </span>
+                              </v-card-title> -->
+              <v-card-title>
+                <span class="title font-weight-black">
+                  {{ o.title }}
+                </span>
+              </v-card-title>
+              <v-card-text class="pb-0">
+                <p class="subtitle-1">
+                  发布时间：{{ oaDate(o.createdtime).toLocaleString() }}
+                </p>
+                <p class="subtitle-2 card-subTitle">
+                  信息类别：{{ o.category }}
+                </p>
+                <p
+                  class="subtitle-1 card-content"
+                  :isShowMore="showMoreList.indexOf(o.id) >= 0"
+                >
+                  {{ o.content }}
+                  <img
+                    v-if="o.image"
+                    alt="相关图片"
+                    :src="o.image"
                   >
-                    {{ o.content }}
-                    <img
-                      v-if="o.image"
-                      alt="相关图片"
-                      :src="o.image"
+                  <span
+                    v-if="showMoreList.indexOf(o.id) < 0"
+                    class="showMore"
+                    @click="showMoreList.push(o.id)"
+                  >展示全文</span>
+                </p>
+              </v-card-text>
+              <v-divider />
+              <v-card-actions>
+                <v-col class="text-center d-flex justify-space-between">
+                  <v-btn
+                    tile
+                    small
+                    text
+                    :href="o.source"
+                    target="_blank"
+                  >
+                    <v-icon
+                      class="iconRed"
+                      left
                     >
-                    <span
-                      v-if="showMoreList.indexOf(o.id) < 0"
-                      class="showMore"
-                      @click="showMoreList.push(o.id)"
-                    >展示全文</span>
-                  </p>
-                </v-card-text>
-                <v-divider />
-                <v-card-actions>
-                  <v-col class="text-center d-flex justify-space-between">
-                    <v-btn
-                      tile
-                      small
-                      text
-                      :href="o.source"
-                      target="_blank"
+                      mdi-open-in-new
+                    </v-icon>查看信息来源
+                  </v-btn>
+                  <v-btn
+                    tile
+                    text
+                    small
+                    @click="openReport(o)"
+                  >
+                    <v-icon
+                      class="iconRed"
+                      left
                     >
-                      <v-icon
-                        class="iconRed"
-                        left
-                      >
-                        mdi-open-in-new
-                      </v-icon>查看信息来源
-                    </v-btn>
-                    <v-btn
-                      tile
-                      text
-                      small
-                      @click="openReport(o)"
-                    >
-                      <v-icon
-                        class="iconRed"
-                        left
-                      >
-                        wsicon wsicon-info
-                      </v-icon>信息纠错
-                    </v-btn>
-                  </v-col>
-                </v-card-actions>
-              </v-card>
-            </template>
-          </DataTable>
-        </div>
+                      wsicon wsicon-info
+                    </v-icon>信息纠错
+                  </v-btn>
+                </v-col>
+              </v-card-actions>
+            </v-card>
+          </template>
+        </DataTable>
       </v-skeleton-loader>
     </v-col>
   </v-row>

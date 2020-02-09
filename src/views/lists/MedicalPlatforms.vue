@@ -84,58 +84,64 @@
             </p> -->
       <v-skeleton-loader
         :loading="$store.getters.ajaxLoading && !data.length"
-        type="card@4"
+        :types="{ skeleton: 'card, card, card, card' }"
+        type="skeleton"
+        transition="slide-y-transition"
       >
-        <div>
-          <!-- <v-row justify="space-between" align="center" class="mx-3">
-                        <v-checkbox v-model="filters.available" class="d-inline-flex" label="只看有房" />
-                        <v-checkbox v-model="filters.linBaoRuZhu" class="d-inline-flex" label="不需自带三件套" />
-                    </v-row> -->
-          <DataTable
-            disable-region-selector
-            search-text="平台名称"
-            :items="dataset"
-          >
-            <template v-slot:default="{ items }">
-              <v-card
-                v-for="item in items"
-                :key="item.id"
-                class="viewCard redBorder"
-              >
-                <v-card-title>
-                  <span class="title font-weight-black">
-                    {{ item.platformname }} <span class="caption font-weight-bold">诊断平台</span>
-                  </span>
-                </v-card-title>
-                <v-card-text v-if="!item.address.startsWith('http')">
-                  使用方法：{{ item.address }}
-                </v-card-text>
-                <v-divider></v-divider>
-                <v-card-actions>
-                  <v-col class="text-center d-flex justify-space-between">
-                    <v-btn
-                      tile
-                      small
-                      text
-                      v-if="redirection(item)"
-                      :href="redirection(item).l"
+        <DataTable
+          disable-region-selector
+          search-text="平台名称"
+          :items="dataset"
+        >
+          <template v-slot:default="{ items }">
+            <v-card
+              v-for="item in items"
+              :key="item.id"
+              class="viewCard redBorder"
+            >
+              <v-card-title>
+                <span class="title font-weight-black">
+                  {{ item.platformname }} <span class="caption font-weight-bold">诊断平台</span>
+                </span>
+              </v-card-title>
+              <v-card-text v-if="!item.address.startsWith('http')">
+                使用方法：{{ item.address }}
+              </v-card-text>
+              <v-divider />
+              <v-card-actions>
+                <v-col class="text-center d-flex justify-space-between">
+                  <v-btn
+                    v-if="redirection(item)"
+                    tile
+                    small
+                    text
+                    :href="redirection(item).l"
+                  >
+                    <v-icon
+                      class="iconRed"
+                      left
                     >
-                    <v-icon class="iconRed" left>mdi-open-in-new</v-icon>打开{{ redirection(item).t }}
-                    </v-btn>
-                    <v-btn
-                      tile
-                      text
-                      small
-                      @click="openReport(item)"
+                      mdi-open-in-new
+                    </v-icon>打开{{ redirection(item).t }}
+                  </v-btn>
+                  <v-btn
+                    tile
+                    text
+                    small
+                    @click="openReport(item)"
+                  >
+                    <v-icon
+                      class="iconRed"
+                      left
                     >
-                    <v-icon class="iconRed" left>wsicon wsicon-info</v-icon>信息纠错
-                    </v-btn>
-                  </v-col>
-                </v-card-actions>
-              </v-card>
-            </template>
-          </DataTable>
-        </div>
+                      wsicon wsicon-info
+                    </v-icon>信息纠错
+                  </v-btn>
+                </v-col>
+              </v-card-actions>
+            </v-card>
+          </template>
+        </DataTable>
       </v-skeleton-loader>
     </v-col>
   </v-row>

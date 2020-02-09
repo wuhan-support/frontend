@@ -84,86 +84,82 @@
             </p> -->
       <v-skeleton-loader
         :loading="$store.getters.ajaxLoading && !data.length"
-        type="card@4"
+        :types="{ skeleton: 'card, card, card, card' }"
+        type="skeleton"
+        transition="slide-y-transition"
       >
-        <div>
-          <!-- <v-row justify="space-between" align="center" class="mx-3">
-                        <v-checkbox v-model="filters.available" class="d-inline-flex" label="只看有房" />
-                        <v-checkbox v-model="filters.linBaoRuZhu" class="d-inline-flex" label="不需自带三件套" />
-                    </v-row> -->
-          <DataTable
-            search-text="住宿名称、地址"
-            :items="dataset"
-          >
-            <template v-slot:default="{ items }">
-              <v-card
-                v-for="[i, o] in items.entries()"
-                :key="i + '' + o.name"
-                class="viewCard redBorder"
-              >
-                <v-card-title>
-                  <span class="title font-weight-black">
-                    {{ o.name ? o.name : o.address }}
-                  </span>
-                </v-card-title>
-                <v-card-text>
-                  <div
-                    v-if="o.status"
-                    class="subtitle-1 font-weight-bold"
+        <DataTable
+          search-text="住宿名称、地址"
+          :items="dataset"
+        >
+          <template v-slot:default="{ items }">
+            <v-card
+              v-for="[i, o] in items.entries()"
+              :key="i + '' + o.name"
+              class="viewCard redBorder"
+            >
+              <v-card-title>
+                <span class="title font-weight-black">
+                  {{ o.name ? o.name : o.address }}
+                </span>
+              </v-card-title>
+              <v-card-text>
+                <div
+                  v-if="o.status"
+                  class="subtitle-1 font-weight-bold"
+                >
+                  状态：{{ o.status }}
+                </div>
+                <div class="subtitle-2 mb-2">
+                  {{ o.province }} {{ o.city }} {{ o.suburb }}；地址：{{ o.address ? o.address : "暂无。可点击下方【查看地图】前往查看地址" }}
+                </div>
+                <div
+                  v-if="o.tags"
+                  class="subtitle-2"
+                >
+                  备注：{{ o.tags }} {{ o.conditions ? o.conditions : "" }}
+                </div>
+                <div
+                  class="subtitle-2"
+                >
+                  联系电话：{{ o.phone ? o.phone : "暂无。可点击下方【查看地图】前往查看电话" }}
+                </div>
+              </v-card-text>
+              <v-divider />
+              <v-card-actions>
+                <v-col class="text-center d-flex justify-space-between">
+                  <v-btn
+                    tile
+                    small
+                    text
+                    :href="`https://ditu.amap.com/search?query=${encodeURIComponent(o.name)}`"
+                    target="_blank"
                   >
-                    状态：{{ o.status }}
-                  </div>
-                  <div class="subtitle-2 mb-2">
-                    {{ o.province }} {{ o.city }} {{ o.suburb }}；地址：{{ o.address ? o.address : "暂无。可点击下方【查看地图】前往查看地址" }}
-                  </div>
-                  <div
-                    v-if="o.tags"
-                    class="subtitle-2"
-                  >
-                    备注：{{ o.tags }} {{ o.conditions ? o.conditions : "" }}
-                  </div>
-                  <div
-                    class="subtitle-2"
-                  >
-                    联系电话：{{ o.phone ? o.phone : "暂无。可点击下方【查看地图】前往查看电话" }}
-                  </div>
-                </v-card-text>
-                <v-divider />
-                <v-card-actions>
-                  <v-col class="text-center d-flex justify-space-between">
-                    <v-btn
-                      tile
-                      small
-                      text
-                      :href="`https://ditu.amap.com/search?query=${encodeURIComponent(o.name)}`"
-                      target="_blank"
+                    <v-icon
+                      class="iconRed"
+                      left
                     >
-                      <v-icon
-                        class="iconRed"
-                        left
-                      >
-                        wsicon wsicon-local
-                      </v-icon>查看地图
-                    </v-btn>
-                    <v-btn
-                      tile
-                      text
-                      small
-                      @click="openReport(o)"
+                      wsicon wsicon-local
+                    </v-icon>查看地图
+                  </v-btn>
+                  <v-btn
+                    tile
+                    text
+                    small
+                    @click="openReport(o)"
+                  >
+                    <v-icon
+                      class="iconRed"
+                      left
                     >
-                      <v-icon
-                        class="iconRed"
-                        left
-                      >
-                        wsicon wsicon-info
-                      </v-icon>信息纠错
-                    </v-btn>
-                  </v-col>
-                </v-card-actions>
-              </v-card>
-            </template>
-          </DataTable>
-        </div>
+                      wsicon wsicon-info
+                    </v-icon>信息纠错
+                  </v-btn>
+                </v-col>
+              </v-card-actions>
+            </v-card>
+          </template>
+        </DataTable>
       </v-skeleton-loader>
     </v-col>
   </v-row>
