@@ -3,6 +3,28 @@
     align="center"
     justify="center"
   >
+    <!--    <v-dialog :value="dialog.enabled" persistent max-width="300px">-->
+    <!--      <v-card>-->
+    <!--        <v-card-title>-->
+    <!--          跳转到页面-->
+    <!--        </v-card-title>-->
+    <!--        <v-card-text>-->
+    <!--          <div class="text-center mx-auto">-->
+    <!--            现在在第 {{ pagination.page }} 页，共 {{ pagination.pageCount }} 页 <small>({{ pagination.itemsLength }} 条记录)</small>-->
+    <!--          </div>-->
+    <!--          跳转至<v-text-field v-model="dialog.page" dense hide-details type="number" placeholder="页面号码" />-->
+    <!--        </v-card-text>-->
+    <!--        <v-card-actions>-->
+    <!--          <v-spacer />-->
+    <!--          <v-btn text color="secondary" @click="dialog.enabled = false">-->
+    <!--            关闭-->
+    <!--          </v-btn>-->
+    <!--          <v-btn text color="primary" @click="setPage">-->
+    <!--            跳转-->
+    <!--          </v-btn>-->
+    <!--        </v-card-actions>-->
+    <!--      </v-card>-->
+    <!--    </v-dialog>-->
     <v-col cols="4">
       <v-btn
         outlined
@@ -57,10 +79,27 @@
         required: true
       }
     },
+    data() {
+      return {
+        // dialog: {
+        //   enabled: false,
+        //   page: "",
+        //   error: null
+        // }
+      }
+    },
     computed: {
       sm () {
         return this.$vuetify.breakpoint.smAndDown
       }
+    },
+    methods: {
+      // setPage() {
+      //   const page = parseInt(this.dialog.page);
+      //   if (Number.isInteger(page)) {
+      //     if ()
+      //   }
+      // }
     }
   }
 </script>

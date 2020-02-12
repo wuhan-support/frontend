@@ -93,7 +93,7 @@ const routes = [{
   meta: {
     icon: "mdi-hospital-box",
     title: "医护人员",
-    subtitle: "为医护人员准备的免费住宿、心理咨询平台与医院物资需求提交系统",
+    subtitle: "为医护人员准备的免费住宿、心理咨询平台与医疗机构物资需求提交系统",
     banner: `${config.cdn.global}/images/staff.jpg`
   },
   children: [{
@@ -128,7 +128,7 @@ const routes = [{
     component: Supplies,
     meta: {
       icon: "mdi-hospital",
-      title: "医院物资需求列表",
+      title: "医疗机构物资需求",
       color: "red--text",
       subtitle: "支持紧急程度与需求核验公示、按照地区过滤等多种功能，方便直观了解情况"
     }
@@ -139,7 +139,7 @@ const routes = [{
     meta: {
       icon: "mdi-file-document-box-plus",
       title: "提交新的物资需求",
-      subtitle: "提交新的医院物资需求。提交后将交由内部信息组与官方渠道进行沟通，确保真实性与时效性后，发布于需求列表中",
+      subtitle: "提交新的医疗机构物资需求。提交后将交由内部信息组与官方渠道进行沟通，确保真实性与时效性后，发布于需求列表中",
       hide: false
     }
   }]
@@ -150,7 +150,7 @@ const routes = [{
   meta: {
     icon: "mdi-hand-heart",
     title: "志愿者",
-    subtitle: "志愿者可实际使用的、经过多方验证后的医院物资需求列表，以及可供各个志愿者使用的物资需求提交系统",
+    subtitle: "志愿者可实际使用的、经过多方验证后的医疗机构物资需求，以及可供各个志愿者使用的物资需求提交系统",
     banner: `${config.cdn.global}/images/volunteers-v3.jpg`
   },
   children: [{
@@ -167,7 +167,7 @@ const routes = [{
     component: Supplies,
     meta: {
       icon: "mdi-hospital",
-      title: "医院物资需求列表",
+      title: "医疗机构物资需求",
       color: "red--text",
       subtitle: "支持紧急程度与需求核验公示、按照地区过滤等多种功能，方便直观了解情况"
     }
@@ -178,7 +178,7 @@ const routes = [{
     meta: {
       icon: "mdi-file-document-box-plus",
       title: "提交新的物资需求",
-      subtitle: "提交新的医院物资需求。提交后将交由内部信息组与官方渠道进行沟通，确保真实性与时效性后，发布于需求列表中",
+      subtitle: "提交新的医疗机构物资需求。提交后将交由内部信息组与官方渠道进行沟通，确保真实性与时效性后，发布于需求列表中",
       hide: false
     }
   }]

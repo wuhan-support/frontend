@@ -22,7 +22,7 @@
         <span class="font-weight-bold">对医护人员</span>：需求发布平台、免费住宿及餐食、免费心理咨询、医疗器械捐赠
       </p>
       <p>
-        <span class="font-weight-bold">对志愿者</span>：医院物资需求查询
+        <span class="font-weight-bold">对志愿者</span>：医疗机构物资需求查询
       </p>
     </v-card-text>
 
