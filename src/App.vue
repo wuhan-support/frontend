@@ -135,7 +135,6 @@
     <v-content
       app
       class="mb-8"
-      :style="{'filter': $route.name === 'home' ? 'grayscale(1)' : 'grayscale(0.5)'}"
     >
       <v-container>
         <transition
@@ -155,7 +154,6 @@
         class="text-center pb-6"
         :class="{'grey lighten-2': $route.name !== 'psychologicalPlatform', 'green lighten-1': $route.name === 'psychologicalPlatform'}"
         style="width: 100%"
-        :style="{'filter': $route.name === 'home' ? 'grayscale(1)' : 'grayscale(0.5)'}"
       >
         <v-card-text>
           <template v-if="$route.name === 'psychologicalPlatform'">
