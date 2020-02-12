@@ -340,21 +340,65 @@
                 <div v-show="show[o.name]">
                   <v-divider />
 
-                  <v-card-text>
-                    <div
-                      v-for="[index, supply] in Object.entries(o.supplies)"
-                      :key="supply.n"
-                      class="mb-3"
+                  <v-card-text class="pb-0">
+                    <v-row
+                      align="start"
+                      justify="start"
                     >
-                      <h2 class="title">
-                        {{ supply.n }}
-                      </h2>
-                      <p class="font-weight-bold red--text display-1">
-                        {{ typeof supply.v === "number" ? "&times; " : "" }}{{ supply.v }}
-                      </p>
-                      <v-divider />
-                    </div>
+                      <v-col
+                        v-for="[index, supply] in o.supplies.entries()"
+                        :key="supply.n"
+                        cols="12"
+                        sm="6"
+                        md="4"
+                        lg="3"
+                        xl="2"
+                      >
+                        <v-card
+                          style="border: 2px solid #cf5355"
+                        >
+                          <v-card-text>
+                            <div class="title">
+                              <small>#{{ index + 1 }}</small> <span class="font-weight-bold">{{ supply.n }}</span>
+                            </div>
+                            <div v-if="supply.abbr">
+                              又名：{{ supply.abbr }}
+                            </div>
+                            <div
+                              class="font-weight-bold red--text"
+                              :class="{'display-1': typeof supply.a === 'number', 'headline': typeof supply.a !== 'number'}"
+                            >
+                              {{ typeof supply.a === "number" ? `&times; ${supply.a.toLocaleString()} ${supply.u ? supply.u : ''}` : supply.a }}
+                            </div>
+                            <div v-if="supply.r">
+                              物资要求：<span class="font-weight-bold">{{ supply.r }}</span>
+                            </div>
+                          </v-card-text>
+                        </v-card>
+                      </v-col>
+                    </v-row>
                   </v-card-text>
+
+                  <v-card-actions class="pt-0">
+                    <v-btn
+                      text
+                      color="#a20002"
+                      block
+                      large
+                      :disabled="!show[o.name]"
+                      @click="showOrHideCard(o)"
+                    >
+                      <v-divider style="opacity: 0.3" />
+                      <span class="mx-4">
+                        <v-icon
+                          left
+                        >
+                          mdi-chevron-up
+                        </v-icon>{{ show[o.name] ? "收起详细需求" : "正在收起..." }}
+                      </span>
+                      <v-divider style="opacity: 0.3" />
+                    </v-btn>
+                  </v-card-actions>
                 </div>
               </v-expand-transition>
             </v-card>
@@ -406,6 +450,55 @@
     },
     computed: {
       dataset() {
+        const suppliesMap = {
+          "n95口罩（9132/1860）": {
+            n: "医用防护口罩",
+            abbr: "N95",
+            u: "个",
+            r: "符合或高于标准 GB19083-2010"
+          },
+          "医用外科口罩": {
+            n: "医用外科口罩",
+            abbr: "医用手术口罩",
+            u: "个",
+            r: "符合或高于标准 YY0469-2011"
+          },
+          "医用防护口罩": {
+            n: "一次性使用医用口罩",
+            abbr: "医用防护口罩",
+            u: "个",
+            r: "符合或高于标准 YY/T 0969-2013"
+          },
+          "防护服": {
+            n: "医用一次性防护服",
+            u: "个",
+            r: "符合或高于标准 GB19082-2009"
+          },
+          "护目镜": {
+            n: "个人用眼护具",
+            abbr: "护目镜",
+            u: "副",
+            r: "符合或高于标准 GB14866-2006"
+          },
+          "医用手套": {
+            n: "一次性使用医用橡胶检查手套",
+            abbr: "医用手套",
+            u: "双",
+            r: "符合或高于标准 GB10213-2006"
+          },
+          "手术衣": {
+            n: "手术衣",
+            u: "个",
+            r: "符合或高于标准 YY/T 0506.2-2016"
+          },
+          "鞋套": {
+            u: "个"
+          },
+          "面罩": {
+            u: "个"
+          }
+          }
+
         return this.data.map(el => {
           const result = {supplies: [], suppliesCount: 0, suppliesCountBias: false};
 
@@ -418,10 +511,20 @@
             } else {
               // supplies list
               if (value) {
-                result.supplies.push({
-                  n: key.replace("n95", "N95 "),
-                  v: value === "Y" ? "需要" : value
-                });
+                const amount = value === "Y" ? "需要" : value;
+                if (key in suppliesMap) {
+                  const merged = Object.assign({
+                    n: key,
+                    a: amount
+                  }, suppliesMap[key]);
+                  result.supplies.push(merged);
+                } else {
+                  result.supplies.push({
+                    n: key,
+                    a: amount
+                  });
+                }
+
                 if (typeof value === "number") {
                   result.suppliesCount += value;
                 } else {
