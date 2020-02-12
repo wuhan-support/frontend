@@ -138,7 +138,7 @@
           请注意：大多数住宿地点均要求各位携带相关证件（医护工作证 + 身份证）实名入住；请记得准备好上述证件后，致电相关住宿提供方确认空房情况哦～ 您辛苦啦～
         </v-card-text>
       </v-card>
-      <p class="subtitle-1">
+      <!-- <p class="subtitle-1">
         图例：<v-icon
           small
         >
@@ -148,7 +148,7 @@
         >
           mdi-home-circle
         </v-icon> 表示房间剩余
-      </p>
+      </p> -->
       <v-skeleton-loader
         :loading="$store.getters.ajaxLoading && !data.length"
         :types="{ skeleton: 'card, card, card, card' }"

@@ -620,12 +620,12 @@
   border-top: 4px solid rgba(226, 82, 66, 1) !important
 }
 .red-breathe {
-  animation: breathe 2.5s ease-in-out alternate infinite;
+  animation: breathe 5s ease-in-out alternate infinite;
 }
 
   @keyframes breathe {
     from {
-      background: #c33e37;
+      background: #a93c33;
     }
     to {
       background: #65201d;
