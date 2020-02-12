@@ -146,12 +146,99 @@
       </v-card>
     </v-dialog>
 
+    <v-dialog
+      v-model="supplies.enabled"
+      overlay-opacity="0.9"
+      scrollable
+      max-width="calc(max(450px, 80vw))"
+    >
+      <v-card v-if="supplies.enabled">
+        <v-card-title
+          class="white--text"
+          style="background: #a14042"
+        >
+          <div
+            class="overline d-block"
+            style="width: 100%"
+          >
+            医疗机构物资需求 - 需求列表
+          </div>
+          <br>
+          <div
+            class="headline font-weight-bold d-block"
+            style="width: 100%"
+          >
+            {{ supplies.content.name }}
+          </div>
+        </v-card-title>
+        <v-card-text>
+          <v-row
+            align="start"
+            justify="start"
+          >
+            <v-col
+              v-for="[index, supply] in supplies.content.supplies.entries()"
+              :key="supply.n"
+              cols="12"
+              sm="6"
+              md="4"
+              lg="3"
+              xl="2"
+              class="align-self-stretch"
+            >
+              <v-card
+                style="border: 2px solid #cf5355; height: 100%"
+              >
+                <v-card-text>
+                  <div class="title">
+                    <small>#{{ index + 1 }}</small> <span class="font-weight-bold">{{ supply.n }}</span>
+                  </div>
+                  <div v-if="supply.abbr">
+                    又名：{{ supply.abbr }}
+                  </div>
+                  <div
+                    class="font-weight-bold red--text"
+                    :class="{'display-1': typeof supply.a === 'number', 'headline': typeof supply.a !== 'number'}"
+                  >
+                    {{ typeof supply.a === "number" ? `&times; ${supply.a.toLocaleString()} ${supply.u ? supply.u : ''}` : supply.a }}
+                  </div>
+                  <div v-if="supply.r">
+                    物资要求：<span class="font-weight-bold">{{ supply.r }}</span>
+                  </div>
+                </v-card-text>
+              </v-card>
+            </v-col>
+          </v-row>
+        </v-card-text>
+
+        <v-card-actions>
+          <v-btn
+            text
+            color="#a20002"
+            block
+            large
+            @click="supplies.enabled = false"
+          >
+            <v-divider style="opacity: 0.3" />
+            <span class="mx-4">
+              <v-icon
+                left
+              >
+                mdi-close
+              </v-icon>收起详细需求
+            </span>
+            <v-divider style="opacity: 0.3" />
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
     <v-col
       cols="12"
       class="mx-3"
     >
       <h1 class="heading">
-        医院需求信息
+        医疗机构物资需求
       </h1>
       <v-card class="elevation-0">
         <v-card-text class="subtitle-1 red font-weight-bold white--text my-2">
@@ -203,205 +290,151 @@
           :items="dataset"
         >
           <template v-slot:default="{ items }">
-            <v-card
-              v-for="[i, o] in items.entries()"
-              :key="i"
-              class="viewCard"
-              :class="{'redBorder pb-0': !o.urge}"
-            >
-              <v-card-title
-                class="mb-2"
-                :class="{'red darken-1 white--text red-breathe': o.urge, 'grey lighten-3': !o.urge}"
-                :style="{'animation-delay': `${i*0.25}s`}"
+            <v-row>
+              <v-col
+                v-for="[i, o] in items.entries()"
+                :id="'supply-' + i"
+                :key="i"
+                cols="12"
+                sm="6"
+                md="6"
+                lg="4"
+                xl="3"
               >
-                <span
-                  class="title font-weight-black"
+                <v-card
+                  class="viewCard"
+                  :class="{'redBorder pb-0': !o.urge}"
                 >
-                  {{ o.urge === '裸奔' ? "[库存为零] ": "" }}{{ o.name }}
-                </span>
-              </v-card-title>
-              <span class="float-right surplusInfo">
-                <div class="content">
-                  <template v-if="o.supplies.length">
-                    <span class="number">{{ o.supplies.length }}种</span>
-                    种类
-                    <br>
-                  </template>
-                  <template v-if="o.suppliesCount">
-                    <span class="number">{{ o.suppliesCount }}{{ o.suppliesCountBias ? "+" : "" }}</span>
-                    数量
-                  </template>
-                </div>
-                <v-icon class="bgIcon">wsicon wsicon-hospital</v-icon>
-              </span>
-              <v-card-text class="pt-0 pb-6 card-min-height">
-                <template v-if="o.tags.length">
-                  <v-chip
-                    v-for="tag in o.tags"
-
-                    :key="tag.t"
-                    label
-                    class="ma-1 font-weight-bold white--text"
-                    small
-                    :color="tag.c"
+                  <v-card-title
+                    class="mb-2"
+                    :class="{'red darken-1 white--text red-breathe': o.urge, 'grey lighten-3': !o.urge}"
+                    :style="{'animation-delay': `${i*0.25}s`}"
                   >
-                    {{ tag.t }}
-                  </v-chip>
-                </template>
-
-                <div class="subtitle-1 mt-3">
-                  {{ o.province }} {{ o.city }}
-                </div>
-
-                <div class="subtitle-2">
-                  地址：{{ o.address ? o.address : "（暂无详细地址，可点击下方搜索）" }}
-                </div>
-
-                <div
-                  v-if="o.alert"
-                  class="caption red--text"
-                >
-                  特别备注：{{ o.alert }}
-                </div>
-                <div
-                  v-if="o.notes"
-                  class="caption deep-orange--text"
-                >
-                  备注：{{ o.notes }}
-                </div>
-              </v-card-text>
-              <v-divider />
-              <v-card-actions>
-                <v-col class="text-center d-flex justify-space-between">
-                  <v-btn
-                    tile
-                    small
-                    text
-                    :href="`https://ditu.amap.com/search?query=${encodeURIComponent(o.name)}`"
-                    target="_blank"
-                  >
-                    <v-icon
-                      class="iconRed"
-                      left
+                    <span
+                      class="title font-weight-black"
                     >
-                      wsicon wsicon-local
-                    </v-icon>{{ o.address ? "查看" : "搜索" }}地图
-                  </v-btn>
-                  <v-btn
-                    tile
-                    text
-                    small
-                    @click="openDialog(o)"
-                  >
-                    <v-icon
-                      class="iconRed"
-                      left
-                    >
-                      wsicon wsicon-contact
-                    </v-icon>联系方式
-                  </v-btn>
-                  <v-btn
-                    tile
-                    text
-                    small
-                    @click="openReport(o)"
-                  >
-                    <v-icon
-                      class="iconRed"
-                      left
-                    >
-                      wsicon wsicon-info
-                    </v-icon>信息纠错
-                  </v-btn>
-                </v-col>
-              </v-card-actions>
-              <v-divider />
-              <v-card-actions>
-                <v-btn
-                  text
-                  color="#a20002"
-                  block
-                  large
-                  :disabled="!o.supplies.length"
-                  @click="showOrHideCard(o)"
-                >
-                  <v-divider style="opacity: 0.3" />
-                  <span class="mx-4">
-                    <v-icon
-                      left
-                    >
-                      {{ show[o.name] ? "mdi-chevron-up" : "mdi-chevron-down" }}
-                    </v-icon>{{ show[o.name] ? "收起详细需求" : "展开详细需求" }}{{ o.supplies.length ? "" : " (无需求数据)" }}
+                      {{ o.urge === '裸奔' ? "[库存为零] ": "" }}{{ o.name }}
+                    </span>
+                  </v-card-title>
+                  <span class="float-right surplusInfo">
+                    <div class="content">
+                      <template v-if="o.supplies.length">
+                        <span class="number">{{ o.supplies.length }}种</span>
+                        种类
+                        <br>
+                      </template>
+                      <template v-if="o.suppliesCount">
+                        <span class="number">{{ o.suppliesCount }}{{ o.suppliesCountBias ? "+" : "" }}</span>
+                        数量
+                      </template>
+                    </div>
+                    <v-icon class="bgIcon">wsicon wsicon-hospital</v-icon>
                   </span>
-                  <v-divider style="opacity: 0.3" />
-                </v-btn>
-              </v-card-actions>
-              <v-expand-transition>
-                <div v-show="show[o.name]">
-                  <v-divider />
+                  <v-card-text class="pt-0 pb-6 card-min-height">
+                    <template v-if="o.tags.length">
+                      <v-chip
+                        v-for="tag in o.tags"
 
-                  <v-card-text class="pb-0">
-                    <v-row
-                      align="start"
-                      justify="start"
-                    >
-                      <v-col
-                        v-for="[index, supply] in o.supplies.entries()"
-                        :key="supply.n"
-                        cols="12"
-                        sm="6"
-                        md="4"
-                        lg="3"
-                        xl="2"
+                        :key="tag.t"
+                        label
+                        class="ma-1 font-weight-bold white--text"
+                        small
+                        :color="tag.c"
                       >
-                        <v-card
-                          style="border: 2px solid #cf5355"
-                        >
-                          <v-card-text>
-                            <div class="title">
-                              <small>#{{ index + 1 }}</small> <span class="font-weight-bold">{{ supply.n }}</span>
-                            </div>
-                            <div v-if="supply.abbr">
-                              又名：{{ supply.abbr }}
-                            </div>
-                            <div
-                              class="font-weight-bold red--text"
-                              :class="{'display-1': typeof supply.a === 'number', 'headline': typeof supply.a !== 'number'}"
-                            >
-                              {{ typeof supply.a === "number" ? `&times; ${supply.a.toLocaleString()} ${supply.u ? supply.u : ''}` : supply.a }}
-                            </div>
-                            <div v-if="supply.r">
-                              物资要求：<span class="font-weight-bold">{{ supply.r }}</span>
-                            </div>
-                          </v-card-text>
-                        </v-card>
-                      </v-col>
-                    </v-row>
-                  </v-card-text>
+                        {{ tag.t }}
+                      </v-chip>
+                    </template>
 
-                  <v-card-actions class="pt-0">
+                    <div class="subtitle-1 mt-3">
+                      {{ o.province }} {{ o.city }}
+                    </div>
+
+                    <div class="subtitle-2">
+                      地址：{{ o.address ? o.address : "（暂无详细地址，可点击下方搜索）" }}
+                    </div>
+
+                    <div
+                      v-if="o.alert"
+                      class="caption red--text"
+                    >
+                      特别备注：{{ o.alert }}
+                    </div>
+                    <div
+                      v-if="o.notes"
+                      class="caption deep-orange--text"
+                    >
+                      备注：{{ o.notes }}
+                    </div>
+                  </v-card-text>
+                  <v-divider />
+                  <v-card-actions>
+                    <v-col class="text-center d-flex justify-space-between">
+                      <v-btn
+                        tile
+                        small
+                        text
+                        :href="`https://ditu.amap.com/search?query=${encodeURIComponent(o.name)}`"
+                        target="_blank"
+                      >
+                        <v-icon
+                          class="iconRed"
+                          left
+                        >
+                          wsicon wsicon-local
+                        </v-icon>{{ o.address ? "查看" : "搜索" }}地图
+                      </v-btn>
+                      <v-btn
+                        tile
+                        text
+                        small
+                        @click="openDialog(o)"
+                      >
+                        <v-icon
+                          class="iconRed"
+                          left
+                        >
+                          wsicon wsicon-contact
+                        </v-icon>联系方式
+                      </v-btn>
+                      <v-btn
+                        tile
+                        text
+                        small
+                        @click="openReport(o)"
+                      >
+                        <v-icon
+                          class="iconRed"
+                          left
+                        >
+                          wsicon wsicon-info
+                        </v-icon>信息纠错
+                      </v-btn>
+                    </v-col>
+                  </v-card-actions>
+                  <v-divider />
+                  <v-card-actions>
                     <v-btn
                       text
                       color="#a20002"
                       block
                       large
-                      :disabled="!show[o.name]"
-                      @click="showOrHideCard(o)"
+                      :disabled="!o.supplies.length"
+                      @click="() => {supplies.enabled = true; supplies.content = o}"
                     >
                       <v-divider style="opacity: 0.3" />
                       <span class="mx-4">
                         <v-icon
                           left
                         >
-                          mdi-chevron-up
-                        </v-icon>{{ show[o.name] ? "收起详细需求" : "正在收起..." }}
+                          mdi-fullscreen
+                        </v-icon>展开详细需求{{ o.supplies.length ? "" : " (无需求数据)" }}
                       </span>
                       <v-divider style="opacity: 0.3" />
                     </v-btn>
                   </v-card-actions>
-                </div>
-              </v-expand-transition>
-            </v-card>
+                </v-card>
+              </v-col>
+            </v-row>
           </template>
         </DataTable>
       </v-skeleton-loader>
@@ -445,6 +478,10 @@
           cause: "",
           causes: ['地址不存在/未找到', '联系不上医院方', '物资被拒收或拦截', '物资已够用', '信息重复', '其他'],
           content: ""
+        },
+        supplies: {
+          enabled: false,
+          content: {}
         }
       }
     },
