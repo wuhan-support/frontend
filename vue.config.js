@@ -29,7 +29,7 @@ module.exports = {
     plugins: [
       new Critters({
         preload: "body",
-        fonts: false
+        fonts: true
       })
     ]
   }
