@@ -486,8 +486,17 @@
     },
     computed: {
       dataset() {
-        const urgeOrderMap = {}, urgeOrder = ['裸奔', '紧缺', ''];
-        for (let index in urgeOrder) urgeOrderMap[urgeOrder[index]] = index;
+        // const sortMap = {
+        //   urge: {
+        //     '裸奔': 0,
+        //     '紧缺': 1,
+        //     '': 2  // 匹配没有填入 urge 的情况；必要
+        //   },
+        //   trueness: {
+        //     "已核实": 0,
+        //     "待核实": 1
+        //   }
+        // };
 
         const suppliesMap = {
           "n95口罩（9132/1860）": {
@@ -578,23 +587,40 @@
           return result
         }).map(el => {
           el.tags = [];
-          if (!(!el.trueness || (el.trueness.includes("未核实") || el.trueness.includes("需确认")))) {
-            el.trueness = el.tags.push({c: 'green', t: `已核实：${el.trueness}`});
+          el.meta = {};
+          if (!(!el.trueness || (el.trueness.includes("未") || el.trueness.includes("需确认")))) {
+            if (el.trueness === "已核实" || el.trueness === "核实") {
+              el.tags.push({c: 'green', t: `已核实`});
+            } else {
+              el.tags.push({c: 'green', t: `已核实：${el.trueness}`});
+            }
+            el.meta.trueness = 0
+          } else if (el.trueness) {
+            el.tags.push({c: 'grey', t: `${el.trueness}`});
+            el.meta.trueness = 1
+          } else {
+            el.tags.push({c: 'grey', t: `暂未与官方核实`});
+            el.meta.trueness = 1
           }
 
           if (el.urge) {
             if (el.urge === "裸奔") {
               el.tags.push({c: 'red darken-2', t: "非常紧急：库存为零"});
+              el.meta.urge = 0
             } else if (el.urge === "紧缺") {
               el.tags.push({c: 'red', t: "紧缺"});
+              el.meta.urge = 1
             } else {
-              el.tags.push({c: 'grey', t: el.urge});
+              el.tags.push({c: 'deep-orange', t: el.urge});
+              el.meta.urge = 2
             }
+          } else {
+            el.meta.urge = 3
           }
 
           return el
         }).sort( function(a, b) {
-          return urgeOrderMap[a.urge] - urgeOrderMap[b.urge]
+          return a.meta.urge - b.meta.urge
         });
       },
       xs () {
