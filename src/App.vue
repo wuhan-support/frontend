@@ -349,7 +349,7 @@ export default {
   margin: 0 5px;
 }
 .appBar .toolbarTitle {
-  font-family: PingFangSC-Medium;
+  font-family: PingFangSC-Medium, PingFangSC-Medium, "PingFang SC", Roboto, sans-serif;
   font-size: 16px;
   color: #333E48;
   letter-spacing: 0;
