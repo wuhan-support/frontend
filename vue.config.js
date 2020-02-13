@@ -1,4 +1,4 @@
-const Critters = require('critters-webpack-plugin');
+// const Critters = require('critters-webpack-plugin');
 
 module.exports = {
   'transpileDependencies': [
@@ -27,10 +27,7 @@ module.exports = {
   },
   configureWebpack: {
     plugins: [
-      new Critters({
-        preload: "body",
-        fonts: true
-      })
+      // new Critters()
     ]
   }
 
