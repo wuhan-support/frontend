@@ -15,7 +15,7 @@ module.exports = {
 
   outputDir: 'dist',
   runtimeCompiler: true,
-  integrity: false,
+  integrity: true,
 
   pluginOptions: {
     i18n: {
@@ -25,11 +25,11 @@ module.exports = {
       enableInSFC: true
     }
   },
-  configureWebpack: {
-    plugins: [
-      // new Critters()
-    ]
-  }
+  // configureWebpack: {
+  //   plugins: [
+  //     // new Critters()
+  //   ]
+  // }
 
   // pwa: {
   //   name: "feiyan.help",
