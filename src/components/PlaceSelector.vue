@@ -60,7 +60,7 @@ export default {
       label: '请选择',
       data: [],
       regions: {
-        province: '湖北省',
+        province: null,
         city: null,
         area: null
       }

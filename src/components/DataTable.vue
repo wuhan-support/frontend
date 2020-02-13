@@ -90,7 +90,7 @@
       :items="data"
       :search="search"
       :page="page"
-      :items-per-page="20"
+      :items-per-page="24"
       hide-default-footer
     >
       <template v-slot:no-data>
@@ -115,7 +115,7 @@
         <Paginator
           :page="page"
           :pagination="pagination"
-          @change="(newPage) => {page = newPage}"
+          @change="pageChanged"
         />
       </template>
       <template v-slot:default="props">
@@ -125,7 +125,9 @@
         <Paginator
           :page="page"
           :pagination="pagination"
-          @change="(newPage) => {page = newPage; $vuetify.goTo('#data-table--content', {duration: 125, offset: 0, easing: 'easeOutQuad'})}"
+          scroll
+          large
+          @change="pageChanged"
         />
       </template>
     </v-data-iterator>
@@ -296,6 +298,10 @@
         .finally(() => {
           this.geolocation.determining = false
         })
+      },
+      pageChanged ({page, scroll=false}) {
+        this.page = page;
+        if (scroll) this.$vuetify.goTo('#data-table--content', {duration: 275, offset: 0, easing: 'easeOutQuad'})
       }
     },
   }

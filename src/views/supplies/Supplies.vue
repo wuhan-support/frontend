@@ -154,14 +154,14 @@
     >
       <v-card v-if="supplies.enabled">
         <v-card-title
-          class="white--text"
-          style="background: #a14042"
+          class="white--text pb-4 elevation-2"
+          style="background: #a14042; line-height: 1.1;"
         >
           <div
             class="overline d-block"
             style="width: 100%"
           >
-            医疗机构物资需求 - 需求列表
+            医疗机构物资需求 — 需求列表
           </div>
           <br>
           <div
@@ -211,7 +211,7 @@
           </v-row>
         </v-card-text>
 
-        <v-card-actions>
+        <v-card-actions class="elevation-2">
           <v-btn
             text
             color="#a20002"
@@ -293,7 +293,6 @@
             <v-row>
               <v-col
                 v-for="[i, o] in items.entries()"
-                :id="'supply-' + i"
                 :key="i"
                 cols="12"
                 sm="6"
@@ -308,7 +307,7 @@
                   <v-card-title
                     class="mb-2"
                     :class="{'red darken-1 white--text red-breathe': o.urge, 'grey lighten-3': !o.urge}"
-                    :style="{'animation-delay': `${i*0.25}s`}"
+                    :style="{'animation-delay': `-${i * 0.75}s`}"
                   >
                     <span
                       class="title font-weight-black"
@@ -487,6 +486,9 @@
     },
     computed: {
       dataset() {
+        const urgeOrderMap = {}, urgeOrder = ['裸奔', '紧缺', ''];
+        for (let index in urgeOrder) urgeOrderMap[urgeOrder[index]] = index;
+
         const suppliesMap = {
           "n95口罩（9132/1860）": {
             n: "医用防护口罩",
@@ -534,7 +536,7 @@
           "面罩": {
             u: "个"
           }
-          }
+        };
 
         return this.data.map(el => {
           const result = {supplies: [], suppliesCount: 0, suppliesCountBias: false};
@@ -570,6 +572,9 @@
               }
             }
           }
+
+          if (!result.urge) result.urge = "";
+
           return result
         }).map(el => {
           el.tags = [];
@@ -588,7 +593,9 @@
           }
 
           return el
-        })
+        }).sort( function(a, b) {
+          return urgeOrderMap[a.urge] - urgeOrderMap[b.urge]
+        });
       },
       xs () {
         return this.$vuetify.breakpoint.xsOnly
@@ -612,14 +619,14 @@
           this.data = data
         })
       },
-      showOrHideCard(o) {
-        if (this.show[o.name]) {
-          this.show[o.name] = !this.show[o.name]
-        } else {
-          this.$set(this.show, o.name, true)
-          // this.show = Object.assign(this.show, {[o.name]: true})
-        }
-      },
+      // showOrHideCard(o) {
+      //   if (this.show[o.name]) {
+      //     this.show[o.name] = !this.show[o.name]
+      //   } else {
+      //     this.$set(this.show, o.name, true)
+      //     // this.show = Object.assign(this.show, {[o.name]: true})
+      //   }
+      // },
       doReport() {
         api.reportIncorrect({
           type: "supplies",

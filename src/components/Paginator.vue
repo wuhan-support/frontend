@@ -30,7 +30,8 @@
         outlined
         :disabled="page <= 1"
         block
-        @click="$emit('change', page - 1)"
+        :large="large"
+        @click="$emit('change', {page: page - 1, scroll})"
       >
         <v-icon left>
           mdi-chevron-left
@@ -55,7 +56,8 @@
         outlined
         :disabled="page >= pagination.pageCount"
         block
-        @click="$emit('change', page + 1)"
+        :large="large"
+        @click="$emit('change', {page: page + 1, scroll})"
       >
         下页
         <v-icon right>
@@ -77,6 +79,18 @@
       pagination: {
         type: Object,
         required: true
+      },
+      scroll: {
+        type: Boolean,
+        default () {
+          return false
+        }
+      },
+      large: {
+        type: Boolean,
+        default () {
+          return false
+        }
       }
     },
     data() {
@@ -91,6 +105,16 @@
     computed: {
       sm () {
         return this.$vuetify.breakpoint.smAndDown
+      }
+    },
+    watch: {
+      pagination(n, o) {
+        if (n.itemsLength !== o.itemsLength) {
+          this.$emit('change', {
+            page: 1,
+            scroll: false
+          })
+        }
       }
     },
     methods: {
