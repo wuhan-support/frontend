@@ -166,19 +166,19 @@
             </h1> -->
           </template>
           <template v-else>
-            <!--            <h1 class="overline mb-4">-->
-            <!--              李文亮医生千古-->
-            <!--            </h1>-->
-            <!--            <h1 class="overline mb-3">-->
-            <!--              医护工作者、武汉市民与湖北居民<br>-->
-            <!--              我们与你同在-->
-            <!--            </h1>-->
-            <!--            <h1 class="overline mb-3">-->
-            <!--              全国人民<br>-->
-            <!--              让我们一起为武汉助力-->
-            <!--            </h1>-->
+            <!-- <h1 class="overline mb-4">
+              李文亮医生千古
+            </h1> -->
+            <!-- <h1 class="overline mb-3">
+              医护工作者、武汉市民与湖北居民<br>
+              我们与你同在
+            </h1>
+            <h1 class="overline mb-3">
+              全国人民<br>
+              让我们一起为武汉助力
+            </h1> -->
             <h1 class="overline mb-5">
-              疫情不息<br>援助不止
+              驰援一线<br>传递温暖
             </h1>
           </template>
 
