@@ -154,14 +154,14 @@
     >
       <v-card v-if="supplies.enabled">
         <v-card-title
-          class="white--text"
-          style="background: #a14042"
+          class="white--text pb-4 elevation-2"
+          style="background: #a14042; line-height: 1.1;"
         >
           <div
             class="overline d-block"
             style="width: 100%"
           >
-            医疗机构物资需求 - 需求列表
+            医疗机构物资需求 — 需求列表
           </div>
           <br>
           <div
@@ -211,7 +211,7 @@
           </v-row>
         </v-card-text>
 
-        <v-card-actions>
+        <v-card-actions class="elevation-2">
           <v-btn
             text
             color="#a20002"
@@ -293,7 +293,6 @@
             <v-row>
               <v-col
                 v-for="[i, o] in items.entries()"
-                :id="'supply-' + i"
                 :key="i"
                 cols="12"
                 sm="6"
@@ -308,7 +307,7 @@
                   <v-card-title
                     class="mb-2"
                     :class="{'red darken-1 white--text red-breathe': o.urge, 'grey lighten-3': !o.urge}"
-                    :style="{'animation-delay': `${i*0.25}s`}"
+                    :style="{'animation-delay': `-${i * 0.75}s`}"
                   >
                     <span
                       class="title font-weight-black"
@@ -487,6 +486,18 @@
     },
     computed: {
       dataset() {
+        // const sortMap = {
+        //   urge: {
+        //     '裸奔': 0,
+        //     '紧缺': 1,
+        //     '': 2  // 匹配没有填入 urge 的情况；必要
+        //   },
+        //   trueness: {
+        //     "已核实": 0,
+        //     "待核实": 1
+        //   }
+        // };
+
         const suppliesMap = {
           "n95口罩（9132/1860）": {
             n: "医用防护口罩",
@@ -534,7 +545,7 @@
           "面罩": {
             u: "个"
           }
-          }
+        };
 
         return this.data.map(el => {
           const result = {supplies: [], suppliesCount: 0, suppliesCountBias: false};
@@ -570,25 +581,47 @@
               }
             }
           }
+
+          if (!result.urge) result.urge = "";
+
           return result
         }).map(el => {
           el.tags = [];
-          if (!(!el.trueness || (el.trueness.includes("未核实") || el.trueness.includes("需确认")))) {
-            el.trueness = el.tags.push({c: 'green', t: `已核实：${el.trueness}`});
+          el.meta = {};
+          if (!(!el.trueness || (el.trueness.includes("未") || el.trueness.includes("需确认")))) {
+            if (el.trueness === "已核实" || el.trueness === "核实") {
+              el.tags.push({c: 'green', t: `已核实`});
+            } else {
+              el.tags.push({c: 'green', t: `已核实：${el.trueness}`});
+            }
+            el.meta.trueness = 0
+          } else if (el.trueness) {
+            el.tags.push({c: 'grey', t: `${el.trueness}`});
+            el.meta.trueness = 1
+          } else {
+            el.tags.push({c: 'grey', t: `暂未与官方核实`});
+            el.meta.trueness = 1
           }
 
           if (el.urge) {
             if (el.urge === "裸奔") {
               el.tags.push({c: 'red darken-2', t: "非常紧急：库存为零"});
+              el.meta.urge = 0
             } else if (el.urge === "紧缺") {
               el.tags.push({c: 'red', t: "紧缺"});
+              el.meta.urge = 1
             } else {
-              el.tags.push({c: 'grey', t: el.urge});
+              el.tags.push({c: 'deep-orange', t: el.urge});
+              el.meta.urge = 2
             }
+          } else {
+            el.meta.urge = 3
           }
 
           return el
-        })
+        }).sort( function(a, b) {
+          return a.meta.urge - b.meta.urge
+        });
       },
       xs () {
         return this.$vuetify.breakpoint.xsOnly
@@ -612,14 +645,14 @@
           this.data = data
         })
       },
-      showOrHideCard(o) {
-        if (this.show[o.name]) {
-          this.show[o.name] = !this.show[o.name]
-        } else {
-          this.$set(this.show, o.name, true)
-          // this.show = Object.assign(this.show, {[o.name]: true})
-        }
-      },
+      // showOrHideCard(o) {
+      //   if (this.show[o.name]) {
+      //     this.show[o.name] = !this.show[o.name]
+      //   } else {
+      //     this.$set(this.show, o.name, true)
+      //     // this.show = Object.assign(this.show, {[o.name]: true})
+      //   }
+      // },
       doReport() {
         api.reportIncorrect({
           type: "supplies",
