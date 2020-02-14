@@ -19,7 +19,7 @@
         <v-select
           v-model="regions[selector.type]"
           hide-details
-          class="body-2"
+          class="subtitle-1"
           :items="selector.data"
           :no-data-text="label"
           :label="label"

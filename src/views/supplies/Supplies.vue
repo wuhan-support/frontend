@@ -302,17 +302,17 @@
               >
                 <v-card
                   class="viewCard"
-                  :class="{'redBorder pb-0': !o.urge}"
+                  :class="{'redBorder pb-0': o.meta.urge >= 2}"
                 >
                   <v-card-title
                     class="mb-2"
-                    :class="{'red darken-1 white--text red-breathe': o.urge, 'grey lighten-3': !o.urge}"
+                    :class="{'darken-1 white--text': o.meta.urge <= 1, 'red red-breathe': o.meta.urge === 0, 'deep-orange warning-breathe': o.meta.urge === 1, 'grey lighten-3': o.meta.urge >= 2}"
                     :style="{'animation-delay': `-${i * 0.75}s`}"
                   >
                     <span
                       class="title font-weight-black"
                     >
-                      {{ o.urge === '裸奔' ? "[库存为零] ": "" }}{{ o.name }}
+                      <small class="font-weight-regular">#{{ o._index + 1 }}</small> {{ o.urge === '裸奔' ? "[库存为零] ": "" }}{{ o.name }}
                     </span>
                   </v-card-title>
                   <span class="float-right surplusInfo">
@@ -369,8 +369,6 @@
                   <v-card-actions>
                     <v-col class="text-center d-flex justify-space-between">
                       <v-btn
-                        tile
-                        small
                         text
                         :href="`https://ditu.amap.com/search?query=${encodeURIComponent(o.name)}`"
                         target="_blank"
@@ -383,9 +381,7 @@
                         </v-icon>{{ o.address ? "查看" : "搜索" }}地图
                       </v-btn>
                       <v-btn
-                        tile
                         text
-                        small
                         @click="openDialog(o)"
                       >
                         <v-icon
@@ -396,9 +392,7 @@
                         </v-icon>联系方式
                       </v-btn>
                       <v-btn
-                        tile
                         text
-                        small
                         @click="openReport(o)"
                       >
                         <v-icon
@@ -690,10 +684,10 @@
   border-top: 4px solid rgba(226, 82, 66, 1) !important
 }
 .red-breathe {
-  animation: breathe 5s ease-in-out alternate infinite;
+  animation: red-breathe 5s ease-in-out alternate infinite;
 }
 
-  @keyframes breathe {
+  @keyframes red-breathe {
     from {
       background: #a93c33;
     }
@@ -701,6 +695,19 @@
       background: #65201d;
     }
   }
+
+.warning-breathe {
+  animation: warning-breathe 5s ease-in-out alternate infinite;
+}
+
+@keyframes warning-breathe {
+  from {
+    background: #cc7400;
+  }
+  to {
+    background: #663c00;
+  }
+}
 
 .surplusInfo .content {
   display: flex;
