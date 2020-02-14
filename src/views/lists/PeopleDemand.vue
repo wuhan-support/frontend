@@ -70,18 +70,6 @@
       <h1 class="heading">
         社区需求列表
       </h1>
-      <!--      <v-card>-->
-      <!--        <v-card-text class="subtitle-2 green white&#45;&#45;text mt-2 mb-4">-->
-      <!--          提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字提示文字-->
-      <!--        </v-card-text>-->
-      <!--      </v-card>-->
-      <!-- <p class="subtitle-1">
-                图例：<v-icon small>
-                    mdi-bed-empty
-                </v-icon> 表示床位剩余，<v-icon small>
-                    mdi-home-circle
-                </v-icon> 表示房间剩余
-            </p> -->
       <v-skeleton-loader
         :loading="$store.getters.ajaxLoading && !data.length"
         :types="{ skeleton: 'card, card, card, card' }"
