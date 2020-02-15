@@ -6,6 +6,7 @@ import Accommodations from "../views/lists/Accommodations";
 // import MedicalPlatforms from '../views/MedicalPlatforms';
 import Supplies from "../views/supplies/Supplies";
 import SuppliesSubmission from "../views/supplies/SuppliesSubmission";
+import CommunitySubmission from "../views/supplies/CommunitySubmission";
 import PeopleLayout from "../layouts/PeopleLayout";
 import StaffLayout from "../layouts/StaffLayout";
 import MedicalPlatforms from "../views/lists/MedicalPlatforms";
@@ -74,6 +75,16 @@ const routes = [{
       icon: "wsicon wsicon-hotel",
       title: "武汉在外人员住宿",
       subtitle: "提供武汉在外人员的住宿信息，保障这些群体的基本生活",
+      hide: false
+    }
+  }, {
+    path: 'supplies/CommunitySubmission',
+    name: 'CommunitySuppliesSubmission',
+    component: CommunitySubmission,
+    meta: {
+      icon: "mdi-file-document-box-plus",
+      title: "提交新的社区物资需求",
+      subtitle: "提交新的社区物资需求。提交后将交由内部信息组与官方渠道进行沟通，确保真实性与时效性后，发布于需求列表中",
       hide: false
     }
   }, {
