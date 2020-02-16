@@ -82,6 +82,7 @@
           <label for="yes">是</label>
           <input type="radio" name="ifconsistent" id="no" value="no" v-model="picked">
           <label for="no">否</label>
+          <input name="agentName" id="agentName" placeholder="请输入联系人">
           <br>
         </template>
         <template v-else-if="item.valueKey === 'region'">
@@ -96,7 +97,7 @@
             :placeholder="item.placeholder"
           />
         </template>
-        <template v-else-if="item.valueKey === 'contact'">
+        <template v-else-if="item.valueKey === 'contactPhone'">
           <input
             v-model="item.value"
             :placeholder="item.placeholder"
@@ -223,7 +224,7 @@
       &.name,
       &.address,
       &.age,
-      &.contact,
+      &.contactPhone,
       &.materialDemand,
       &.address,
       &.proof {
@@ -275,6 +276,12 @@
           font-size: 14px;
           margin-right:10px;
         }
+        input{
+          font-size: 14px;
+          background: #f8f8f8;
+          border-radius: 4px;
+        }
+
       }
       &.type{
         label{
@@ -340,7 +347,7 @@
             required: true,
             value: null
           }, {
-            valueKey: 'contact',
+            valueKey: 'contactPhone',
             label: '联系方式',
             type: 'Number',
             placeholder: '(选填) 请输入{{label}}',
