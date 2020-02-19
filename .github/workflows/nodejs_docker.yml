@@ -44,12 +44,15 @@ jobs:
           fi
 
       - name: Build image
+        if: github.event_name == 'push'
         run: docker build . --file Dockerfile --tag image
 
       - name: Log into registry
+        if: github.event_name == 'push'
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login docker.pkg.github.com -u ${{ github.actor }} --password-stdin
 
       - name: Push image
+        if: github.event_name == 'push'
         run: |
           IMAGE_ID=docker.pkg.github.com/${{ github.repository }}/$IMAGE_NAME
           # Strip git ref prefix from version
