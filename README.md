@@ -28,4 +28,5 @@ $ yarn serve
 3. 开发完成并 `commit` 后，使用 `git push --set-upstream origin {分支名}` 将当前更改 `push` 至 GitHub
 4. 访问 GitHub，[创建 Pull Request](https://github.com/wuhan-support/frontend/compare)
     - 其中，`base` 选择 `dev`，`compare` 选择之前的分支名
-5. 创建 Pull Request 后，等待管理者前来进行 Merge
+    - 请在文字描述中/assign [OWNERS](https://github.com/wuhan-support/frontend/blob/dev/OWNERS)文件中的同学进行代码审核
+5. 代码合并由@ws-robot 吃小⚪同学负责
