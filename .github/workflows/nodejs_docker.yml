@@ -62,7 +62,7 @@ jobs:
           # Use Docker `latest` tag convention for master branch
           [ "$VERSION" == "master" ] && VERSION=latest-${{ github.sha }}
           # Use Docker `dev` tag convention for dev branch
-          [ "$VERSION" == "dev" ] && VERSION=dev-${{ github.sha }}
+          [ "$VERSION" == "dev" ] && VERSION=dev
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
           docker tag image $IMAGE_ID:$VERSION
