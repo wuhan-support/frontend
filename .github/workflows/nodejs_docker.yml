@@ -60,11 +60,43 @@ jobs:
           # Strip "v" prefix from tag name
           [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
           # Use Docker `latest` tag convention for master branch
-          [ "$VERSION" == "master" ] && VERSION=latest
+          [ "$VERSION" == "master" ] && VERSION=latest-${{ github.sha }}
           # Use Docker `dev` tag convention for dev branch
-          [ "$VERSION" == "dev" ] && VERSION=dev
+          [ "$VERSION" == "dev" ] && VERSION=dev-${{ github.sha }}
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
           docker tag image $IMAGE_ID:$VERSION
           docker tag image $IMAGE_ID:$VERSION
           docker push $IMAGE_ID:$VERSION
+
+  deploy:
+    runs-on: ubuntu-latest
+    if: (echo "refs/tags/master" | sed -e 's,.*/\(.*\),\1,') == 'master'
+    steps:
+      - name: K8S set context
+        uses: azure/k8s-set-context@v1
+        with:
+          method: kubeconfig
+          kubeconfig:  ${{ secrets.K8S_Context }}
+        id: setcontext  
+
+      - name: K8S create secret
+      - uses: Azure/k8s-create-secret@v1
+        with:
+          container-registry-url: docker.pkg.github.com
+          container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
+          container-registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+          secret-name: github-k8s-secret
+
+      - name: K8S deploy
+        uses: Azure/k8s-deploy@v1
+        with:
+            namespace: 'default'
+            manifests: |
+              manifests/fe-deployment.yaml
+              manifests/fe-service.taml
+            images: |
+              docker.pkg.github.com/wuhan-support/frontend/frontend:latest-${{ github.sha }}
+            imagepullsecrets: |
+              github-k8s-secret
+            kubectl-version: 'latest'
