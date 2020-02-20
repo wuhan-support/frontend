@@ -1,0 +1,43 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.20.0 ()
+  creationTimestamp: null
+  labels:
+    io.kompose.service: fe
+    release : stable
+  name: wuhan-support-fe
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.20.0 ()
+      creationTimestamp: null
+      labels:
+        io.kompose.service: fe
+    spec:
+      containers:
+      - image: docker.pkg.github.com/wuhan-support/frontend/frontend:latest
+        imagePullPolicy: Always
+        name: wuhan-support-fe
+        ports:
+        - containerPort: 80
+        resources: {}
+        volumeMounts:
+        - mountPath: /var/log/nginx
+          name: fe-claim0
+      imagePullSecrets:
+      - name: regsecret
+      restartPolicy: Always
+      volumes:
+      - name: fe-claim0
+        hostPath:
+            path: /usr/share/wuhan-support/fe/logs
+            type: DirectoryOrCreate
+status: {}
