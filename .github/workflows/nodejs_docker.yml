@@ -71,7 +71,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    if: (echo "refs/tags/master" | sed -e 's,.*/\(.*\),\1,') == 'master'
+    if: $(echo "refs/tags/master" | sed -e 's,.*/\(.*\),\1,') == 'master'
     steps:
       - name: K8S set context
         uses: azure/k8s-set-context@v1
