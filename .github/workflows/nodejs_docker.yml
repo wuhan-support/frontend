@@ -81,7 +81,7 @@ jobs:
         id: setcontext  
 
       - name: K8S create secret
-      - uses: Azure/k8s-create-secret@v1
+        uses: Azure/k8s-create-secret@v1
         with:
           container-registry-url: docker.pkg.github.com
           container-registry-username: ${{ secrets.REGISTRY_USERNAME }}
