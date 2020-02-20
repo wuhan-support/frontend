@@ -71,6 +71,7 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
+    needs: build
     if: github.ref == 'refs/heads/master'
     steps:
       - name: K8S set context
@@ -94,7 +95,7 @@ jobs:
             namespace: 'default'
             manifests: |
               manifests/fe-deployment.yaml
-              manifests/fe-service.taml
+              manifests/fe-service.yaml
             images: |
               docker.pkg.github.com/wuhan-support/frontend/frontend:latest-${{ github.sha }}
             imagepullsecrets: |
