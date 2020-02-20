@@ -1,27 +1,35 @@
 import service from "../utils/service";
 export default {
-  accommodations () {
+  accommodations() {
     return service.get("/accommodations");
   },
-  peopleAccommodations () {
+  peopleAccommodations() {
     return service.get("/people/accommodations");
   },
-  psychologicalPlatform () {
+  psychologicalPlatform() {
     return service.get("/platforms/psychological");
   },
-  medicalPlatform () {
+  medicalPlatform() {
     return service.get("/platforms/medical");
   },
-  supplies () {
+  supplies() {
     return service.get("/hospital/supplies/v2");
   },
-  reportIncorrect ({ type, cause, content }) {
-    return service.post("/report", { type, cause, content });
+  reportIncorrect({
+    type,
+    cause,
+    content
+  }) {
+    return service.post("/report", {
+      type,
+      cause,
+      content
+    });
   },
-  submitSupplies (data) {
+  submitSupplies(data) {
     return service.post("/hospital/supplies/submissions", data);
   },
-  realTimeMsgs (data) {
+  realTimeMsgs(data) {
     return service.get("/wiki/stream", data);
   },
 };
