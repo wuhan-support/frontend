@@ -1,29 +1,46 @@
 <template>
   <div class="form-test">
-    <v-dialog v-model="missingDialog.enabled" persistent max-width="450px">
+    <v-dialog
+      v-model="missingDialog.enabled"
+      persistent
+      max-width="450px"
+    >
       <v-card>
-        <v-card-title class="warning mb-2">请检查填写内容</v-card-title>
+        <v-card-title class="warning mb-2">
+          请检查填写内容
+        </v-card-title>
         <v-card-text>
           <span class="subtitle-1">以下内容是必填的，但被留空了：</span>
           <ul class="my-2">
             <li
               v-for="c in missingDialog.content"
               :key="c.index"
-            >{{ parseInt(c.index) + 1 }}. {{ c.text }}</li>
+            >
+              {{ parseInt(c.index) + 1 }}. {{ c.text }}
+            </li>
           </ul>
           <span class="font-weight-bold mt-2">请在检查后重试</span>
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn text @click="missingDialog.enabled = false">关闭</v-btn>
+          <v-btn
+            text
+            @click="missingDialog.enabled = false"
+          >
+            关闭
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <h1 class="heading">需求提交</h1>
+    <h1 class="heading">
+      需求提交
+    </h1>
     <v-card>
       <v-card-text
         class="subtitle-1 red font-weight-bold white--text my-2"
-      >数据贡献志愿者请注意：我们感谢您提供数据以帮助其他志愿者；但为了资源分配效率与信息准确度考量，在您提交数据后我们还需进行二次审核、确保信息真实无误后，再公开发布您的信息；因此，您可能不会看到您的信息被立即公开。若您想加速此流程，还请在下方的【需求官方证明】一栏中，填写相关官方证明，我们核验此证明后即可立即发布数据。感谢您的理解与配合！</v-card-text>
+      >
+        数据贡献志愿者请注意：我们感谢您提供数据以帮助其他志愿者；但为了资源分配效率与信息准确度考量，在您提交数据后我们还需进行二次审核、确保信息真实无误后，再公开发布您的信息；因此，您可能不会看到您的信息被立即公开。若您想加速此流程，还请在下方的【需求官方证明】一栏中，填写相关官方证明，我们核验此证明后即可立即发布数据。感谢您的理解与配合！
+      </v-card-text>
     </v-card>
     <form-item
       v-for="(item, index) in formKeyObj"
@@ -33,94 +50,149 @@
       :required="item.required"
     >
       <template slot="value">
-        <template v-if="item.valueKey === 'name'">
-          <input v-model="item.value" :placeholder="item.placeholder" />
-        </template>
-        <template v-else-if="item.valueKey === 'age'">
-          <input v-model="item.value" :placeholder="item.placeholder" />
-        </template>
-        <template v-else-if="item.valueKey === 'type'">
-          <input type="radio" id="nCov" value="nCov" v-model="item.value" />
+        <template v-if="item.valueKey === 'type'">
+          <input
+            id="nCov"
+            v-model="item.value"
+            type="radio"
+            value="nCov"
+          >
           <label for="nCov">新冠肺炎</label>
-          <input type="radio" value="others" id="others" v-model="item.value" />
+          <input
+            id="others"
+            v-model="item.value"
+            type="radio"
+            value="others"
+          >
           <label for="others">其他人群</label>
-          <input type="radio" value="normal" id="normal" v-model="item.value" />
+          <input
+            id="normal"
+            v-model="item.value"
+            type="radio"
+            value="normal"
+          >
           <label for="normal">普通人群</label>
           <template v-if="['nCov','confirmedPatients','medicalObserve'].includes(item.value)">
-            <br />
+            <br>
             <input
               id="confirmedPatients"
               v-model="item.value"
               type="radio"
               name="type"
               value="confirmedPatients"
-            />
+            >
             <label for="confirmedPatients">确诊病人</label>
-            <input id="medicalObserve" v-model="item.value" type="radio" value="medicalObserve" />
+            <input
+              id="medicalObserve"
+              v-model="item.value"
+              type="radio"
+              value="medicalObserve"
+            >
             <label for="medicalObserve">医疗观察</label>
           </template>
           <template v-if="['others','lungDisease','respiratoryDisease'].includes(item.value)">
-            <br />
+            <br>
             <input
+              id="lungDisease"
+              v-model="item.value"
               type="radio"
               name="type"
-              id="lungDisease"
               value="lungDisease"
-              v-model="item.value"
-            />
+            >
             <label for="lungDisease">肺部疾病患者</label>
             <input
+              id="respiratoryDisease"
+              v-model="item.value"
               type="radio"
               name="type"
-              id="respiratoryDisease"
               value="respiratoryDisease"
-              v-model="item.value"
-            />
+            >
             <label for="respiratoryDisease">呼吸道疾病患者</label>
           </template>
 
-          <br />
+          <br>
         </template>
         <template v-else-if="item.valueKey === 'ifconsistent'">
-          <input type="radio" name="ifconsistent" id="yes" value="yes" v-model="item.value" />
-          <label for="yes">是</label>
-          <input type="radio" name="ifconsistent" id="no" value="no" v-model="item.value" />
-          <label for="no">否</label>
-          <input
-            type="text"
-            name="agentName"
-            id="agentName"
-            placeholder="请输入联系人"
-            :disabled="item.value === 'yes' ? true : false"
+          <!--          <input-->
+          <!--            id="yes"-->
+          <!--            v-model="item.value"-->
+          <!--            type="radio"-->
+          <!--            name="ifconsistent"-->
+          <!--            value="yes"-->
+          <!--          >-->
+          <!--          <label for="yes">是</label>-->
+          <!--          <input-->
+          <!--            id="no"-->
+          <!--            v-model="item.value"-->
+          <!--            type="radio"-->
+          <!--            name="ifconsistent"-->
+          <!--            value="no"-->
+          <!--          >-->
+          <!--          <label for="no">否</label>-->
+
+          <v-switch
+            v-model="item.value"
+            :label="`联系人与需求人相同: ${item.value ? '相同' : '不相同'}`"
           />
-          <br />
+          <v-text-field
+            v-if="!item.value"
+            v-model="item.phone"
+            dense
+            filled
+            placeholder="请输入联系人电话"
+          />
         </template>
         <template v-else-if="item.valueKey === 'region'">
-          <PlaceSelector v-model="item.value" class="mx-4" />
-        </template>
-        <template v-else-if="item.valueKey === 'address'">
-          <textarea v-model="item.value" :placeholder="item.placeholder" />
-        </template>
-        <template v-else-if="item.valueKey === 'contactPhone'">
-          <input v-model="item.value" :placeholder="item.placeholder" />
-        </template>
-        <template v-else-if="item.valueKey === 'materialDemand'">
-          <input v-model="item.value" :placeholder="item.placeholder" />
+          <PlaceSelector
+            v-model="item.value"
+            class="mx-4"
+          />
         </template>
         <template v-else-if="item.valueKey === 'notes'">
-          <textarea v-model="item.value" :placeholder="item.placeholder" />
+          <v-textarea
+            v-model="item.value"
+            filled
+            dense
+            height="100"
+            :placeholder="item.placeholder"
+          />
+        </template>
+        <template v-else>
+          <v-text-field
+            v-model="item.value"
+            hide-details
+            dense
+            filled
+            :placeholder="item.placeholder"
+          />
         </template>
       </template>
     </form-item>
     <!-- 确认提交 -->
-    <v-btn x-large block color="primary" :loading="loading" @click="submit">
-      <v-icon left>mdi-send</v-icon>确认提交
+    <v-btn
+      x-large
+      block
+      color="primary"
+      :loading="loading"
+      @click="submit"
+    >
+      <v-icon left>
+        mdi-send
+      </v-icon>确认提交
     </v-btn>
-    <v-dialog v-model="submitted" persistent no-click-animation overlay-opacity="0.9">
+    <v-dialog
+      v-model="submitted"
+      persistent
+      no-click-animation
+      overlay-opacity="0.9"
+    >
       <!-- 已成功提交物资需求 -->
       <v-card class="pa-5 py-10">
         <v-row justify="center">
-          <v-col cols="12" class="text-center">
+          <v-col
+            cols="12"
+            class="text-center"
+          >
             <v-img
               :src="require('@/assets/logo/red.svg')"
               aspect-ratio="4.4"
@@ -128,11 +200,28 @@
               contain
               class="mx-auto pt-1 pb-4"
             />
-            <v-icon x-large class="pt-6 pb-2" color="green">mdi-check-circle</v-icon>
-            <h1 class="overline">Successfully submitted</h1>
-            <h1 class="title mb-6">已成功提交物资需求</h1>
-            <p class="subtitle-1 mb-4">我们将在审核、确保准确性后以最快速度上线信息。感谢提供！</p>
-            <v-btn outlined :to="{name: 'volunteerIndex'}">返回志愿者首页</v-btn>
+            <v-icon
+              x-large
+              class="pt-6 pb-2"
+              color="green"
+            >
+              mdi-check-circle
+            </v-icon>
+            <h1 class="overline">
+              Successfully submitted
+            </h1>
+            <h1 class="title mb-6">
+              已成功提交物资需求
+            </h1>
+            <p class="subtitle-1 mb-4">
+              我们将在审核、确保准确性后以最快速度上线信息。感谢提供！
+            </p>
+            <v-btn
+              outlined
+              :to="{name: 'volunteerIndex'}"
+            >
+              返回志愿者首页
+            </v-btn>
           </v-col>
         </v-row>
       </v-card>
@@ -141,10 +230,23 @@
     <v-dialog v-model="error">
       <v-card class="pa-2 py-5">
         <v-row justify="center">
-          <v-col cols="12" class="text-center">
-            <v-icon x-large class="pt-6 pb-2" color="error">mdi-close-circle</v-icon>
-            <h1 class="overline">Network Error</h1>
-            <h1 class="title mb-6">提交不成功</h1>
+          <v-col
+            cols="12"
+            class="text-center"
+          >
+            <v-icon
+              x-large
+              class="pt-6 pb-2"
+              color="error"
+            >
+              mdi-close-circle
+            </v-icon>
+            <h1 class="overline">
+              Network Error
+            </h1>
+            <h1 class="title mb-6">
+              提交不成功
+            </h1>
             <p class="subtitle-1 mb-4">
               请检查网络连接后
               <v-btn
@@ -152,7 +254,9 @@
                 outlined
                 color="primary"
                 @click="() => { error = false; submit() }"
-              >尝试重新提交</v-btn>
+              >
+                尝试重新提交
+              </v-btn>
             </p>
           </v-col>
         </v-row>
@@ -291,11 +395,11 @@ export default {
         // 4联系人是否与需求人一样↓
         {
           valueKey: "ifconsistent",
-          label: "联系人是否与需求人一样",
+          label: "联系人与需求人相同",
           type: "String",
           placeholder: "请输入{{label}}",
           required: true,
-          value: null,
+          value: true,
           phone: null
         },
         // 5联系方式↓
@@ -303,10 +407,9 @@ export default {
           valueKey: "contactPhone",
           label: "联系方式",
           type: "Number",
-          placeholder: "(选填) 请输入{{label}}",
+          placeholder: "请输入{{label}}",
           required: true,
           value: null,
-          section: []
         },
         // 6所在地区↓
         {
@@ -400,6 +503,14 @@ export default {
         }
         marshalled[form.valueKey] = form.value;
       }
+
+      const isConsistant = this.formKeyObj.find(el => el.valueKey === 'ifconsistent');
+      if (!isConsistant.value) {
+        marshalled["contact"] = isConsistant.phone
+      } else {
+        marshalled["contact"] = this.formKeyObj.find(el => el.valueKey === 'contactPhone').value
+      }
+
       return { marshalled, missings };
     },
     notifyMissings(missings) {

@@ -12,7 +12,10 @@
     <template v-else>
       <div class="label">
         {{ label }}
-        <span v-if="required" class="red--text font-weight-black">*</span>
+        <span
+          v-if="required"
+          class="red--text font-weight-black"
+        >*</span>
       </div>
       <div class="value">
         <slot name="value" />

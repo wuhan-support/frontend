@@ -1,11 +1,27 @@
 <template>
-  <v-row align="center" justify="center">
+  <v-row
+    align="center"
+    justify="center"
+  >
     <!-- 感谢支持，已提交纠错信息 -->
-    <v-snackbar :value="snackbar" color="success" bottom :timeout="4000">
-      <v-icon left color="white">mdi-check</v-icon>感谢支持，已提交纠错信息
+    <v-snackbar
+      :value="snackbar"
+      color="success"
+      bottom
+      :timeout="4000"
+    >
+      <v-icon
+        left
+        color="white"
+      >
+        mdi-check
+      </v-icon>感谢支持，已提交纠错信息
       <v-spacer />
     </v-snackbar>
-    <v-dialog v-model="dialog.enabled" max-width="450px">
+    <v-dialog
+      v-model="dialog.enabled"
+      max-width="450px"
+    >
       <v-card>
         <v-card-title>联系方式</v-card-title>
         <v-card-text>
@@ -22,7 +38,11 @@
               </v-list-item-content>
             </v-list-item>
 
-            <v-list-item v-for="[i, contact] in contacts.entries()" :key="i" v-bind="contact.link">
+            <v-list-item
+              v-for="[i, contact] in contacts.entries()"
+              :key="i"
+              v-bind="contact.link"
+            >
               <v-list-item-avatar>
                 <v-icon>mdi-contact-phone</v-icon>
               </v-list-item-avatar>
@@ -39,14 +59,18 @@
             outlined
             small
             @click="dialog.forced = !dialog.forced"
-          >{{ dialog.forced ? "收起" : "排版有误？" }}</v-btn>
+          >
+            {{ dialog.forced ? "收起" : "排版有误？" }}
+          </v-btn>
           <v-expand-transition>
             <div v-if="dialog.forced">
               <v-divider class="my-3" />
-              <h2 class="subtitle-1">以下是未经排版的数据</h2>
+              <h2 class="subtitle-1">
+                以下是未经排版的数据
+              </h2>
               <div>
                 联系人：{{ dialog.contact.name }}
-                <br />
+                <br>
                 电话：{{ dialog.contact.content }}
               </div>
             </div>
@@ -54,11 +78,20 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer />
-          <v-btn text @click="closeDialog">关闭</v-btn>
+          <v-btn
+            text
+            @click="closeDialog"
+          >
+            关闭
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <v-dialog v-model="report.enabled" persistent max-width="450px">
+    <v-dialog
+      v-model="report.enabled"
+      persistent
+      max-width="450px"
+    >
       <v-card>
         <v-card-title>提交纠错</v-card-title>
         <v-card-text>
@@ -71,11 +104,16 @@
             hide-details
             class="mb-2"
           />收到纠错请求后我们会再次审核此条信息以保证准确性。
-          <br />
+          <br>
           <span class="red--text">注意：我们的人力资源有限，烦请不要滥用此功能，十分感谢！</span>
         </v-card-text>
         <v-card-actions>
-          <v-btn text @click="report.enabled = false">取消</v-btn>
+          <v-btn
+            text
+            @click="report.enabled = false"
+          >
+            取消
+          </v-btn>
 
           <v-spacer />
 
@@ -85,7 +123,9 @@
             :loading="$store.getters.ajaxLoading"
             :disabled="report.cause === ''"
             @click="doReport"
-          >确认</v-btn>
+          >
+            确认
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -101,15 +141,25 @@
           class="white--text pb-4 elevation-2"
           style="background: #a14042; line-height: 1.1;"
         >
-          <div class="overline d-block" style="width: 100%">医疗机构物资需求 — 需求列表</div>
-          <br />
+          <div
+            class="overline d-block"
+            style="width: 100%"
+          >
+            医疗机构物资需求 — 需求列表
+          </div>
+          <br>
           <div
             class="headline font-weight-bold d-block"
             style="width: 100%"
-          >{{ supplies.content.name }}</div>
+          >
+            {{ supplies.content.name }}
+          </div>
         </v-card-title>
         <v-card-text>
-          <v-row align="start" justify="start">
+          <v-row
+            align="start"
+            justify="start"
+          >
             <v-col
               v-for="[index, supply] in supplies.content.supplies.entries()"
               :key="supply.n"
@@ -126,11 +176,15 @@
                     <small>#{{ index + 1 }}</small>
                     <span class="font-weight-bold">{{ supply.n }}</span>
                   </div>
-                  <div v-if="supply.abbr">又名：{{ supply.abbr }}</div>
+                  <div v-if="supply.abbr">
+                    又名：{{ supply.abbr }}
+                  </div>
                   <div
                     class="font-weight-bold red--text"
                     :class="{'display-1': typeof supply.a === 'number', 'headline': typeof supply.a !== 'number'}"
-                  >{{ typeof supply.a === "number" ? `&times; ${supply.a.toLocaleString()} ${supply.u ? supply.u : ''}` : supply.a }}</div>
+                  >
+                    {{ typeof supply.a === "number" ? `&times; ${supply.a.toLocaleString()} ${supply.u ? supply.u : ''}` : supply.a }}
+                  </div>
                   <div v-if="supply.r">
                     物资要求：
                     <span class="font-weight-bold">{{ supply.r }}</span>
@@ -142,7 +196,13 @@
         </v-card-text>
 
         <v-card-actions class="elevation-2">
-          <v-btn text color="#a20002" block large @click="supplies.enabled = false">
+          <v-btn
+            text
+            color="#a20002"
+            block
+            large
+            @click="supplies.enabled = false"
+          >
             <v-divider style="opacity: 0.3" />
             <span class="mx-4">
               <v-icon left>mdi-close</v-icon>收起详细需求
@@ -153,8 +213,13 @@
       </v-card>
     </v-dialog>
 
-    <v-col cols="12" class="mx-3">
-      <h1 class="heading">医疗机构物资需求</h1>
+    <v-col
+      cols="12"
+      class="mx-3"
+    >
+      <h1 class="heading">
+        医疗机构物资需求
+      </h1>
       <v-card class="elevation-0">
         <v-card-text class="subtitle-1 red font-weight-bold white--text my-2">
           本列表中的所有医院均存在
@@ -164,7 +229,9 @@
       <v-card class="elevation-0">
         <v-card-text
           class="subtitle-2 green white--text my-2"
-        >为保证需求真实性，本列表中大部分数据均通过【真人电话/微信视频/带相片工作证照片/医院官方电话】的方式核验联系人信息；同时已通过标签方式标明需求核验状况，便于各位捐赠者查验</v-card-text>
+        >
+          为保证需求真实性，本列表中大部分数据均通过【真人电话/微信视频/带相片工作证照片/医院官方电话】的方式核验联系人信息；同时已通过标签方式标明需求核验状况，便于各位捐赠者查验
+        </v-card-text>
       </v-card>
 
       <v-card class="elevation-0">
@@ -174,7 +241,9 @@
             small
             color="grey lighten-3"
             style="margin-top: -4px;"
-          >mdi-file-document-box-remove</v-icon>纠错按钮发起纠错请求，我们将再次与医院进行二次审核，以保证消息时效性。
+          >
+            mdi-file-document-box-remove
+          </v-icon>纠错按钮发起纠错请求，我们将再次与医院进行二次审核，以保证消息时效性。
         </v-card-text>
       </v-card>
 
@@ -213,7 +282,10 @@
                 lg="4"
                 xl="3"
               >
-                <v-card class="viewCard" :class="{'redBorder pb-0': o.meta.urge >= 2}">
+                <v-card
+                  class="viewCard"
+                  :class="{'redBorder pb-0': o.meta.urge >= 2}"
+                >
                   <v-card-title
                     class="mb-2"
                     :class="{'darken-1 white--text': o.meta.urge <= 1, 'red red-breathe': o.meta.urge === 0, 'deep-orange warning-breathe': o.meta.urge === 1, 'grey lighten-3': o.meta.urge >= 2}"
@@ -229,7 +301,7 @@
                       <template v-if="o.supplies.length">
                         <span class="number">{{ o.supplies.length }}种</span>
                         种类
-                        <br />
+                        <br>
                       </template>
                       <template v-if="o.suppliesCount">
                         <span
@@ -249,15 +321,31 @@
                         class="ma-1 font-weight-bold white--text"
                         small
                         :color="tag.c"
-                      >{{ tag.t }}</v-chip>
+                      >
+                        {{ tag.t }}
+                      </v-chip>
                     </template>
 
-                    <div class="subtitle-1 mt-3">{{ o.province }} {{ o.city }}</div>
+                    <div class="subtitle-1 mt-3">
+                      {{ o.province }} {{ o.city }}
+                    </div>
 
-                    <div class="subtitle-2">地址：{{ o.address ? o.address : "（暂无详细地址，可点击下方搜索）" }}</div>
+                    <div class="subtitle-2">
+                      地址：{{ o.address ? o.address : "（暂无详细地址，可点击下方搜索）" }}
+                    </div>
 
-                    <div v-if="o.alert" class="caption red--text">特别备注：{{ o.alert }}</div>
-                    <div v-if="o.notes" class="caption deep-orange--text">备注：{{ o.notes }}</div>
+                    <div
+                      v-if="o.alert"
+                      class="caption red--text"
+                    >
+                      特别备注：{{ o.alert }}
+                    </div>
+                    <div
+                      v-if="o.notes"
+                      class="caption deep-orange--text"
+                    >
+                      备注：{{ o.notes }}
+                    </div>
                   </v-card-text>
                   <v-divider />
                   <v-card-actions>
@@ -267,14 +355,35 @@
                         :href="`https://ditu.amap.com/search?query=${encodeURIComponent(o.name)}`"
                         target="_blank"
                       >
-                        <v-icon class="iconRed" left>wsicon wsicon-local</v-icon>
+                        <v-icon
+                          class="iconRed"
+                          left
+                        >
+                          wsicon wsicon-local
+                        </v-icon>
                         {{ o.address ? "查看" : "搜索" }}地图
                       </v-btn>
-                      <v-btn text @click="openDialog(o)">
-                        <v-icon class="iconRed" left>wsicon wsicon-contact</v-icon>联系方式
+                      <v-btn
+                        text
+                        @click="openDialog(o)"
+                      >
+                        <v-icon
+                          class="iconRed"
+                          left
+                        >
+                          wsicon wsicon-contact
+                        </v-icon>联系方式
                       </v-btn>
-                      <v-btn text @click="openReport(o)">
-                        <v-icon class="iconRed" left>wsicon wsicon-info</v-icon>信息纠错
+                      <v-btn
+                        text
+                        @click="openReport(o)"
+                      >
+                        <v-icon
+                          class="iconRed"
+                          left
+                        >
+                          wsicon wsicon-info
+                        </v-icon>信息纠错
                       </v-btn>
                     </v-col>
                   </v-card-actions>
@@ -304,7 +413,7 @@
       </v-skeleton-loader>
       <div class="text-right grey--text overline mt-4">
         此页面数据合作方
-        <br />
+        <br>
         <a
           href="https://mp.weixin.qq.com/s/U_IAuov_AR13S87cJYjlSg"
           target="_blank"
