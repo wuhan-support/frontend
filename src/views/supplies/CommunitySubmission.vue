@@ -157,6 +157,148 @@
             :placeholder="item.placeholder"
           />
         </template>
+        <template v-else-if="item.valueKey === 'medicalSupplies'">
+          <v-row class="mx-2">
+            <v-col
+              v-for="(item0, index0) in item.value"
+              :key="index0"
+              cols="12"
+              sm="6"
+              md="6"
+              lg="4"
+              xl="3"
+            >
+              <div
+                class="subItem"
+              >
+                医疗需求物资 <span class="font-weight-bold">{{ `#${index0 + 1}` }} {{ item0["name"] ? `${item0["name"]}` : `(未命名)` }}</span>
+                <form-item
+                  v-for="(item1, index1) in subFormKeyObj"
+                  :key="index0 + ',' + index1"
+                  :label="item1.label"
+                  dense
+                  full-width
+                  :required="item1.required"
+                >
+                  <template
+                    slot="value"
+                  >
+                    <input
+                      v-model="item0[item1.valueKey]"
+                      :placeholder="item1.placeholder + (item1.required ? ' *' : '')"
+                      :class="{'red lighten-4 requiredInput': item1.required && !item0[item1.valueKey]}"
+                    >
+                  </template>
+                </form-item>
+                <v-btn
+                  color="error"
+                  class="mt-2"
+                  depressed
+                  block
+                  @click="item.value.splice(index0, 1)"
+                >
+                  <v-icon left>
+                    mdi-minus-circle
+                  </v-icon>
+                  移除此物品
+                </v-btn>
+              </div>
+            </v-col>
+            <v-col
+              cols="12"
+              sm="6"
+              md="6"
+              lg="4"
+              xl="3"
+              class="align-center"
+            >
+              <v-btn
+                block
+                x-large
+                color="green white--text"
+                @click="$set(item.value, item.value.length, {...nullSupply})"
+              >
+                <v-icon left>
+                  mdi-plus-circle
+                </v-icon>
+                <span class="font-weight-bold">
+                  添加医疗物品
+                </span>
+              </v-btn>
+            </v-col>
+          </v-row>
+        </template>
+        <template v-else-if="item.valueKey === 'liveSupplies'">
+          <v-row class="mx-2">
+            <v-col
+              v-for="(item0, index0) in item.value"
+              :key="index0"
+              cols="12"
+              sm="6"
+              md="6"
+              lg="4"
+              xl="3"
+            >
+              <div
+                class="subItem"
+              >
+                生活需求物资 <span class="font-weight-bold">{{ `#${index0 + 1}` }} {{ item0["name"] ? `${item0["name"]}` : `(未命名)` }}</span>
+                <form-item
+                  v-for="(item1, index1) in subFormKeyObj"
+                  :key="index0 + ',' + index1"
+                  :label="item1.label"
+                  dense
+                  full-width
+                  :required="item1.required"
+                >
+                  <template
+                    slot="value"
+                  >
+                    <input
+                      v-model="item0[item1.valueKey]"
+                      :placeholder="item1.placeholder + (item1.required ? ' *' : '')"
+                      :class="{'red lighten-4 requiredInput': item1.required && !item0[item1.valueKey]}"
+                    >
+                  </template>
+                </form-item>
+                <v-btn
+                  color="error"
+                  class="mt-2"
+                  depressed
+                  block
+                  @click="item.value.splice(index0, 1)"
+                >
+                  <v-icon left>
+                    mdi-minus-circle
+                  </v-icon>
+                  移除此物品
+                </v-btn>
+              </div>
+            </v-col>
+            <v-col
+              cols="12"
+              sm="6"
+              md="6"
+              lg="4"
+              xl="3"
+              class="align-center"
+            >
+              <v-btn
+                block
+                x-large
+                color="green white--text"
+                @click="$set(item.value, item.value.length, {...nullSupply})"
+              >
+                <v-icon left>
+                  mdi-plus-circle
+                </v-icon>
+                <span class="font-weight-bold">
+                  添加生活物品
+                </span>
+              </v-btn>
+            </v-col>
+          </v-row>
+        </template>
         <template v-else>
           <v-text-field
             v-model="item.value"
@@ -268,24 +410,16 @@
 <style lang="scss" scoped>
 .form-test {
   .form-item {
-    &.name,
-    &.address,
-    &.age,
-    &.contactPhone,
-    &.materialDemand,
-    &.address,
-    &.proof {
-      input {
-        font-size: 14px;
-        outline: none;
-        width: 100%;
-        background: #f8f8f8;
-        border-radius: 4px;
-        padding: 0 10px;
-      }
+    input {
+      font-size: 14px;
+      outline: none;
+      width: 100%;
+      background: #f8f8f8;
+      border-radius: 4px;
+      padding: 0 10px;
     }
 
-    &.supplies {
+    &.medicalSupplies, &.liveSupplies {
       .subItem {
         padding: 16px;
         background: #d7d7d7;
@@ -309,7 +443,7 @@
           background-color: #fff !important;
         }
         .requiredInput::after {
-          content: "必填";
+          content: "必填"
         }
       }
       .subItemAdd {
@@ -363,6 +497,45 @@ export default {
   },
   data() {
     return {
+      subFormKeyObj: [{
+        valueKey: 'name',
+        label: '物资名称',
+        type: 'String',
+        placeholder: '请输入{{label}}',
+        required: true,
+        value: null
+      }, {
+        valueKey: 'unit',
+        label: '数量单位',
+        type: 'Number',
+        placeholder: '如：个、20包/箱、500ml/瓶',
+        required: true,
+        value: null
+      }, {
+        valueKey: 'need',
+        label: '需求数量',
+        type: 'Number',
+        placeholder: '请输入{{label}}',
+        required: true,
+        value: null
+      }, {
+        valueKey: 'daily',
+        label: '每日消耗',
+        type: 'Number',
+        placeholder: '请输入{{label}}',
+        required: false,
+        value: null
+      }, {
+        valueKey: 'have',
+        label: '库存数量',
+        type: 'Number',
+        placeholder: '请输入{{label}}',
+        required: true,
+        value: null
+      }].map(item => {
+        item.placeholder = (item.placeholder || '').replace('{{label}}', item.label);
+        return item;
+      }),
       // 表单分类↓
       formKeyObj: [
         // 1需求人姓名↓
@@ -384,19 +557,19 @@ export default {
           value: null
         },
         // 3需求人求助类别↓
-        {
-          valueKey: "type",
-          label: "需求人求助类别",
-          type: "String",
-          placeholder: "请输入{{label}}",
-          required: true,
-          value: null
-        },
+        // {
+        //   valueKey: "type",
+        //   label: "需求人求助类别",
+        //   type: "String",
+        //   placeholder: "请输入{{label}}",
+        //   required: true,
+        //   value: null
+        // },
         // 4联系人是否与需求人一样↓
         {
           valueKey: "ifconsistent",
           label: "联系人与需求人相同",
-          type: "String",
+          type: "Boolean",
           placeholder: "请输入{{label}}",
           required: true,
           value: true,
@@ -433,9 +606,18 @@ export default {
         },
         // 8物资需求列表↓
         {
-          valueKey: "materialDemand",
-          label: "物资需求列表",
-          type: "String",
+          valueKey: "medicalSupplies",
+          label: "医疗需求列表",
+          type: "Array-Object",
+          placeholder: "请输入{{label}}",
+          required: true,
+          value: [],
+          section: []
+        },
+        {
+          valueKey: "liveSupplies",
+          label: "生活需求列表",
+          type: "Array-Object",
           placeholder: "请输入{{label}}",
           required: true,
           value: [],
@@ -484,7 +666,7 @@ export default {
       const missings = [];
       Console.log(this.formKeyObj);
       for (const [index, form] of Object.entries(this.formKeyObj)) {
-        if (form.required && (!form.value || form.value === "")) {
+        if (form.required && form.type !== "Boolean" && (!form.value || form.value === "")) {
           missings.push({ index, text: form.label });
         } else if (
           form.valueKey === "region" &&
@@ -511,6 +693,12 @@ export default {
         marshalled["contact"] = this.formKeyObj.find(el => el.valueKey === 'contactPhone').value
       }
 
+      try {
+        marshalled["age"] = parseInt(marshalled["age"])
+      } catch (e) {
+        alert("年龄必须是数字")
+      }
+
       return { marshalled, missings };
     },
     notifyMissings(missings) {
@@ -522,7 +710,7 @@ export default {
       if (missings.length) return this.notifyMissings(missings);
       this.loading = true;
       api
-        .submitSupplies(marshalled)
+        .submitCommunitySupplies(marshalled)
         .then(() => {
           this.submitted = true;
         })

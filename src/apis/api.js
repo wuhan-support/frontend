@@ -15,6 +15,9 @@ export default {
   supplies() {
     return service.get("/hospital/supplies/v2");
   },
+  communitySupplies() {
+    return service.get("/community/supplies");
+  },
   reportIncorrect({
     type,
     cause,
@@ -28,6 +31,9 @@ export default {
   },
   submitSupplies(data) {
     return service.post("/hospital/supplies/submissions", data);
+  },
+  submitCommunitySupplies(data) {
+    return service.post("/community/supplies/submissions", data);
   },
   realTimeMsgs(data) {
     return service.get("/wiki/stream", data);
