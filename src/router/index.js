@@ -51,6 +51,28 @@ const routes = [{
       title: "市民信息主页",
     }
   }, {
+    path: 'supplies',
+    name: 'CommunitySupplies',
+    component: Community,
+    meta: {
+      icon: "mdi-file-document-box-search",
+      icons: ["mdi-account", "mdi-file-document-box-search"],
+      title: "社区物资需求列表",
+      subtitle: "为民众设置的社区物资需求列表，便于各民众发布自己的个人物资需求以便进行针对性帮助",
+      hide: false
+    }
+  }, {
+    path: 'supplies/submit',
+    name: 'CommunitySuppliesSubmission',
+    component: CommunitySubmission,
+    meta: {
+      icon: "mdi-file-document-box-plus",
+      icons: ["mdi-account", "mdi-file-document-box-plus"],
+      title: "提交社区物资需求",
+      subtitle: "提交新的社区物资需求。提交后将发布于社区物资需求列表中",
+      hide: false
+    }
+  }, {
     path: 'platforms/medical',
     name: 'peopleMedicalPlatform',
     component: MedicalPlatforms,
@@ -76,28 +98,6 @@ const routes = [{
       icon: "wsicon wsicon-hotel",
       title: "武汉在外人员住宿",
       subtitle: "提供武汉在外人员的住宿信息，保障这些群体的基本生活",
-      hide: false
-    }
-  }, {
-    path: 'supplies',
-    name: 'CommunitySupplies',
-    component: Community,
-    meta: {
-      icon: "mdi-file-document-box-search",
-      icons: ["mdi-account", "mdi-file-document-box-search"],
-      title: "社区物资需求列表",
-      subtitle: "为民众设置的社区物资需求列表，便于各民众发布自己的个人物资需求以便进行针对性帮助",
-      hide: false
-    }
-  }, {
-    path: 'supplies/submit',
-    name: 'CommunitySuppliesSubmission',
-    component: CommunitySubmission,
-    meta: {
-      icon: "mdi-file-document-box-plus",
-      icons: ["mdi-account", "mdi-file-document-box-plus"],
-      title: "提交社区物资需求",
-      subtitle: "提交新的社区物资需求。提交后将发布于社区物资需求列表中",
       hide: false
     }
   }, {
