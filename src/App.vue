@@ -137,6 +137,50 @@
       class="mb-8"
     >
       <v-container>
+        <v-snackbar
+          v-model="$store.state.ajax.error"
+          color="error darken-1"
+          bottom
+          :timeout="20000"
+        >
+          <v-row
+            align="center"
+            class="mx-0"
+          >
+            <v-icon class="mr-4 white--text">
+              mdi-alert-circle
+            </v-icon>
+
+            数据加载失败
+
+            <v-spacer />
+
+            <v-btn
+              class="ml-sm-4"
+              small
+              depressed
+              ripple
+              @click="refresh"
+            >
+              <v-icon
+                small
+                class="mr-1"
+              >
+                mdi-refresh
+              </v-icon>
+              刷新
+            </v-btn>
+
+            <v-btn
+              class="ml-4"
+              text
+              small
+              @click="$store.state.ajax.error = false"
+            >
+              关闭
+            </v-btn>
+          </v-row>
+        </v-snackbar>
         <transition
           name="slide-fade"
           mode="out-in"
@@ -298,6 +342,9 @@ export default {
       } else {
         document.body.style.backgroundColor = "#fafafa";
       }
+    },
+    refresh () {
+      document.location.reload()
     }
   }
 };
