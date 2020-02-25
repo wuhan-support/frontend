@@ -4,7 +4,7 @@
       v-model="regions"
       type="select"
       @values="handleRegionChange"
-    /> -->
+    />-->
     <v-row class="body-2">
       <v-col
         v-for="(selector, index) in selectorList"
@@ -19,7 +19,7 @@
         <v-select
           v-model="regions[selector.type]"
           hide-details
-          class="body-2"
+          class="subtitle-1"
           :items="selector.data"
           :no-data-text="label"
           :label="label"
@@ -47,90 +47,96 @@
 
 <script>
 export default {
-  name: 'PlaceSelector',
+  name: "PlaceSelector",
   props: {
     // 自定义区域数据
     customDataset: {
       type: Object,
-      default: () => require('../assets/pca.json')
+      default: () => require("../assets/pca.json")
     }
   },
   data() {
     return {
-      label: '请选择',
+      label: "请选择",
       data: [],
+      // 地区↓
       regions: {
-        province: null,
-        city: null,
-        area: null
+        province: null, // 省份
+        city: null, // 城市
+        area: null // 区域
       }
-    }
+    };
   },
   computed: {
     // 省数据
     provinceData() {
-      return [null, ...Object.keys(this.customDataset || {})]
+      return [null, ...Object.keys(this.customDataset || {})];
     },
     // 市数据
     cityData() {
-      return [null, ...Object.keys(this.customDataset[this.regions.province] || {})]
+      return [
+        null,
+        ...Object.keys(this.customDataset[this.regions.province] || {})
+      ];
     },
     // 区/县数据
     areaData() {
-      return [null, ...((this.customDataset[this.regions.province] || {})[this.regions.city] || [])]
+      let city = this.regions.city
+        ? this.customDataset[this.regions.province][this.regions.city]
+        : [];
+      return [null, ...city];
     },
     selectorList() {
       return [
         {
-          type: 'province',
+          type: "province",
           data: this.provinceData
         },
         {
-          type: 'city',
+          type: "city",
           data: this.cityData
         },
         {
-          type: 'area',
+          type: "area",
           data: this.areaData
         }
-      ]
+      ];
     }
   },
   methods: {
     // 重新选择省/市时 清空下级数据
-    clearRegionsData (type) {
+    clearRegionsData(type) {
       switch (type) {
-        case 'province':
-          this.regions.city = null
-          this.regions.area = null
+        case "province":
+          this.regions.city = null;
+          this.regions.area = null;
           break;
-        case 'city':
-          this.regions.area = null
+        case "city":
+          this.regions.area = null;
           break;
       }
     },
     // 监听地址选择
-    handleRegionChange (type) {
-      this.clearRegionsData(type)
-      this.data = Object.values(this.regions).filter(_ => !!_)
+    handleRegionChange(type) {
+      this.clearRegionsData(type);
+      this.data = Object.values(this.regions).filter(_ => !!_);
       const events = [
         {
-          name: 'input',
+          name: "input",
           data: this.data
         },
         {
-          name: 'change',
+          name: "change",
           data: this.regions
         }
-      ]
+      ];
       events.forEach(e => {
-        this._events[e.name] && this.$emit(e.name, e.data)
-      })
+        this._events[e.name] && this.$emit(e.name, e.data);
+      });
     }
   }
-}
+};
 </script>
-
 <style lang="scss" scoped>
 .place-selector {
   flex: 1;

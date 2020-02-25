@@ -5,7 +5,9 @@
       align="center"
       class="mx-0"
     >
-      <div class="subtitle-2">
+      <div
+        class="subtitle-2"
+      >
         按地区过滤：
       </div>
       <PlaceSelector
@@ -60,12 +62,18 @@
     </v-expand-transition>
     <v-text-field
       v-model="search"
+      label="搜索"
       :placeholder="searchText"
       dense
       outlined
       hide-details
       clearable
     >
+      <template v-slot:prepend-inner>
+        <v-icon left>
+          mdi-magnify
+        </v-icon>
+      </template>
       <template
         v-if="enableGeolocation"
         v-slot:append-outer
@@ -266,7 +274,13 @@
           return a.distance - b.distance
         });
 
-        return sorted
+        // 增加索引号
+        const indexed = sorted.map((el, index) => {
+          el["_index"] = index;
+          return el
+        });
+
+        return indexed
       },
       // 返回当前地理位置信息
       location () {

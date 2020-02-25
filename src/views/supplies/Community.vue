@@ -38,17 +38,29 @@
               </v-list-item-content>
             </v-list-item>
 
-            <v-list-item
-              v-for="[i, contact] in contacts.entries()"
-              :key="i"
-              v-bind="contact.link"
-            >
+            <!--            <v-list-item-->
+            <!--              v-if="dialog.contact.content.agentcontactphone"-->
+            <!--              :href="`tel://${dialog.contact.content.agentcontactphone}`"-->
+            <!--            >-->
+            <!--              <v-list-item-avatar>-->
+            <!--                <v-icon>mdi-contact-phone</v-icon>-->
+            <!--              </v-list-item-avatar>-->
+            <!--              <v-list-item-content>-->
+            <!--                <v-list-item-title>(联系人)</v-list-item-title>-->
+            <!--                <v-list-item-subtitle>{{ dialog.contact.content.agentcontactphone || "" }}</v-list-item-subtitle>-->
+            <!--              </v-list-item-content>-->
+            <!--              <v-list-item-action>-->
+            <!--                <v-icon>mdi-phone</v-icon>-->
+            <!--              </v-list-item-action>-->
+            <!--            </v-list-item>-->
+
+            <v-list-item :href="`tel://${dialog.contact.content.contactphone}`">
               <v-list-item-avatar>
                 <v-icon>mdi-contact-phone</v-icon>
               </v-list-item-avatar>
               <v-list-item-content>
-                <v-list-item-title>{{ contact.name }}</v-list-item-title>
-                <v-list-item-subtitle>{{ contact.content }}</v-list-item-subtitle>
+                <v-list-item-title>{{ dialog.contact.content.name || "" }}</v-list-item-title>
+                <v-list-item-subtitle>{{ dialog.contact.content.contactphone || "" }}</v-list-item-subtitle>
               </v-list-item-content>
               <v-list-item-action>
                 <v-icon>mdi-phone</v-icon>
@@ -69,9 +81,11 @@
                 以下是未经排版的数据
               </h2>
               <div>
-                联系人：{{ dialog.contact.name }}
-                <br>
-                电话：{{ dialog.contact.content }}
+                提交人：{{ dialog.contact.content.name || "" }}<br>
+                电话：{{ dialog.contact.content.contactphone || "" }}
+                <!--                <br>-->
+                <!--                联系人：{{ dialog.contact.content.agentname || "" }}<br>-->
+                <!--                联系人电话：{{ dialog.contact.content.agentcontactphone || "" }}-->
               </div>
             </div>
           </v-expand-transition>
@@ -145,23 +159,33 @@
             class="overline d-block"
             style="width: 100%"
           >
-            医疗机构物资需求 — 需求列表
+            社区物资需求 — 需求详细信息
           </div>
           <br>
           <div
             class="headline font-weight-bold d-block"
             style="width: 100%"
           >
-            {{ supplies.content.name }}
+            {{ supplies.content.address }}
           </div>
         </v-card-title>
         <v-card-text>
           <v-row
+            v-if="supplies.content.medicalsupplies"
             align="start"
             justify="start"
+            class="pt-3"
           >
             <v-col
-              v-for="[index, supply] in supplies.content.supplies.entries()"
+              cols="12"
+              class="pa-0"
+            >
+              <v-subheader>
+                医疗物资需求
+              </v-subheader>
+            </v-col>
+            <v-col
+              v-for="[index, supply] in supplies.content.medicalsupplies.entries()"
               :key="supply.n"
               cols="12"
               sm="6"
@@ -173,21 +197,71 @@
               <v-card style="border: 2px solid #cf5355; height: 100%">
                 <v-card-text>
                   <div class="title">
-                    <small>#{{ index + 1 }}</small>
-                    <span class="font-weight-bold">{{ supply.n }}</span>
-                  </div>
-                  <div v-if="supply.abbr">
-                    又名：{{ supply.abbr }}
+                    <small>#{{ index + 1 }}</small>&nbsp;
+                    <span class="font-weight-bold">{{ supply.name }}</span>
                   </div>
                   <div
-                    class="font-weight-bold red--text"
-                    :class="{'display-1': typeof supply.a === 'number', 'headline': typeof supply.a !== 'number'}"
+                    v-if="supply.need"
+                    class="font-weight-bold red--text display-1"
                   >
-                    {{ typeof supply.a === "number" ? `&times; ${supply.a.toLocaleString()} ${supply.u ? supply.u : ''}` : supply.a }}
+                    <small>需要</small> {{ `&times; ${supply.need} ${supply.unit ? supply.unit : ''}` }}
                   </div>
-                  <div v-if="supply.r">
-                    物资要求：
-                    <span class="font-weight-bold">{{ supply.r }}</span>
+                  <div
+                    v-if="supply.daily"
+                    class="font-weight-bold red--text title"
+                  >
+                    <small>每日消耗</small> {{ `&times; ${supply.daily} ${supply.unit ? supply.unit : ''}` }}
+                  </div>
+                  <div
+                    v-if="supply.have"
+                    class="font-weight-bold red--text title"
+                  >
+                    <small>现剩余</small> {{ `&times; ${supply.have} ${supply.unit ? supply.unit : ''}` }}
+                  </div>
+                </v-card-text>
+              </v-card>
+            </v-col>
+          </v-row>
+          <v-row
+            v-if="supplies.content.livesupplies"
+            align="start"
+            justify="start"
+          >
+            <v-col
+              cols="12"
+              class="pa-0"
+            >
+              <v-subheader>
+                生活物资需求
+              </v-subheader>
+            </v-col>
+            <v-col
+              v-for="[index, supply] in supplies.content.livesupplies.entries()"
+              :key="supply.n"
+              cols="12"
+              sm="6"
+              md="4"
+              lg="3"
+              xl="2"
+              class="align-self-stretch"
+            >
+              <v-card style="border: 2px solid #cf5355; height: 100%">
+                <v-card-text>
+                  <div class="title">
+                    <small>#{{ index + 1 }}</small>&nbsp;
+                    <span class="font-weight-bold">{{ supply.name }}</span>
+                  </div>
+                  <div
+                    v-if="supply.need"
+                    class="font-weight-bold red--text display-1"
+                  >
+                    <small>需要</small> {{ `&times; ${supply.need} ${supply.unit ? supply.unit : ''}` }}
+                  </div>
+                  <div
+                    v-if="supply.have"
+                    class="font-weight-bold red--text title"
+                  >
+                    <small>现剩余</small> {{ `&times; ${supply.have} ${supply.unit ? supply.unit : ''}` }}
                   </div>
                 </v-card-text>
               </v-card>
@@ -213,37 +287,42 @@
       </v-card>
     </v-dialog>
 
+    <v-btn
+      fixed
+      fab
+      bottom
+      right
+      color="primary"
+      :to="{name: 'CommunitySuppliesSubmission'}"
+    >
+      <v-icon>
+        mdi-file-plus
+      </v-icon>
+    </v-btn>
+
     <v-col
       cols="12"
       class="mx-3"
     >
       <h1 class="heading">
-        医疗机构物资需求
+        社区物资需求列表
       </h1>
       <v-card class="elevation-0">
-        <v-card-text class="subtitle-1 red font-weight-bold white--text my-2">
-          本列表中的所有医院均存在
-          <span class="font-weight-black title">非常紧急</span>的物资缺口状况，急需社会各界紧急援助！若您身边有相关资源（包括物流资源、消耗品资源等）请速与这些医院进行联系！
-        </v-card-text>
-      </v-card>
-      <v-card class="elevation-0">
-        <v-card-text
-          class="subtitle-2 green white--text my-2"
-        >
-          为保证需求真实性，本列表中大部分数据均通过【真人电话/微信视频/带相片工作证照片/医院官方电话】的方式核验联系人信息；同时已通过标签方式标明需求核验状况，便于各位捐赠者查验
+        <v-card-text class="subtitle-1 warning font-weight-bold white--text my-2">
+          本列表中信息均为各用户自行上传，请自行验证真伪。
         </v-card-text>
       </v-card>
 
       <v-card class="elevation-0">
         <v-card-text class="caption grey white--text my-2">
-          若您发现信息有不完整、已过期等情况，请点击相应数据卡片右下角的
+          若您发现信息有不准确、甚至违法违规等情况，请点击相应数据卡片右下角的
           <v-icon
             small
             color="grey lighten-3"
             style="margin-top: -4px;"
           >
             mdi-file-document-box-remove
-          </v-icon>纠错按钮发起纠错请求，我们将再次与医院进行二次审核，以保证消息时效性。
+          </v-icon>纠错按钮发起纠错请求，我们将审核消息是否正常；同时请发布者放心：我们不会无缘无故删除您的物资请求提交。
         </v-card-text>
       </v-card>
 
@@ -287,27 +366,19 @@
                   :class="{'redBorder pb-0': o.meta.urge >= 2}"
                 >
                   <v-card-title
-                    class="mb-2"
-                    :class="{'darken-1 white--text': o.meta.urge <= 1, 'red red-breathe': o.meta.urge === 0, 'deep-orange warning-breathe': o.meta.urge === 1, 'grey lighten-3': o.meta.urge >= 2}"
-                    :style="{'animation-delay': `-${i * 0.75}s`}"
+                    class="mb-2 grey lighten-3 title"
                   >
-                    <span class="title font-weight-black">
-                      <small class="font-weight-regular">#{{ o._index + 1 }}</small>
-                      {{ o.urge === '裸奔' ? "[库存为零] ": "" }}{{ o.name }}
-                    </span>
+                    <small class="mr-2">#{{ o._index + 1 }}</small> {{ o.address }}
                   </v-card-title>
                   <span class="float-right surplusInfo">
                     <div class="content">
-                      <template v-if="o.supplies.length">
-                        <span class="number">{{ o.supplies.length }}种</span>
-                        种类
-                        <br>
+                      <template v-if="o.medicalsupplies">
+                        <span class="number">&times;{{ o.medicalsupplies.length }}</span>
+                        <span>医疗物资<small>需求</small></span>
                       </template>
-                      <template v-if="o.suppliesCount">
-                        <span
-                          class="number"
-                        >{{ o.suppliesCount }}{{ o.suppliesCountBias ? "+" : "" }}</span>
-                        数量
+                      <template v-if="o.livesupplies">
+                        <span class="number">&times;{{ o.livesupplies.length }}</span>
+                        <span>生活物资<small>需求</small></span>
                       </template>
                     </div>
                     <v-icon class="bgIcon">wsicon wsicon-hospital</v-icon>
@@ -331,15 +402,9 @@
                     </div>
 
                     <div class="subtitle-2">
-                      地址：{{ o.address ? o.address : "（暂无详细地址，可点击下方搜索）" }}
+                      地址：{{ o.address }}
                     </div>
 
-                    <div
-                      v-if="o.alert"
-                      class="caption red--text"
-                    >
-                      特别备注：{{ o.alert }}
-                    </div>
                     <div
                       v-if="o.notes"
                       class="caption deep-orange--text"
@@ -361,7 +426,7 @@
                         >
                           wsicon wsicon-local
                         </v-icon>
-                        {{ o.address ? "查看" : "搜索" }}地图
+                        查看地图
                       </v-btn>
                       <v-btn
                         text
@@ -394,13 +459,12 @@
                       color="#a20002"
                       block
                       large
-                      :disabled="!o.supplies.length"
                       @click="() => {supplies.enabled = true; supplies.content = o}"
                     >
                       <v-divider style="opacity: 0.3" />
                       <span class="mx-4">
                         <v-icon left>mdi-fullscreen</v-icon>
-                        展开详细需求{{ o.supplies.length ? "" : " (无需求数据)" }}
+                        展开详细需求
                       </span>
                       <v-divider style="opacity: 0.3" />
                     </v-btn>
@@ -414,11 +478,7 @@
       <div class="text-right grey--text overline mt-4">
         此页面数据合作方
         <br>
-        <a
-          href="https://mp.weixin.qq.com/s/U_IAuov_AR13S87cJYjlSg"
-          target="_blank"
-          style="text-decoration: none"
-        >WeStar 公益团队</a>
+        网站内提交系统
       </div>
     </v-col>
   </v-row>
@@ -442,7 +502,7 @@ export default {
         forced: false,
         contact: {
           name: "",
-          content: ""
+          content: {}
         },
         address: ""
       },
@@ -450,10 +510,10 @@ export default {
         enabled: false,
         cause: "",
         causes: [
-          "地址不存在/未找到",
-          "联系不上医院方",
-          "物资被拒收或拦截",
-          "物资已够用",
+          "联系不上需求人",
+          "物资已不需要",
+          "地址错误",
+          "物资被拦截",
           "信息重复",
           "其他"
         ],
@@ -467,157 +527,15 @@ export default {
   },
   computed: {
     dataset() {
-      // const sortMap = {
-      //   urge: {
-      //     '裸奔': 0,
-      //     '紧缺': 1,
-      //     '': 2  // 匹配没有填入 urge 的情况；必要
-      //   },
-      //   trueness: {
-      //     "已核实": 0,
-      //     "待核实": 1
-      //   }
-      // };
-
-      const suppliesMap = {
-        "n95口罩（9132/1860）": {
-          n: "医用防护口罩",
-          abbr: "N95",
-          u: "个",
-          r: "符合或高于标准 GB19083-2010"
-        },
-        医用外科口罩: {
-          n: "医用外科口罩",
-          abbr: "医用手术口罩",
-          u: "个",
-          r: "符合或高于标准 YY0469-2011"
-        },
-        医用防护口罩: {
-          n: "一次性使用医用口罩",
-          abbr: "医用防护口罩",
-          u: "个",
-          r: "符合或高于标准 YY/T 0969-2013"
-        },
-        防护服: {
-          n: "医用一次性防护服",
-          u: "个",
-          r: "符合或高于标准 GB19082-2009"
-        },
-        护目镜: {
-          n: "个人用眼护具",
-          abbr: "护目镜",
-          u: "副",
-          r: "符合或高于标准 GB14866-2006"
-        },
-        医用手套: {
-          n: "一次性使用医用橡胶检查手套",
-          abbr: "医用手套",
-          u: "双",
-          r: "符合或高于标准 GB10213-2006"
-        },
-        手术衣: {
-          n: "手术衣",
-          u: "个",
-          r: "符合或高于标准 YY/T 0506.2-2016"
-        },
-        鞋套: {
-          u: "个"
-        },
-        面罩: {
-          u: "个"
-        }
-      };
-
       return this.data
-        .map(el => {
-          const result = {
-            supplies: [],
-            suppliesCount: 0,
-            suppliesCountBias: false
-          };
-
-          for (const [key, value] of Object.entries(el)) {
-            if (value === "　") continue;
-            const keys = key.split(" ");
-            if (keys.length === 2) {
-              // information
-              result[keys[0]] = value;
-            } else {
-              // supplies list
-              if (value) {
-                const amount = value === "Y" ? "需要" : value;
-                if (key in suppliesMap) {
-                  const merged = Object.assign(
-                    {
-                      n: key,
-                      a: amount
-                    },
-                    suppliesMap[key]
-                  );
-                  result.supplies.push(merged);
-                } else {
-                  result.supplies.push({
-                    n: key,
-                    a: amount
-                  });
-                }
-
-                if (typeof value === "number") {
-                  result.suppliesCount += value;
-                } else {
-                  result.suppliesCountBias = true;
-                }
-              }
-            }
-          }
-
-          if (!result.urge) result.urge = "";
-
-          return result;
-        })
         .map(el => {
           el.tags = [];
           el.meta = {};
-          if (
-            !(
-              !el.trueness ||
-              el.trueness.includes("未") ||
-              el.trueness.includes("需确认")
-            )
-          ) {
-            if (el.trueness === "已核实" || el.trueness === "核实") {
-              el.tags.push({ c: "green", t: `已核实` });
-            } else {
-              el.tags.push({ c: "green", t: `已核实：${el.trueness}` });
-            }
-            el.meta.trueness = 0;
-          } else if (el.trueness) {
-            el.tags.push({ c: "grey", t: `${el.trueness}` });
-            el.meta.trueness = 1;
-          } else {
-            el.tags.push({ c: "grey", t: `暂未与官方核实` });
-            el.meta.trueness = 1;
-          }
-
-          if (el.urge) {
-            if (el.urge === "裸奔") {
-              el.tags.push({ c: "red darken-2", t: "非常紧急：库存为零" });
-              el.meta.urge = 0;
-            } else if (el.urge === "紧缺") {
-              el.tags.push({ c: "red", t: "紧缺" });
-              el.meta.urge = 1;
-            } else {
-              el.tags.push({ c: "deep-orange", t: el.urge });
-              el.meta.urge = 2;
-            }
-          } else {
-            el.meta.urge = 3;
-          }
+          if (el.age <= 6) el.tags.push({ c: "deep-orange darken-2", t: `婴儿 (${el.age} 岁)` });
+          if (el.age > 6 && el.age < 18) el.tags.push({ c: "deep-orange darken-2", t: `未成年人 (${el.age} 岁)` });
+          if (el.age > 65) el.tags.push({ c: "deep-orange darken-2", t: `老人 (${el.age} 岁)` });
 
           return el;
-        })
-        .sort(function(a, b) {
-          return a.meta.urge - b.meta.urge;
         });
     },
     xs() {
@@ -638,7 +556,7 @@ export default {
   },
   methods: {
     update() {
-      api.supplies().then(({ data }) => {
+      api.communitySupplies().then(({ data }) => {
         this.data = data;
       });
     },
@@ -668,8 +586,8 @@ export default {
     openDialog(o) {
       this.dialog.enabled = true;
       this.dialog.contact.name = o.contact;
-      this.dialog.contact.content = o.phone;
-      this.dialog.address = o.address ? o.address : "暂无详细地址，可点击搜索";
+      this.dialog.contact.content = o;
+      this.dialog.address = o.address;
     },
     openReport(o) {
       this.report.enabled = true;
