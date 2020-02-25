@@ -360,9 +360,9 @@
             </p>
             <v-btn
               outlined
-              :to="{name: 'volunteerIndex'}"
+              :to="{name: 'peopleIndex'}"
             >
-              返回志愿者首页
+              返回首页
             </v-btn>
           </v-col>
         </v-row>
