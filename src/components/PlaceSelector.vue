@@ -137,5 +137,16 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style lang="scss" scoped>
+.place-selector {
+  flex: 1;
+  >>> .v-label {
+    font-size: 14px;
+  }
+  .selection {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}
 </style>

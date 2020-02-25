@@ -42,12 +42,24 @@
                 height="96"
                 tile
               >
-                <v-icon
-                  size="48"
-                  :class="route.meta.color ? route.meta.color : ''"
-                >
-                  {{ route.meta.icon }}
-                </v-icon>
+                <template v-if="route.meta.icons">
+                  <v-icon
+                    v-for="icon in route.meta.icons"
+                    :key="icon"
+                    size="36"
+                    :class="route.meta.color ? route.meta.color : ''"
+                  >
+                    {{ icon }}
+                  </v-icon>
+                </template>
+                <template v-else>
+                  <v-icon
+                    size="48"
+                    :class="route.meta.color ? route.meta.color : ''"
+                  >
+                    {{ route.meta.icon }}
+                  </v-icon>
+                </template>
               </v-sheet>
               <v-card-title
                 :class="route.meta.classes"
@@ -91,7 +103,8 @@ export default {
   },
   computed: {
     routes () {
-      return this.$router.options.routes.find(el => el.name === this.$route.matched[0].name).children.filter(el => el.path !== "")
+      return this.$router.options.routes.find(el => el.name === this.$route.matched[0].name)
+        .children.filter(el => el.path !== "" && !el.meta.hide)
     }
   },
 }

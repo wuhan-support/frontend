@@ -18,6 +18,7 @@ import VolunteerLayout from "../layouts/SponsorLayout";
 import Volunteer from "../views/roles/Volunteer";
 import WikiStream from "../views/lists/RealTimeMsgs";
 import PeopleAccommodations from "../views/lists/PeopleAccommodations";
+import Community from "../views/supplies/Community";
 
 Vue.use(VueRouter);
 
@@ -78,13 +79,25 @@ const routes = [{
       hide: false
     }
   }, {
-    path: 'supplies/CommunitySubmission',
+    path: 'supplies',
+    name: 'CommunitySupplies',
+    component: Community,
+    meta: {
+      icon: "mdi-file-document-box-search",
+      icons: ["mdi-account", "mdi-file-document-box-search"],
+      title: "社区物资需求列表",
+      subtitle: "为民众设置的社区物资需求列表，便于各民众发布自己的个人物资需求以便进行针对性帮助",
+      hide: false
+    }
+  }, {
+    path: 'supplies/submit',
     name: 'CommunitySuppliesSubmission',
     component: CommunitySubmission,
     meta: {
       icon: "mdi-file-document-box-plus",
-      title: "提交新的社区物资需求",
-      subtitle: "提交新的社区物资需求。提交后将交由内部信息组与官方渠道进行沟通，确保真实性与时效性后，发布于需求列表中",
+      icons: ["mdi-account", "mdi-file-document-box-plus"],
+      title: "提交社区物资需求",
+      subtitle: "提交新的社区物资需求。提交后将发布于社区物资需求列表中",
       hide: false
     }
   }, {
@@ -138,7 +151,8 @@ const routes = [{
     name: 'staffSupplies',
     component: Supplies,
     meta: {
-      icon: "mdi-hospital",
+      icon: "mdi-file-document-box-search",
+      icons: ["mdi-hospital", "mdi-file-document-box-search"],
       title: "医疗机构物资需求",
       color: "red--text",
       subtitle: "支持紧急程度与需求核验公示、按照地区过滤等多种功能，方便直观了解情况"
@@ -149,7 +163,8 @@ const routes = [{
     component: SuppliesSubmission,
     meta: {
       icon: "mdi-file-document-box-plus",
-      title: "提交新的物资需求",
+      icons: ["mdi-hospital", "mdi-file-document-box-plus"],
+      title: "提交医疗物资需求",
       subtitle: "提交新的医疗机构物资需求。提交后将交由内部信息组与官方渠道进行沟通，确保真实性与时效性后，发布于需求列表中",
       hide: false
     }
@@ -178,6 +193,7 @@ const routes = [{
     component: Supplies,
     meta: {
       icon: "mdi-hospital",
+      icons: ["mdi-hospital", "mdi-file-document-box-search"],
       title: "医疗机构物资需求",
       color: "red--text",
       subtitle: "支持紧急程度与需求核验公示、按照地区过滤等多种功能，方便直观了解情况"
@@ -188,7 +204,8 @@ const routes = [{
     component: SuppliesSubmission,
     meta: {
       icon: "mdi-file-document-box-plus",
-      title: "提交新的物资需求",
+      icons: ["mdi-hospital", "mdi-file-document-box-plus"],
+      title: "提交医疗物资需求",
       subtitle: "提交新的医疗机构物资需求。提交后将交由内部信息组与官方渠道进行沟通，确保真实性与时效性后，发布于需求列表中",
       hide: false
     }
