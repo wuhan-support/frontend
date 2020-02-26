@@ -16,7 +16,6 @@ import People from "../views/roles/People";
 import config from "../config";
 import VolunteerLayout from "../layouts/SponsorLayout";
 import Volunteer from "../views/roles/Volunteer";
-import WikiStream from "../views/lists/RealTimeMsgs";
 import PeopleAccommodations from "../views/lists/PeopleAccommodations";
 import Community from "../views/supplies/Community";
 
@@ -51,6 +50,26 @@ const routes = [{
       title: "市民信息主页",
     }
   }, {
+    path: 'supplies',
+    name: 'CommunitySupplies',
+    component: Community,
+    meta: {
+      icon: "mdi-file-document-box-search",
+      icons: ["mdi-account", "mdi-file-document-box-search"],
+      title: "社区物资需求列表",
+      subtitle: "为民众设置的社区物资需求列表，便于各民众发布自己的个人物资需求以便进行针对性帮助"
+    }
+  }, {
+    path: 'supplies/submit',
+    name: 'CommunitySuppliesSubmission',
+    component: CommunitySubmission,
+    meta: {
+      icon: "mdi-file-document-box-plus",
+      icons: ["mdi-account", "mdi-file-document-box-plus"],
+      title: "提交社区物资需求",
+      subtitle: "提交新的社区物资需求。提交后将发布于社区物资需求列表中"
+    }
+  }, {
     path: 'platforms/medical',
     name: 'peopleMedicalPlatform',
     component: MedicalPlatforms,
@@ -75,39 +94,7 @@ const routes = [{
     meta: {
       icon: "wsicon wsicon-hotel",
       title: "武汉在外人员住宿",
-      subtitle: "提供武汉在外人员的住宿信息，保障这些群体的基本生活",
-      hide: false
-    }
-  }, {
-    path: 'supplies',
-    name: 'CommunitySupplies',
-    component: Community,
-    meta: {
-      icon: "mdi-file-document-box-search",
-      icons: ["mdi-account", "mdi-file-document-box-search"],
-      title: "社区物资需求列表",
-      subtitle: "为民众设置的社区物资需求列表，便于各民众发布自己的个人物资需求以便进行针对性帮助",
-      hide: false
-    }
-  }, {
-    path: 'supplies/submit',
-    name: 'CommunitySuppliesSubmission',
-    component: CommunitySubmission,
-    meta: {
-      icon: "mdi-file-document-box-plus",
-      icons: ["mdi-account", "mdi-file-document-box-plus"],
-      title: "提交社区物资需求",
-      subtitle: "提交新的社区物资需求。提交后将发布于社区物资需求列表中",
-      hide: false
-    }
-  }, {
-    path: "stream",
-    name: "peopleStream",
-    component: WikiStream,
-    meta: {
-      icon: "mdi-timeline-text",
-      title: "信息看板",
-      subtitle: "以官方渠道发布的其他信息一览"
+      subtitle: "提供武汉在外人员的住宿信息，保障这些群体的基本生活"
     }
   }]
 }, {

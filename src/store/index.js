@@ -6,12 +6,13 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     ajax: {
-      states: []
+      states: [],
+      error: false
     },
     settings: {
       dark: false,
       language: null
-    }
+    },
   },
   mutations: {
     switchDark(state, newState) {
@@ -26,7 +27,8 @@ export default new Vuex.Store({
   getters: {
     language: state => state.settings.language,
     dark: state => state.settings.dark,
-    ajaxLoading: state => !!state.ajax.states.length
+    ajaxLoading: state => !!state.ajax.states.length,
+    ajaxError: state => state.ajax.error,
   },
   actions: {
   },
