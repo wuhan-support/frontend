@@ -210,9 +210,9 @@
             </h1> -->
           </template>
           <template v-else>
-            <!-- <h1 class="overline mb-4">
-              李文亮医生千古
-            </h1> -->
+            <h1 class="overline mb-4">
+              致敬英雄 逝者安息
+            </h1>
             <!-- <h1 class="overline mb-3">
               医护工作者、武汉市民与湖北居民<br>
               我们与你同在
