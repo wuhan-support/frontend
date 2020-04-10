@@ -1,32 +1,36 @@
 {
   "app": {
-    "name": "feiyan.help"
+    "name": "feiyan.help",
+    "slogan": [
+      "驰援一线",
+      "传递温暖"
+    ]
   },
-  "pages": {
-    "home": {
-      "_name": "首页"
-    },
-    "supplies": {
-      "_name": "医疗机构物资需求"
-    },
-    "about": {
-      "_name": "关于我们"
-    },
-    "stream": {
-      "_name": "实时播报"
-    },
-    "accommodations": {
-      "_name": ""
-    },
-    "platforms": {
-      "_name": ""
-    },
-    "psychological": {
-      "_name": ""
-    },
-    "suppliesSubmission": {
-      "_name": ""
-    }
+  "home": {
+    "_name": "首页",
+    "title": "您是?",
+    "cardPrefix": "我是"
+  },
+  "people": {
+    "_name": "普通市民",
+    "_subtitle": "为普通市民准备的线上医疗诊断平台、线上心理咨询平台、信息看板与武汉在外人员住宿等信息"
+  },
+  "staff": {
+    "_name": "医护人员",
+    "_subtitle": "为医护人员准备的免费住宿、心理咨询平台与医疗机构物资需求提交系统"
+  },
+  "volunteer": {
+    "_name": "志愿者",
+    "_subtitle": "志愿者可实际使用的、经过多方验证后的医疗机构物资需求，以及可供各个志愿者使用的物资需求提交系统"
+  },
+  "menu": {
+    "languages": "语言选择"
+  },
+  "footer": {
+    "eula": "最终用户许可协议",
+    "privacy": "隐私声明",
+    "team": "wuhan.support 团队",
+    "source": "项目源代码"
   },
   "partials": {
     "boolean": {

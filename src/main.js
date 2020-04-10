@@ -8,6 +8,7 @@ import vuetify from './plugins/vuetify'
 import * as Sentry from '@sentry/browser'
 import * as Integrations from '@sentry/integrations'
 import './assets/icon/wsicon.css'
+import i18n from './i18n'
 
 Vue.config.productionTip = false
 
@@ -46,5 +47,6 @@ new Vue({
   router,
   store,
   vuetify,
+  i18n,
   render: h => h(App)
 }).$mount('#app')

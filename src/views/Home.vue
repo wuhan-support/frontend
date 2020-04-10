@@ -2,6 +2,9 @@
   <div
     class="home"
   >
+    <div class="locale-switcher">
+      <LocaleSwitcher />
+    </div>
     <v-row
       align="center"
       justify="center"
@@ -26,7 +29,7 @@
             class="pt-0"
           >
             <h1 class="subtitle-1 font-weight-bold text-center">
-              驰援一线 · 传递温暖
+              {{ $t('app.slogan').join(' · ') }}
             </h1>
           </v-col>
         </v-row>
@@ -77,7 +80,7 @@
         >
           <v-col cols="12">
             <h1 class="heading text-center">
-              您是?
+              {{ $t('home.title') }}
             </h1>
           </v-col>
         </v-row>
@@ -113,12 +116,12 @@
               <v-card-title
                 class="darken-1"
               >
-                我是{{ route.meta.title }}
+                {{ $t('home.cardPrefix') }}{{ $t(route.meta.title) }}
               </v-card-title>
               <v-card-subtitle
                 class="darken-1"
               >
-                {{ route.meta.subtitle }}
+                {{ $t(route.meta.subtitle) }}
               </v-card-subtitle>
             </v-card>
           </v-col>
@@ -130,9 +133,10 @@
 
 <script>
 // import HomeDescription from "../components/HomeDescription";
+import LocaleSwitcher from "../components/LocaleSwitcher";
 export default {
   name: 'Home',
-  components: {},
+  components: {LocaleSwitcher},
   computed: {
     routes () {
       return this.$router.options.routes.filter(el => el.path !== '/' && !el.meta.hide)
@@ -149,5 +153,10 @@ export default {
 </script>
 
 <style scoped>
-
+  .locale-switcher {
+    position: fixed !important;
+    right: 1em !important;
+    top: 1em !important;
+    z-index: 99999999;
+  }
 </style>
