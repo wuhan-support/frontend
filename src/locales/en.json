@@ -10,7 +10,7 @@
   "home": {
     "_name": "Home",
     "title": "You are?",
-    "cardPrefix": "I am "
+    "cardPrefix": "I am a "
   },
   "people": {
     "_name": "Citizen",
