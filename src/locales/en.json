@@ -1,35 +1,37 @@
 {
   "app": {
-    "name": "WuhanSupport"
+    "name": "feiyan.help",
+    "slogan": [
+      "Science",
+      "Openness",
+      "Support"
+    ]
   },
-  "pages": {
-    "home": {
-      "_name": "Home"
-    },
-    "about": {
-      "_name": "About us"
-    },
-    "stream": {
-      "_name": "Event Stream"
-    },
-    "accommodations": {
-      "_name": "Accommodations"
-    },
-    "medical": {
-      "_name": "Medical"
-    },
-    "psychological": {
-      "_name": "Psychological"
-    },
-    "suppliesSubmission": {
-      "_name": "Submit Supplies"
-    },
-    "people": {
-      "_name": "People"
-    },
-    "staff": {
-      "_name": "Staff"
-    }
+  "home": {
+    "_name": "Home",
+    "title": "You are?",
+    "cardPrefix": "I am "
+  },
+  "people": {
+    "_name": "Citizen",
+    "_subtitle": "Medical diagnosis platform, online psychological consultation platform, information kanban, accommodation for Wuhan citizens, etc,."
+  },
+  "staff": {
+    "_name": "Medical Staff",
+    "_subtitle": "Free accommodation, psychological consultation platform and medical institution material demand submission system for medical staff"
+  },
+  "volunteer": {
+    "_name": "Volunteer",
+    "_subtitle": "The medical institution's material requirements that can be actually used by volunteers and verified by multiple parties, as well as the material requirements that can be used by each volunteer"
+  },
+  "menu": {
+    "languages": "Language"
+  },
+  "footer": {
+    "eula": "End-user License Agreement",
+    "privacy": "Privacy Policy",
+    "team": "wuhan.support Organization",
+    "source": "Source Code"
   },
   "partials": {
     "boolean": {

@@ -68,7 +68,7 @@
             no-action
           >
             <template v-slot:activator>
-              <v-list-item-title>{{ route.meta.title }}</v-list-item-title>
+              <v-list-item-title>{{ $t(route.meta.title) }}</v-list-item-title>
             </template>
 
             <v-list-item
@@ -92,6 +92,11 @@
             </v-list-item>
           </v-list-group>
         </template>
+        <v-divider />
+        <div class="d-flex ma-4">
+          <v-spacer />
+          <LocaleSwitcher />
+        </div>
       </v-list>
     </v-navigation-drawer>
     <v-app-bar
@@ -210,9 +215,9 @@
             </h1> -->
           </template>
           <template v-else>
-            <h1 class="overline mb-4">
-              致敬英雄 逝者安息
-            </h1>
+            <!--            <h1 class="overline mb-4">-->
+            <!--              致敬英雄 逝者安息-->
+            <!--            </h1>-->
             <!-- <h1 class="overline mb-3">
               医护工作者、武汉市民与湖北居民<br>
               我们与你同在
@@ -222,7 +227,7 @@
               让我们一起为武汉助力
             </h1> -->
             <h1 class="overline mb-5">
-              驰援一线<br>传递温暖
+              {{ $t('app.slogan').join(' · ') }}
             </h1>
           </template>
 
@@ -237,7 +242,7 @@
               class="font-weight-bold secondary--text text--darken-2"
               style="text-decoration: none;"
             >
-              最终用户许可协议
+              {{ $t('footer.eula') }}
             </a>
 
             <v-divider
@@ -251,7 +256,7 @@
               class="font-weight-bold secondary--text text--darken-2"
               style="text-decoration: none;"
             >
-              隐私声明
+              {{ $t('footer.privacy') }}
             </a>
           </v-row>
 
@@ -259,7 +264,9 @@
             href="https://wuhan.support/"
             target="_blank"
             style="text-decoration: none;"
-          ><strong>wuhan.support 团队</strong></a></span>
+          ><strong>
+            {{ $t('footer.team') }}
+          </strong></a></span>
 
           <br>
           <v-btn
@@ -271,7 +278,7 @@
             <v-icon left>
               mdi-github-circle
             </v-icon>
-            项目源代码
+            {{ $t('footer.source') }}
           </v-btn>
         </v-card-text>
       </v-card>
@@ -283,8 +290,10 @@
 // import Console from "@/utils/Console";
 // import utils from "./utils/utils";
 
+import LocaleSwitcher from "./components/LocaleSwitcher";
 export default {
   name: "App",
+  components: {LocaleSwitcher},
   data() {
     return {
       routes: [],
