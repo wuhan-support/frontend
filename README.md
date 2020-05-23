@@ -1,5 +1,5 @@
 # wuhan-support 前端项目
-本项目为 https://feiyan.help 网站的前端项目
+本项目为综合信息平台 https://covid-19.red 网站的前端项目
 
 ## 技术栈
 - MVVC 框架：Vue.js (https://vuejs.org)
