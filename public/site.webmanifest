@@ -1,8 +1,7 @@
 {
-    "name": "多维度信息整合平台 | feiyan.help",
+    "name": "多维度信息整合平台 | COVID-19.ICU",
     "short_name": "新冠信息平台",
-    "icons": [
-        {
+    "icons": [{
             "src": "/android-chrome-192x192.png",
             "sizes": "192x192",
             "type": "image/png"

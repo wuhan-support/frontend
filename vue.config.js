@@ -8,7 +8,7 @@ module.exports = {
     proxy: {
       "/api": {
         target: "http://localhost/",
-        pathRewrite: {'^/api' : ''}
+        pathRewrite: { '^/api': '' }
       }
     }
   },
@@ -32,7 +32,7 @@ module.exports = {
   // }
 
   // pwa: {
-  //   name: "feiyan.help",
+  //   name: "covid-19.icu",
   //   themeColor: "#813d34",
   //   msTileColor: "#1d499b",
   //   appleMobileWebAppStatusBarStyle: "black-translucent",

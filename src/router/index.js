@@ -13,7 +13,6 @@ import MedicalPlatforms from "../views/lists/MedicalPlatforms";
 import PsychologicalPlatforms from "../views/lists/PsychologicalPlatforms";
 import Staff from "../views/roles/Staff";
 import People from "../views/roles/People";
-import config from "../config";
 import VolunteerLayout from "../layouts/SponsorLayout";
 import Volunteer from "../views/roles/Volunteer";
 import PeopleAccommodations from "../views/lists/PeopleAccommodations";
@@ -28,7 +27,7 @@ const routes = [{
   component: Home,
   meta: {
     icon: "mdi-home",
-    title: "home._name",
+    title: "首页",
     hide: true,
     hideDrawer: true
   }
@@ -40,10 +39,10 @@ const routes = [{
     icon: "mdi-face",
     title: "people._name",
     subtitle: "people._subtitle",
-    banner: `${config.cdn.global}/images/people.jpg`
+    banner: `/images/people.jpg`
   },
   children: [
-      {
+    {
       path: '',
       name: 'peopleIndex',
       component: People,
@@ -108,7 +107,7 @@ const routes = [{
     icon: "mdi-hospital-box",
     title: "staff._name",
     subtitle: "staff._subtitle",
-    banner: `${config.cdn.global}/images/staff.jpg`
+    banner: `/images/staff.jpg`
   },
   children: [
     {
@@ -169,7 +168,7 @@ const routes = [{
     icon: "mdi-hand-heart",
     title: "volunteer._name",
     subtitle: "volunteer._subtitle",
-    banner: `${config.cdn.global}/images/volunteers-v3.jpg`
+    banner: `/images/volunteers-v3.jpg`
   },
   children: [{
     path: '',
@@ -215,7 +214,7 @@ const routes = [{
 const router = new VueRouter({
   mode: 'hash',
   base: process.env.BASE_URL,
-  scrollBehavior (to, from, savedPosition) {
+  scrollBehavior(to, from, savedPosition) {
     return { x: 0, y: 0 };
   },
   routes

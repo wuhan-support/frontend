@@ -5,6 +5,6 @@ export default {
     global: 'https://wuhan-support-images.oss-accelerate.aliyuncs.com'
   },
   app: {
-    name: "feiyan.help"
+    name: "covid-19.icu"
   }
 }

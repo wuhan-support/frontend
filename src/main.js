@@ -23,7 +23,7 @@ if (production) {
   })
 
   Vue.use(VueAnalytics, {
-    id: 'UA-69113723-14',
+    id: 'UA-59884641-12',
     // customResourceURL: "https://www.google-analytics.com/analytics.js",
     router,
     debug: {
