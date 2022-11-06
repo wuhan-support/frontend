@@ -4,13 +4,13 @@ import store from "../store";
 import uuidv4 from 'uuid/v4';
 
 const service = axios.create({
-  baseURL: "/api"
+  baseURL: "https://api.covid-19.icu/api"
 });
 
 service.interceptors.request.use(function (request) {
   // Do something with request data
   const id = uuidv4();
-  Object.assign(request, {_id: id})
+  Object.assign(request, { _id: id })
   store.commit("addRequest", id);
   return request;
 }, function (error) {
